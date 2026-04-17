@@ -379,6 +379,24 @@ let cart = [], seq = 0, activeNav = null;
 // cart entries are either product-entries {id, product, label, rows, meta}
 // or group-header entries {id, _type:'group', label, note}
 
+// ── PERSISTENCE ───────────────────────────────────────────────────────────────
+function saveCart() {
+  try {
+    localStorage.setItem('fortibom_cart', JSON.stringify({ cart, seq }));
+  } catch(e) {
+    toast('Could not save cart — browser storage may be full.');
+  }
+}
+function loadCart() {
+  try {
+    const raw = localStorage.getItem('fortibom_cart');
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    cart = saved.cart || [];
+    seq  = saved.seq  || 0;
+  } catch(e) { /* corrupt data — start fresh */ }
+}
+
 // ── ICONS ──────────────────────────────────────────────────────────────────
 function icon(file) {
   if (file.startsWith('fortigate'))   return `<svg class="ni-icon" viewBox="0 0 18 18" fill="none"><rect x="2" y="4" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M5 7h8M5 9.5h5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>`;
@@ -457,6 +475,7 @@ window.addEventListener('message', e => {
   cart.push({ id:++seq, product, label:dispLabel, rows, meta });
   updateBadges();
   renderGroups();
+  saveCart();
   toast(`✓ Added to Project BOM: ${dispLabel}`);
   if (cart.length === 1) showPBV();
 });
@@ -474,8 +493,8 @@ function updateBadges() {
   n > 0 ? navProj.classList.add('live') : navProj.classList.remove('live');
 }
 
-function removeFromCart(id) { cart = cart.filter(c=>c.id!==id); updateBadges(); renderGroups(); }
-function clearCart() { if (!confirm('Clear all items from the Project BOM?')) return; cart=[]; updateBadges(); renderGroups(); }
+function removeFromCart(id) { cart = cart.filter(c=>c.id!==id); updateBadges(); renderGroups(); saveCart(); }
+function clearCart() { if (!confirm('Clear all items from the Project BOM?')) return; cart=[]; seq=0; updateBadges(); renderGroups(); saveCart(); }
 
 // ── RENDER ───────────────────────────────────────────────────────────────────
 function renderGroups() {
@@ -587,6 +606,7 @@ function addDragListeners(el) {
     cart.splice(tgtIdx, 0, moved);
     dragSrcId = null;
     renderGroups();
+    saveCart();
   });
 }
 
@@ -633,6 +653,7 @@ function saveGroupRow() {
   }
   closeGroupModal();
   renderGroups();
+  saveCart();
   toast(editingGroupId !== null ? '✓ Group updated' : '✓ Group header added');
 }
 
@@ -842,6 +863,7 @@ function doImport() {
   }
   updateBadges();
   renderGroups();
+  saveCart();
   closeImport();
   const parts = [];
   if (prodCount) parts.push(`${prodCount} product group${prodCount!==1?'s':''}`);
@@ -856,6 +878,10 @@ function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
 document.getElementById('pi-date').value = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+loadCart();
+updateBadges();
+renderGroups();
+if (cart.length) showPBV();
 buildNav();
 </script>
 </body>
