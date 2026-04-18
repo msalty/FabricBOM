@@ -1,6 +1,6 @@
 {
-  "name": "FortiBOM – Project BOM Generator",
-  "short_name": "FortiBOM",
+  "name": "FabricBOM – Project BOM Generator",
+  "short_name": "FabricBOM",
   "description": "Cross-product Bill of Materials generator for Fortinet deployments.",
   "start_url": "./",
   "display": "standalone",
