@@ -6,7 +6,11 @@
 
 ## Overview
 
-FabricBOM is a client-side web application that helps Sales Engineers and Partner Engineers build and export structured Bill of Materials quotes for Fortinet network security deployments. Select from 15+ supported products, configure hardware models, support tiers, and licenses, then combine everything into a single exportable project BOM — no backend server or external dependencies required.  Designed to be run offline as a PWA.  Disclaimer: FabricBOM is not an officially sanctioned Fortinet product. Always validate output against the official Fortinet product ordering guides.  All source and reference materials used in the creation of this product are public.
+FabricBOM is a client-side web application that helps Sales Engineers, Partner Engineers, and Customers build and export structured Bill of Materials quotes for Fortinet network security fabric deployments. Select from 15+ supported products, configure hardware models, support tiers, and licenses, then combine everything into a single exportable project BOM — no backend server or external dependencies required.  
+
+Designed to be run offline with no further dependencies.  (Use the option to install web apps on most modern browsers and IOS / Android devices)
+
+Disclaimer: FabricBOM is not an officially sanctioned Fortinet product. Always validate output against the official Fortinet product ordering guides.  All source and reference materials used in the creation of this product are public.
 
 ## Features
 
