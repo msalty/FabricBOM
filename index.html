@@ -830,7 +830,7 @@ function bomDataRows() {
   for (const entry of cart) {
     if (entry._type === 'group') continue;
     for (const r of rowsWithTerm(entry.rows)) {
-      if (r.section !== undefined) continue;
+      if (r.section !== undefined || r.kind === 'note') continue;
       out.push(r);
     }
   }
