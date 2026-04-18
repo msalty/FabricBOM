@@ -10,7 +10,7 @@ FTNxT-BOMGen is a client-side web application that helps Sales Engineers and Par
 
 ## Features
 
-- **Multi-product hub** — 13+ Fortinet products organized by category in a sidebar navigation
+- **Multi-product hub** — 15+ Fortinet products organized by category in a sidebar navigation
 - **Per-product configuration** — choose hardware model, quantity, FortiCare support tier, and add-on licenses for each product
 - **Project BOM aggregation** — combine multiple product configurations into one quote with shared customer metadata (name, opportunity ID, SE name, date, project scope)
 - **Global license term selection** — apply co-term, 1-year, 3-year, or 5-year terms to all SKUs at export time
