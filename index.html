@@ -210,6 +210,23 @@
   .dm-item svg{width:13px;height:13px;flex-shrink:0;color:var(--c-text2);}
   .dm-sep{height:1px;background:var(--c-border);margin:3px 0;}
 
+  /* Saved Projects view */
+  #spv{flex:1;overflow-y:auto;display:none;flex-direction:column;background:var(--forti-content-bg);padding:20px;gap:14px;}
+  #spv > *{flex-shrink:0;}
+  #spv::-webkit-scrollbar{width:6px;}
+  #spv::-webkit-scrollbar-thumb{background:#C8CDD9;border-radius:3px;}
+  .sp-list{display:flex;flex-direction:column;gap:10px;}
+  .sp-card{background:var(--c-white);border:1px solid var(--c-border);border-radius:4px;display:flex;align-items:stretch;overflow:hidden;}
+  .sp-accent{width:4px;background:var(--forti-red);flex-shrink:0;}
+  .sp-body{flex:1;padding:12px 16px;min-width:0;}
+  .sp-name{font-size:14px;font-weight:600;color:var(--c-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .sp-meta{font-size:11px;color:var(--c-text2);margin-top:3px;}
+  .sp-actions{display:flex;gap:6px;padding:10px 14px;align-items:center;flex-shrink:0;}
+  .sp-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:60px 20px;text-align:center;color:var(--c-textm);}
+  .sp-empty svg{opacity:.2;}
+  .sp-empty h3{font-size:16px;font-weight:500;color:var(--c-text2);}
+  .sp-empty p{font-size:13px;max-width:320px;line-height:1.6;}
+
   /* Print */
   @media print {
     body{background:#fff;overflow:auto;height:auto;}
@@ -250,6 +267,11 @@
       <svg class="ni-icon" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="2" stroke="#E8EAF0" stroke-width="1.2"/><path d="M5 6h8M5 9h8M5 12h5" stroke="#E8EAF0" stroke-width="1.2" stroke-linecap="round"/></svg>
       <span class="ni-label">Project BOM</span>
       <span class="ni-badge" id="sb-badge">0</span>
+    </div>
+    <div class="ni" id="nav-saved" onclick="showSavedProjects()">
+      <svg class="ni-icon" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/><rect x="5" y="2" width="6" height="5" rx="1" stroke="currentColor" stroke-width="1.1"/><rect x="4" y="9" width="10" height="5" rx="1" stroke="currentColor" stroke-width="1.1"/></svg>
+      <span class="ni-label">Saved Projects</span>
+      <span class="ni-badge" id="sp-badge">0</span>
     </div>
     <div class="n-sep" style="margin-top:8px;"></div>
     <div class="nsl">Products</div>
@@ -317,6 +339,7 @@
         <div class="si"><div class="sl">Term Applied</div><div class="sv" id="sum-term" style="font-size:14px;">-DD</div></div>
         <div class="act-row">
           <button class="btn bp" onclick="exportCSV()"><svg viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3.5 6l3 3 3-3" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg>Export CSV</button>
+          <button class="btn bs" onclick="saveProject()"><svg viewBox="0 0 13 13" fill="none"><rect x="1" y="1" width="11" height="11" rx="1" stroke="#6B7589" stroke-width="1.1"/><rect x="4" y="1" width="5" height="4" rx=".5" stroke="#6B7589" stroke-width="1.1"/><rect x="3" y="7" width="7" height="4" rx=".5" stroke="#6B7589" stroke-width="1.1"/></svg>Save Project</button>
           <button class="btn bs" onclick="openImport()"><svg viewBox="0 0 13 13" fill="none"><path d="M6.5 9V1M9.5 6l-3 3-3-3" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round"/></svg>Import CSV</button>
           <button class="btn bs" onclick="openAddGroup()"><svg viewBox="0 0 13 13" fill="none"><rect x="1" y="4" width="11" height="5" rx="1" stroke="#6B7589" stroke-width="1.1"/><path d="M4 6.5h5M6.5 5.5v2" stroke="#6B7589" stroke-width="1.1" stroke-linecap="round"/></svg>Add Group</button>
           <button class="btn bs" onclick="window.print()"><svg viewBox="0 0 13 13" fill="none"><rect x="1.5" y="4" width="10" height="6" rx="1" stroke="#6B7589" stroke-width="1.1"/><path d="M3.5 4V2h6v2M3.5 10h6" stroke="#6B7589" stroke-width="1.1" stroke-linecap="round"/></svg>Print</button>
@@ -335,6 +358,17 @@
 
       <!-- BOM groups container -->
       <div id="bgc"></div>
+    </div>
+
+    <!-- Saved Projects view -->
+    <div id="spv">
+      <div class="lc">
+        <div class="lch">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="1" width="11" height="11" rx="1" stroke="#6B7589" stroke-width="1.1"/><rect x="4" y="1" width="5" height="4" rx=".5" stroke="#6B7589" stroke-width="1.1"/><rect x="3" y="7" width="7" height="4" rx=".5" stroke="#6B7589" stroke-width="1.1"/></svg>
+          <h2>Saved Projects</h2>
+        </div>
+        <div id="spv-content" class="lcb"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -424,6 +458,7 @@ const CATALOG = [
 ];
 
 let cart = [], seq = 0, activeNav = null;
+let savedProjects = [];
 // cart entries are either product-entries {id, product, label, rows, meta}
 // or group-header entries {id, _type:'group', label, note}
 
@@ -443,6 +478,26 @@ function loadCart() {
     cart = saved.cart || [];
     seq  = saved.seq  || 0;
   } catch(e) { /* corrupt data — start fresh */ }
+}
+function saveSaved() {
+  try {
+    localStorage.setItem('fortibom_saved', JSON.stringify(savedProjects));
+  } catch(e) {
+    toast('Could not save — browser storage may be full.');
+  }
+}
+function loadSaved() {
+  try {
+    const raw = localStorage.getItem('fortibom_saved');
+    if (!raw) return;
+    savedProjects = JSON.parse(raw) || [];
+  } catch(e) { savedProjects = []; }
+}
+function updateSavedBadge() {
+  const badge = document.getElementById('sp-badge');
+  const n = savedProjects.length;
+  badge.textContent = n;
+  n > 0 ? badge.classList.add('on') : badge.classList.remove('on');
 }
 
 // ── ICONS ──────────────────────────────────────────────────────────────────
@@ -501,6 +556,7 @@ function loadProduct(path, label, navEl) {
   setActiveNav(navEl);
   document.getElementById('bc').textContent = label;
   document.getElementById('pbv').style.display = 'none';
+  document.getElementById('spv').style.display = 'none';
   document.getElementById('pfw').style.display = 'flex';
   document.getElementById('ws').style.display = 'none';
   const f = document.getElementById('pf');
@@ -511,12 +567,14 @@ function showPBV() {
   setActiveNav(document.getElementById('nav-proj'));
   document.getElementById('bc').textContent = 'Project BOM';
   document.getElementById('pfw').style.display = 'none';
+  document.getElementById('spv').style.display = 'none';
   document.getElementById('pbv').style.display = 'flex';
 }
 function showAbout() {
   setActiveNav(null);
   document.getElementById('bc').textContent = 'About';
   document.getElementById('pbv').style.display = 'none';
+  document.getElementById('spv').style.display = 'none';
   document.getElementById('pfw').style.display = 'flex';
   document.getElementById('pf').style.display = 'none';
   const ws = document.getElementById('ws');
@@ -751,6 +809,93 @@ function rowsWithTerm(rows) {
     if (r.section !== undefined) return r;
     return { ...r, sku: applyTermToSku(r.sku, term) };
   });
+}
+
+// ── SAVED PROJECTS ────────────────────────────────────────────────────────────
+function saveProject() {
+  if (!cart.length) { toast('⚠ Nothing to save — add items to the BOM first'); return; }
+  const meta = getMeta();
+  const snapshot = {
+    id: 'save_' + Date.now(),
+    savedAt: new Date().toISOString(),
+    meta,
+    cart: JSON.parse(JSON.stringify(cart)),
+    seq
+  };
+  savedProjects.unshift(snapshot);
+  saveSaved();
+  updateSavedBadge();
+  toast(`✓ Project saved: "${meta.cust || 'Unnamed'}"`);
+}
+
+function showSavedProjects() {
+  setActiveNav(document.getElementById('nav-saved'));
+  document.getElementById('bc').textContent = 'Saved Projects';
+  document.getElementById('pfw').style.display = 'none';
+  document.getElementById('pbv').style.display = 'none';
+  document.getElementById('spv').style.display = 'flex';
+  renderSavedProjects();
+}
+
+function renderSavedProjects() {
+  const content = document.getElementById('spv-content');
+  if (!savedProjects.length) {
+    content.innerHTML = `<div class="sp-empty">
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="6" y="6" width="36" height="36" rx="5" stroke="#9BA5BA" stroke-width="2"/><rect x="16" y="6" width="16" height="14" rx="2" stroke="#9BA5BA" stroke-width="2"/><rect x="12" y="26" width="24" height="12" rx="2" stroke="#9BA5BA" stroke-width="2"/></svg>
+      <h3>No saved projects yet</h3>
+      <p>Use the <strong>Save Project</strong> button in your Project BOM to save a snapshot you can resume later.</p>
+    </div>`;
+    return;
+  }
+  const cards = savedProjects.map(p => {
+    const prodCount = p.cart.filter(c => !c._type).length;
+    const lineCount = p.cart.filter(c => !c._type).reduce((s, c) => s + (c.rows ? c.rows.filter(r => r.section === undefined).length : 0), 0);
+    const when = new Date(p.savedAt).toLocaleString('en-US', {month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'});
+    const opp  = p.meta.opp  ? `<div class="sp-meta">Opp: ${h(p.meta.opp)}</div>`  : '';
+    const eng  = p.meta.eng  ? `<div class="sp-meta">SE: ${h(p.meta.eng)}</div>`   : '';
+    return `<div class="sp-card">
+      <div class="sp-accent"></div>
+      <div class="sp-body">
+        <div class="sp-name">${h(p.meta.cust || 'Unnamed Project')}</div>
+        <div class="sp-meta">${when} &middot; ${prodCount} product group${prodCount !== 1 ? 's' : ''} &middot; ${lineCount} line item${lineCount !== 1 ? 's' : ''}</div>
+        ${opp}${eng}
+      </div>
+      <div class="sp-actions">
+        <button class="btn bs" onclick="loadSavedProject('${p.id}')">Load</button>
+        <button class="btn bd" onclick="deleteSavedProject('${p.id}')">Delete</button>
+      </div>
+    </div>`;
+  }).join('');
+  content.innerHTML = `<div class="sp-list">${cards}</div>`;
+}
+
+function loadSavedProject(id) {
+  const snap = savedProjects.find(p => p.id === id);
+  if (!snap) return;
+  if (cart.length && !confirm(`Load "${snap.meta.cust || 'this project'}"? Your current Project BOM will be replaced.`)) return;
+  cart = JSON.parse(JSON.stringify(snap.cart));
+  seq  = snap.seq;
+  document.getElementById('pi-cust').value  = snap.meta.cust  || '';
+  document.getElementById('pi-opp').value   = snap.meta.opp   || '';
+  document.getElementById('pi-eng').value   = snap.meta.eng   || '';
+  document.getElementById('pi-date').value  = snap.meta.date  || '';
+  document.getElementById('pi-notes').value = snap.meta.notes || '';
+  document.getElementById('pi-term').value  = snap.meta.term  || 'DD';
+  updateBadges();
+  renderGroups();
+  saveCart();
+  toast(`✓ Loaded: "${snap.meta.cust || 'Unnamed'}"`);
+  showPBV();
+}
+
+function deleteSavedProject(id) {
+  const snap = savedProjects.find(p => p.id === id);
+  if (!confirm(`Delete saved project "${snap?.meta?.cust || 'this project'}"?`)) return;
+  savedProjects = savedProjects.filter(p => p.id !== id);
+  saveSaved();
+  updateSavedBadge();
+  renderSavedProjects();
+  toast('✓ Saved project deleted');
 }
 
 // ── EXPORT ───────────────────────────────────────────────────────────────────
@@ -1013,7 +1158,9 @@ function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t
 // ── INIT ─────────────────────────────────────────────────────────────────────
 document.getElementById('pi-date').value = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
 loadCart();
+loadSaved();
 updateBadges();
+updateSavedBadge();
 renderGroups();
 if (cart.length) showPBV();
 buildNav();
