@@ -1075,7 +1075,7 @@ function exportCSV() {
   const p = getMeta();
   const termLabel = {DD:'Co-term (-DD)',12:'1 Year (-12)',36:'3 Years (-36)',60:'5 Years (-60)'}[p.term];
   const rows = [
-    ['FortiBOM Project Export'],
+    ['FabricBOM Project Export'],
     [`Customer:${p.cust}`,`Opportunity:${p.opp}`,`Engineer:${p.eng}`,`Date:${p.date}`,`Term:${termLabel}`],
     [],
     ['Product Group','Part Number','Description','Qty','Type','Notes'],
@@ -1095,7 +1095,7 @@ function exportCSV() {
   const csv = rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\r\n');
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
-  a.download=`FortiBOM_${p.cust.replace(/[^a-zA-Z0-9]/g,'_')}_${new Date().toISOString().slice(0,10)}.csv`;
+  a.download=`FabricBOM_${p.cust.replace(/[^a-zA-Z0-9]/g,'_')}_${new Date().toISOString().slice(0,10)}.csv`;
   a.click(); toast('✓ CSV exported');
 }
 // ── COPY / EXPORT DROPDOWN ───────────────────────────────────────────────────
@@ -1238,7 +1238,7 @@ function parseCSV(text) {
   }
   const lines = rawLines.map(parseLine);
   // Validate header
-  if (!lines[0] || lines[0][0] !== 'FortiBOM Project Export') return {ok:false, error:'Not a FortiBOM CSV export (missing header).'};
+  if (!lines[0] || lines[0][0] !== 'FabricBOM Project Export') return {ok:false, error:'Not a FabricBOM CSV export (missing header).'};
   // Row 1: meta
   const metaRow = lines[1] || [];
   function mval(cell) { return cell ? cell.replace(/^[^:]+:/,'').trim() : ''; }
