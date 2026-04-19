@@ -1175,14 +1175,29 @@ async function findExactDesc(desc) {
 }
 
 // ─────────────────────────────────────────────
+//  Normalization helpers
+// ─────────────────────────────────────────────
+function normalizeSkuTerm(sku) {
+  // Replace Fortinet contract-term suffixes with -DD so the Project BOM
+  // term selector can substitute the correct value at export time.
+  return sku.replace(/-(?:12|24|36|48|60)$/i, '-DD');
+}
+
+function normalizeDesc(desc) {
+  // Strip leading year strings (e.g. "3 Year ", "1 Year ") so the
+  // description stays accurate when the term is changed in the Project BOM.
+  return desc.replace(/\b\d+\s+[Yy]ears?\s+/g, '');
+}
+
+// ─────────────────────────────────────────────
 //  Fill row fields from a pricing match
 // ─────────────────────────────────────────────
 function fillRowFromPricing(id, item) {
   const skuEl = document.getElementById(`sku-${id}`);
-  if (skuEl) skuEl.value = item.sku.toUpperCase();
+  if (skuEl) skuEl.value = normalizeSkuTerm(item.sku).toUpperCase();
 
   const descEl = document.getElementById(`desc-${id}`);
-  if (descEl) descEl.value = item.desc1;
+  if (descEl) descEl.value = normalizeDesc(item.desc1);
 
   const notesEl = document.getElementById(`notes-${id}`);
   if (notesEl) notesEl.value = item.desc2;
