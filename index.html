@@ -202,6 +202,11 @@
   .bgr-btn.del{border-color:#F5C6C2;color:#C0392B;background:#FEF0EE;}
   .bgr-btn.del:hover{background:#F5C6C2;}
 
+  /* Project Total */
+  #project-total{background:var(--c-white);border:1px solid var(--c-border);border-radius:4px;padding:14px 20px;display:flex;justify-content:flex-end;align-items:center;gap:20px;}
+  #project-total .pt-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--c-text2);}
+  #project-total .pt-value{font-size:22px;font-weight:700;color:var(--forti-red);}
+
   /* Import modal */
   #imp-modal{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.55);align-items:center;justify-content:center;}
   #imp-modal.on{display:flex;}
@@ -408,6 +413,12 @@
 
       <!-- BOM groups container -->
       <div id="bgc"></div>
+
+      <!-- Project Total (only shown when pricing data is loaded) -->
+      <div id="project-total" style="display:none;">
+        <span class="pt-label">Project Total</span>
+        <span class="pt-value" id="pt-value"></span>
+      </div>
     </div>
 
     <!-- Saved Projects view -->
@@ -767,6 +778,7 @@ async function renderGroups() {
   ec.style.display = 'none';
   sbar.style.display = 'flex';
   let totL=0, totQ=0;
+  let grandTotal=0, grandTotalValid=false;
   c.innerHTML = '';
   for (const entry of cart) {
     if (entry._type === 'group') {
@@ -801,6 +813,7 @@ async function renderGroups() {
           const listPrice = priceMap.get(r.sku || '');
           const listPriceNum = listPrice ? parseFloat(String(listPrice).replace(/[^0-9.]/g, '')) : NaN;
           const totalNum = (!isNaN(listPriceNum) && typeof r.qty === 'number') ? listPriceNum * r.qty : NaN;
+          if (!isNaN(totalNum)) { grandTotal += totalNum; grandTotalValid = true; }
           priceCells = `<td class="nc" style="text-align:right;white-space:nowrap;">${listPrice ? h(listPrice) : ''}</td><td class="nc" style="text-align:right;white-space:nowrap;">${!isNaN(totalNum) ? '$'+totalNum.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}) : ''}</td>`;
         }
         const detailRows = [];
@@ -841,6 +854,13 @@ async function renderGroups() {
   const term = getCurrentTerm();
   const termLabel = {DD:'-DD (co-term)',12:'-12 (1 yr)',36:'-36 (3 yr)',60:'-60 (5 yr)'}[term];
   document.getElementById('sum-term').textContent = termLabel;
+  const ptEl = document.getElementById('project-total');
+  if (hasPricing && grandTotalValid) {
+    document.getElementById('pt-value').textContent = '$' + grandTotal.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+    ptEl.style.display = 'flex';
+  } else {
+    ptEl.style.display = 'none';
+  }
 }
 
 // ── DRAG-TO-REORDER ──────────────────────────────────────────────────────────
