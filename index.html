@@ -749,13 +749,11 @@ function showAbout() {
 window.addEventListener('message', e => {
   if (!e.data || e.data.type !== 'FORTIBOM_ADD') return;
   const { product, label, rows, meta } = e.data;
-  const count = cart.filter(c => c.product === product).length;
-  const dispLabel = count > 0 ? `${label} (run ${count+1})` : label;
-  cart.push({ id:++seq, product, label:dispLabel, rows, meta });
+  cart.push({ id:++seq, product, label, rows, meta });
   updateBadges();
   renderGroups();
   saveCart();
-  toast(`✓ Added to Project BOM: ${dispLabel}`);
+  toast(`✓ Added to Project BOM: ${label}`);
   if (cart.length === 1) showPBV();
 });
 
