@@ -143,7 +143,7 @@
   .sr td{background:#EAECF3!important;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--c-text2);padding:4px 10px;border-top:2px solid #C5CAD9;}
   .sk{font-family:'Courier New',monospace;font-size:11px;color:#1A4E82;font-weight:700;white-space:nowrap;}
   .qc{text-align:center;font-weight:700;color:var(--c-textm);}
-  .qty-input{width:44px;text-align:center;border:1px solid transparent;border-radius:3px;background:transparent;font-size:12px;font-weight:700;color:var(--c-textm);font-family:inherit;padding:1px 3px;-moz-appearance:textfield;}
+  .qty-input{width:58px;text-align:center;border:1px solid transparent;border-radius:3px;background:transparent;font-size:12px;font-weight:700;color:var(--c-textm);font-family:inherit;padding:1px 3px;-moz-appearance:textfield;}
   .qty-input:hover{border-color:var(--c-border);}
   .qty-input:focus{border-color:#4A90D9;outline:none;background:#fff;}
   .qty-input::-webkit-inner-spin-button,.qty-input::-webkit-outer-spin-button{opacity:0;}
@@ -434,6 +434,7 @@
         <h3>Project BOM is empty</h3>
         <p>Select a product from the left sidebar, configure it, and click <strong>Add to Project BOM</strong>. You can add multiple products and run the same product page multiple times to build a complete project quote.</p>
         <button class="btn bs" onclick="openImport()" style="margin-top:4px;"><svg viewBox="0 0 13 13" fill="none"><path d="M6.5 9V1M9.5 6l-3 3-3-3" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round"/></svg>Import from CSV</button>
+        <button class="btn bs" onclick="openSkuModal()"><svg viewBox="0 0 13 13" fill="none"><rect x="1" y="3" width="11" height="7" rx="1" stroke="#6B7589" stroke-width="1.1"/><path d="M3.5 6.5h6M6.5 5v3" stroke="#6B7589" stroke-width="1.1" stroke-linecap="round"/></svg>Add SKU</button>
       </div>
 
       <!-- BOM groups container -->
@@ -950,7 +951,7 @@ async function renderGroups() {
         </div>
         <div class="bt-wrap"><table class="bt"><thead><tr>
           <th style="width:200px;">Part Number</th><th class="col-desc">Description</th>
-          <th style="width:50px;text-align:center;">Qty</th><th class="col-type" style="width:100px;">Type</th><th class="col-notes" style="width:125px;">Notes</th>${hasPricing ? '<th style="width:110px;text-align:right;">List Price</th><th style="width:120px;text-align:right;">Total Price</th>' : ''}
+          <th style="width:64px;text-align:center;">Qty</th><th class="col-type" style="width:100px;">Type</th><th class="col-notes" style="width:125px;">Notes</th>${hasPricing ? '<th style="width:110px;text-align:right;">List Price</th><th style="width:120px;text-align:right;">Total Price</th>' : ''}
           <th class="col-exp"></th>
         </tr></thead><tbody>${rows}</tbody></table></div>`;
       addDragListeners(el);
