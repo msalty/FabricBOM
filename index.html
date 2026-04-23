@@ -194,6 +194,14 @@
   .drag-handle:active{cursor:grabbing;}
   .drag-handle svg{pointer-events:none;}
 
+  /* Inline label editing */
+  .label-input{font-family:inherit;border:1px solid transparent;border-radius:3px;background:transparent;padding:1px 4px;box-sizing:border-box;}
+  .label-input:hover{border-color:var(--c-border);}
+  .label-input:focus{border-color:#4A90D9;outline:none;background:#fff;}
+  .bgr-label.label-input{font-size:13px;font-weight:700;color:var(--c-text);flex:1;width:auto;min-width:40px;}
+  input.bgp.label-input{font-size:12px;font-weight:700;color:var(--c-text);width:100%;display:block;}
+  .sr .label-input{font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--c-text2);width:100%;display:block;}
+
   /* BOM Group header rows (user-created section dividers) */
   .bom-group-row{background:#D8DCE6;border:1px solid #B4BAC8;border-radius:4px;display:flex;align-items:stretch;gap:0;overflow:hidden;cursor:default;}
   .bom-group-row.dragging{opacity:.45;box-shadow:0 4px 18px rgba(0,0,0,.18);}
@@ -858,6 +866,21 @@ function updateQty(entryId, rowIdx, rawVal) {
   saveCart();
   renderGroups();
 }
+function updateEntryLabel(id, value) {
+  const entry = cart.find(c => c.id === id);
+  if (!entry) return;
+  const v = value.trim();
+  if (v) entry.label = v;
+  saveCart();
+  renderGroups();
+}
+function updateSectionLabel(entryId, rowIdx, value) {
+  const entry = cart.find(e => e.id === entryId);
+  if (!entry || !entry.rows || entry.rows[rowIdx] === undefined) return;
+  entry.rows[rowIdx].section = value.trim();
+  saveCart();
+  renderGroups();
+}
 function clearCart() { if (!confirm('Clear all items from the Project BOM?')) return; cart=[]; seq=0; if (location.hash.startsWith('#bom=')) history.replaceState(null, '', location.pathname); updateBadges(); renderGroups(); saveCart(); }
 
 // ── KIND (TYPE) OVERRIDE ─────────────────────────────────────────────────────
@@ -943,7 +966,7 @@ async function renderGroups() {
         </div>
         <div class="bgr-body">
           <svg class="bgr-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="4" width="12" height="6" rx="1" stroke="#EE3124" stroke-width="1.3"/><path d="M4 7h6" stroke="#EE3124" stroke-width="1.3" stroke-linecap="round"/></svg>
-          <span class="bgr-label">${h(entry.label)}</span>
+          <input type="text" class="label-input bgr-label" value="${h(entry.label)}" onchange="updateEntryLabel(${entry.id},this.value)">
           ${entry.note ? `<span class="bgr-note">${h(entry.note)}</span>` : ''}
         </div>
         <div class="bgr-actions">
@@ -956,7 +979,7 @@ async function renderGroups() {
       let lines=0, qty=0;
       const displayRows = rowsWithTerm(entry.rows);
       const rows = displayRows.map((r, i) => {
-        if (r.section!==undefined) return `<tr class="sr"><td colspan="${colSpan}">${h(r.section)}</td></tr>`;
+        if (r.section!==undefined) return `<tr class="sr"><td colspan="${colSpan}"><input type="text" class="label-input" value="${h(r.section)}" onchange="updateSectionLabel(${entry.id},${i},this.value)"></td></tr>`;
         lines++; if (typeof r.qty==='number') qty+=r.qty;
         const bm={req:'<span class="br br-r">Required</span>',mand:'<span class="br br-m">Mandatory</span>',opt:'<span class="br br-o">Optional</span>',inc:'<span class="br br-o">Included</span>',excl:'<span class="br br-ex">Excluded</span>',note:''};
         const effectiveKind = r._kindOverride !== undefined ? r._kindOverride : r.kind;
@@ -978,7 +1001,7 @@ async function renderGroups() {
         const detailTr = detailRows.length ? `<tr class="bom-detail"><td colspan="100"><table class="det-tbl"><tbody>${detailRows.join('')}</tbody></table></td></tr>` : '';
         const evenCls = lines%2===0 ? ' class="bt-even"' : '';
         const typeCell = `<button class="type-btn" onclick="openKindPopover(event,${entry.id},${i})" title="Click to change type">${bm[effectiveKind]||'<span class=\\"type-empty\\">—</span>'}<span class="type-hint">▾</span></button>`;
-        return `<tr${evenCls}><td><span class="sk">${h(r.sku||'')}</span></td><td class="nc col-desc"><span class="note-clamp" title="${h(r.desc||'')}">${h(r.desc||'')}</span></td><td class="qc"><input type="number" class="qty-input" value="${r.qty??''}" min="0" onchange="updateQty(${entry.id},${i},this.value)"></td><td class="col-type">${typeCell}</td><td class="nc col-notes"><span class="note-clamp" title="${h(r.note||'')}">${h(r.note||'')}</span></td>${priceCells}${expCell}</tr>${detailTr}`;
+        return `<tr${evenCls}>${expCell}<td><span class="sk">${h(r.sku||'')}</span></td><td class="nc col-desc"><span class="note-clamp" title="${h(r.desc||'')}">${h(r.desc||'')}</span></td><td class="qc"><input type="number" class="qty-input" value="${r.qty??''}" min="0" onchange="updateQty(${entry.id},${i},this.value)"></td><td class="col-type">${typeCell}</td><td class="nc col-notes"><span class="note-clamp" title="${h(r.note||'')}">${h(r.note||'')}</span></td>${priceCells}</tr>${detailTr}`;
       }).join('');
       totL+=lines; totQ+=qty;
       const el = document.createElement('div');
@@ -989,14 +1012,13 @@ async function renderGroups() {
           <div class="drag-handle" title="Drag to reorder">
             <svg width="12" height="18" viewBox="0 0 12 18" fill="none"><circle cx="4" cy="4" r="1.3" fill="currentColor"/><circle cx="8" cy="4" r="1.3" fill="currentColor"/><circle cx="4" cy="9" r="1.3" fill="currentColor"/><circle cx="8" cy="9" r="1.3" fill="currentColor"/><circle cx="4" cy="14" r="1.3" fill="currentColor"/><circle cx="8" cy="14" r="1.3" fill="currentColor"/></svg>
           </div>
-          <div><div class="bgp">${h(entry.label)}</div><div class="bgm">${lines} line item${lines!==1?'s':''} · ${qty.toLocaleString()} units/licenses</div></div>
+          <div><input type="text" class="label-input bgp" value="${h(entry.label)}" onchange="updateEntryLabel(${entry.id},this.value)"><div class="bgm">${lines} line item${lines!==1?'s':''} · ${qty.toLocaleString()} units/licenses</div></div>
           <span class="bg-tag">${h(entry.product)}</span>
-          <button class="bg-del" onclick="removeFromCart(${entry.id})">✕ Remove</button>
+          <button class="bg-del" onclick="removeFromCart(${entry.id})">✕</button>
         </div>
         <div class="bt-wrap"><table class="bt"><thead><tr>
-          <th style="width:200px;">Part Number</th><th class="col-desc">Description</th>
+          <th class="col-exp"></th><th style="width:200px;">Part Number</th><th class="col-desc">Description</th>
           <th style="width:64px;text-align:center;">Qty</th><th class="col-type" style="width:100px;">Type</th><th class="col-notes" style="width:125px;">Notes</th>${hasPricing ? '<th style="width:110px;text-align:right;">List Price</th><th style="width:120px;text-align:right;">Total Price</th>' : ''}
-          <th class="col-exp"></th>
         </tr></thead><tbody>${rows}</tbody></table></div>`;
       addDragListeners(el);
       c.appendChild(el);
@@ -1021,8 +1043,26 @@ async function renderGroups() {
 // ── DRAG-TO-REORDER ──────────────────────────────────────────────────────────
 let dragSrcId = null;
 
+function _doDrop(targetId) {
+  if (dragSrcId === null || dragSrcId === targetId) return;
+  const srcIdx = cart.findIndex(c => c.id === dragSrcId);
+  const tgtIdx = cart.findIndex(c => c.id === targetId);
+  if (srcIdx === -1 || tgtIdx === -1) return;
+  const [moved] = cart.splice(srcIdx, 1);
+  cart.splice(tgtIdx, 0, moved);
+  dragSrcId = null;
+  renderGroups();
+  saveCart();
+}
+
+function _topItem(node) {
+  const bgc = document.getElementById('bgc');
+  while (node && node.parentElement !== bgc) node = node.parentElement;
+  return (node && node.dataset.id) ? node : null;
+}
+
 function addDragListeners(el) {
-  // Only allow drag when the mousedown originated on the drag handle
+  // ── Mouse / HTML5 drag ──
   el.addEventListener('mousedown', e => {
     el.draggable = !!e.target.closest('.drag-handle');
   });
@@ -1044,16 +1084,47 @@ function addDragListeners(el) {
   });
   el.addEventListener('drop', e => {
     e.preventDefault();
-    const targetId = Number(el.dataset.id);
-    if (dragSrcId === null || dragSrcId === targetId) return;
-    const srcIdx = cart.findIndex(c => c.id === dragSrcId);
-    const tgtIdx = cart.findIndex(c => c.id === targetId);
-    if (srcIdx === -1 || tgtIdx === -1) return;
-    const [moved] = cart.splice(srcIdx, 1);
-    cart.splice(tgtIdx, 0, moved);
+    _doDrop(Number(el.dataset.id));
+  });
+
+  // ── Touch drag (mobile) ──
+  el.addEventListener('touchstart', e => {
+    if (!e.target.closest('.drag-handle')) return;
+    e.preventDefault();
+    dragSrcId = Number(el.dataset.id);
+    el.classList.add('dragging');
+  }, { passive: false });
+
+  el.addEventListener('touchmove', e => {
+    if (dragSrcId === null) return;
+    e.preventDefault();
+    const t = e.touches[0];
+    el.style.pointerEvents = 'none';
+    const under = document.elementFromPoint(t.clientX, t.clientY);
+    el.style.pointerEvents = '';
+    const targetEl = under && _topItem(under);
+    document.querySelectorAll('#bgc > *').forEach(n => n.classList.remove('drag-over'));
+    if (targetEl && Number(targetEl.dataset.id) !== dragSrcId) targetEl.classList.add('drag-over');
+  }, { passive: false });
+
+  el.addEventListener('touchend', e => {
+    if (dragSrcId === null) return;
+    e.preventDefault();
+    el.classList.remove('dragging');
+    const t = e.changedTouches[0];
+    el.style.pointerEvents = 'none';
+    const under = document.elementFromPoint(t.clientX, t.clientY);
+    el.style.pointerEvents = '';
+    document.querySelectorAll('#bgc > *').forEach(n => n.classList.remove('drag-over'));
+    const targetEl = under && _topItem(under);
+    if (targetEl) _doDrop(Number(targetEl.dataset.id));
+    else dragSrcId = null;
+  }, { passive: false });
+
+  el.addEventListener('touchcancel', () => {
+    el.classList.remove('dragging');
+    document.querySelectorAll('#bgc > *').forEach(n => n.classList.remove('drag-over'));
     dragSrcId = null;
-    renderGroups();
-    saveCart();
   });
 }
 
