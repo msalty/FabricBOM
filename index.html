@@ -301,6 +301,13 @@
   #spv-filter:focus{border-color:rgba(238,49,36,.5);}
   #spv-filter-clear{position:absolute;right:24px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--c-textm);font-size:16px;padding:0;line-height:1;display:none;}
   #spv-filter-clear:hover{color:var(--c-text2);}
+  .sp-rev-toggle{display:inline-flex;align-items:center;gap:5px;margin-top:6px;background:none;border:none;padding:2px 0;font-size:11px;color:var(--c-text2);cursor:pointer;font-family:inherit;line-height:1.4;transition:color .12s;}
+  .sp-rev-toggle:hover{color:var(--forti-red);}
+  .sp-rev-arrow{font-size:9px;}
+  .sp-rev-list{margin-top:6px;border-top:1px solid var(--c-border);padding-top:6px;display:flex;flex-direction:column;gap:4px;}
+  .sp-rev-row{display:flex;align-items:center;gap:10px;padding:3px 0;}
+  .sp-rev-date{font-size:11px;color:var(--c-text2);flex:1;}
+  .sp-rev-load{font-size:11px;padding:3px 8px;flex-shrink:0;}
 
   /* Saved Pricing upload drop zone */
   #pricing-drop{border:2px dashed var(--c-ib);border-radius:4px;padding:32px 20px;text-align:center;color:var(--c-text2);font-size:13px;cursor:pointer;transition:border-color .15s,background .15s;}
@@ -696,6 +703,7 @@ const CATALOG = [
 let cart = [], seq = 0, activeNav = null;
 let savedProjects = [];
 let spvFilter = '';
+let spRevExpanded = {}; // projectKey -> boolean, tracks which revision lists are expanded
 // cart entries are either product-entries {id, product, label, rows, meta}
 // or group-header entries {id, _type:'group', label, note}
 
@@ -754,10 +762,28 @@ function loadSaved() {
     if (!raw) return;
     savedProjects = JSON.parse(raw) || [];
   } catch(e) { savedProjects = []; }
+
+  // Migration: assign projectKey to old snapshots that lack one, grouped by customer name
+  const keyMap = {};
+  savedProjects.forEach(p => {
+    if (p.projectKey) {
+      const norm = (p.meta.cust || '').trim().toLowerCase();
+      if (!keyMap[norm]) keyMap[norm] = p.projectKey;
+    }
+  });
+  savedProjects.forEach(p => {
+    if (!p.projectKey) {
+      const norm = (p.meta.cust || '').trim().toLowerCase();
+      if (!keyMap[norm]) keyMap[norm] = 'pk_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
+      p.projectKey = keyMap[norm];
+    }
+  });
+  saveSaved();
 }
 function updateSavedBadge() {
   const badge = document.getElementById('sp-badge');
-  const n = savedProjects.length;
+  const uniqueKeys = new Set(savedProjects.map(p => p.projectKey || p.id));
+  const n = uniqueKeys.size;
   badge.textContent = n;
   n > 0 ? badge.classList.add('on') : badge.classList.remove('on');
 }
@@ -1277,8 +1303,14 @@ function rowsWithTerm(rows) {
 function saveProject() {
   if (!cart.length) { toast('⚠ Nothing to save — add items to the BOM first'); return; }
   const meta = getMeta();
+  const normalizedCust = (meta.cust || '').trim().toLowerCase();
+  const existing = savedProjects.find(p =>
+    p.projectKey && (p.meta.cust || '').trim().toLowerCase() === normalizedCust
+  );
+  const projectKey = existing ? existing.projectKey : 'pk_' + Date.now();
   const snapshot = {
     id: 'save_' + Date.now(),
+    projectKey,
     savedAt: new Date().toISOString(),
     meta,
     cart: JSON.parse(JSON.stringify(cart)),
@@ -1317,14 +1349,30 @@ function clearSpvFilter() {
 
 function renderSavedProjects() {
   const content = document.getElementById('spv-content');
-  const projects = spvFilter
-    ? savedProjects.filter(p =>
-        (p.meta.cust || '').toLowerCase().includes(spvFilter) ||
-        (p.meta.opp  || '').toLowerCase().includes(spvFilter) ||
-        (p.meta.eng  || '').toLowerCase().includes(spvFilter)
-      )
-    : savedProjects;
-  if (!projects.length) {
+
+  // Group by projectKey, preserving unshift order (newest first within each group)
+  const groupMap = {};
+  savedProjects.forEach(p => {
+    const key = p.projectKey || p.id;
+    if (!groupMap[key]) groupMap[key] = [];
+    groupMap[key].push(p);
+  });
+
+  // Sort groups so the one with the most recent primary save appears first
+  let groups = Object.values(groupMap);
+  groups.sort((a, b) => new Date(b[0].savedAt) - new Date(a[0].savedAt));
+
+  // Apply filter against the primary (latest) revision's metadata
+  if (spvFilter) {
+    groups = groups.filter(g => {
+      const p = g[0];
+      return (p.meta.cust || '').toLowerCase().includes(spvFilter) ||
+             (p.meta.opp  || '').toLowerCase().includes(spvFilter) ||
+             (p.meta.eng  || '').toLowerCase().includes(spvFilter);
+    });
+  }
+
+  if (!groups.length) {
     content.innerHTML = spvFilter
       ? `<div class="sp-empty"><h3>No matching projects</h3><p>No saved projects match your filter.</p></div>`
       : `<div class="sp-empty">
@@ -1334,26 +1382,60 @@ function renderSavedProjects() {
     </div>`;
     return;
   }
-  const cards = projects.map(p => {
+
+  const cards = groups.map(revisions => {
+    const p = revisions[0]; // primary (most recent)
+    const key = p.projectKey || p.id;
     const prodCount = p.cart.filter(c => !c._type).length;
     const lineCount = p.cart.filter(c => !c._type).reduce((s, c) => s + (c.rows ? c.rows.filter(r => r.section === undefined).length : 0), 0);
     const when = new Date(p.savedAt).toLocaleString('en-US', {month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'});
-    const opp  = p.meta.opp  ? `<div class="sp-meta">Opp: ${h(p.meta.opp)}</div>`  : '';
-    const eng  = p.meta.eng  ? `<div class="sp-meta">SE: ${h(p.meta.eng)}</div>`   : '';
+    const opp  = p.meta.opp ? `<div class="sp-meta">Opp: ${h(p.meta.opp)}</div>` : '';
+    const eng  = p.meta.eng ? `<div class="sp-meta">SE: ${h(p.meta.eng)}</div>`  : '';
+
+    const priorRevisions = revisions.slice(1);
+    const hasRevisions = priorRevisions.length > 0;
+    const isExpanded = !!spRevExpanded[key];
+
+    const toggleBtn = hasRevisions
+      ? `<button class="sp-rev-toggle" onclick="toggleRevisions('${h(key)}')" aria-expanded="${isExpanded}">
+           <span class="sp-rev-arrow">${isExpanded ? '&#9660;' : '&#9658;'}</span>
+           ${priorRevisions.length} prior save${priorRevisions.length !== 1 ? 's' : ''}
+         </button>`
+      : '';
+
+    let revList = '';
+    if (hasRevisions && isExpanded) {
+      const rows = priorRevisions.map(r => {
+        const rWhen = new Date(r.savedAt).toLocaleString('en-US', {month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'});
+        return `<div class="sp-rev-row">
+          <span class="sp-rev-date">${rWhen}</span>
+          <button class="btn bs sp-rev-load" onclick="loadSavedProject('${r.id}')">Load</button>
+        </div>`;
+      }).join('');
+      revList = `<div class="sp-rev-list">${rows}</div>`;
+    }
+
     return `<div class="sp-card">
       <div class="sp-accent"></div>
       <div class="sp-body">
         <div class="sp-name">${h(p.meta.cust || 'Unnamed Project')}</div>
         <div class="sp-meta">${when} &middot; ${prodCount} product group${prodCount !== 1 ? 's' : ''} &middot; ${lineCount} line item${lineCount !== 1 ? 's' : ''}</div>
         ${opp}${eng}
+        ${toggleBtn}
+        ${revList}
       </div>
       <div class="sp-actions">
         <button class="btn bs" onclick="loadSavedProject('${p.id}')">Load</button>
-        <button class="btn bd" onclick="deleteSavedProject('${p.id}')">Delete</button>
+        <button class="btn bd" onclick="deleteProjectGroup('${h(key)}')">Delete</button>
       </div>
     </div>`;
   }).join('');
   content.innerHTML = `<div class="sp-list">${cards}</div>`;
+}
+
+function toggleRevisions(projectKey) {
+  spRevExpanded[projectKey] = !spRevExpanded[projectKey];
+  renderSavedProjects();
 }
 
 function loadSavedProject(id) {
@@ -1381,6 +1463,23 @@ function deleteSavedProject(id) {
   const snap = savedProjects.find(p => p.id === id);
   if (!confirm(`Delete saved project "${snap?.meta?.cust || 'this project'}"?`)) return;
   savedProjects = savedProjects.filter(p => p.id !== id);
+  saveSaved();
+  updateSavedBadge();
+  renderSavedProjects();
+  toast('✓ Saved project deleted');
+}
+
+function deleteProjectGroup(projectKey) {
+  const group = savedProjects.filter(p => (p.projectKey || p.id) === projectKey);
+  if (!group.length) return;
+  const name = group[0].meta.cust || 'this project';
+  const revCount = group.length;
+  const msg = revCount > 1
+    ? `Delete all ${revCount} saves for "${name}"? This cannot be undone.`
+    : `Delete saved project "${name}"?`;
+  if (!confirm(msg)) return;
+  savedProjects = savedProjects.filter(p => (p.projectKey || p.id) !== projectKey);
+  delete spRevExpanded[projectKey];
   saveSaved();
   updateSavedBadge();
   renderSavedProjects();
