@@ -1,632 +1,1316 @@
+<!--
+  FabricBOM Build Report
+  Product: FortiClient
+  Source ordering guide: FC-OG-R27-20260429
+  Price list verified against: 2026Q3-NULL-PRICE-LIST.csv
+  Generated: 2026-09-15
+  Spec: fabricbom-bomgen-spec-v1.2.1
+
+  Price-list schema note: Q3 file has columns Identifier, Product Family Group, Product, Product Type, Item, SKU, Category.
+  'Item' used as Description #1 (leading term phrase '1 Year' removed); term derived from SKU suffix.
+  No Comments column -> EOL/EOS/replacement flags could not be checked.
+  All SKUs below also have -24/-48 variants; emitted as -DD (shell substitutes -12/-36/-60).
+
+  SKU Reconciliation:
+  ✓  exact            FC1-10-EMS05-428-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC1-10-EMS05-429-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC1-10-EMS05-485-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC1-10-EMS05-537-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC1-10-EMS05-538-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC1-10-EMS05-539-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC1-10-EMS04-428-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC1-10-EMS04-429-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ⚠  price-list-only  FC1-10-EMS04-537-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)  [not in OG forensics table; included per user 2026-09-15]
+  ⚠  price-list-only  FC1-10-EMS04-538-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)  [not in OG forensics table; included per user 2026-09-15]
+  ✓  exact            FC2-10-EMS05-428-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC2-10-EMS05-429-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC2-10-EMS05-485-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC2-10-EMS05-537-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC2-10-EMS05-538-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC2-10-EMS05-539-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC2-10-EMS04-428-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC2-10-EMS04-429-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ⚠  price-list-only  FC2-10-EMS04-537-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)  [not in OG forensics table; included per user 2026-09-15]
+  ⚠  price-list-only  FC2-10-EMS04-538-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)  [not in OG forensics table; included per user 2026-09-15]
+  ✓  exact            FC3-10-EMS05-428-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC3-10-EMS05-429-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC3-10-EMS05-485-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC3-10-EMS05-537-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC3-10-EMS05-538-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC3-10-EMS05-539-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC3-10-EMS04-428-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC3-10-EMS04-429-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ⚠  price-list-only  FC3-10-EMS04-537-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)  [not in OG forensics table; included per user 2026-09-15]
+  ⚠  price-list-only  FC3-10-EMS04-538-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)  [not in OG forensics table; included per user 2026-09-15]
+  ✓  exact            FC4-10-EMS05-428-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC4-10-EMS05-429-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC4-10-EMS05-485-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC4-10-EMS05-537-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC4-10-EMS05-538-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC4-10-EMS05-539-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC4-10-EMS04-428-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ✓  exact            FC4-10-EMS04-429-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)
+  ⚠  price-list-only  FC4-10-EMS04-537-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)  [not in OG forensics table; included per user 2026-09-15]
+  ⚠  price-list-only  FC4-10-EMS04-538-01-DD       (multi-term: -12, -24, -36, -48, -60; family FortiClient)  [not in OG forensics table; included per user 2026-09-15]
+  ✓  exact            FC1-10-FCBPS-310-02-DD       (multi-term: -12, -36, -60; family FortiClient)
+  ✓  exact            FC2-10-FCBPS-310-02-DD       (multi-term: -12, -36, -60; family FortiClient)
+  ✓  exact            FC5-10-FCBPS-310-02-DD       (multi-term: -12, -36, -60; family FortiClient)
+  ✓  exact            FC1-10-FCTST-1284-02-DD      (multi-term: -12, -36, -60; family FortiIdentity Cloud)
+  ✗  unresolved       FC1Z-15-EMS05-428-02-00      (co-term renewal SKU; not in price list; NOT emitted)
+  ✗  unresolved       FC2Z-15-EMS05-428-02-00      (co-term renewal SKU; not in price list; NOT emitted)
+  ✗  unresolved       FC1Z-15-EMS05-429-02-00      (co-term upgrade SKU; not in price list; NOT emitted)
+  ✗  unresolved       FC2Z-15-EMS05-429-02-00      (co-term upgrade SKU; not in price list; NOT emitted)
+  Single-term SKUs: none.
+
+  Open questions resolved during build:
+  - 2026-09-15: FC1Z/FC2Z-15-EMS05-428/429-02-00 not found anywhere (no FC#Z- or -15- SKUs in list) -> user chose
+    'guidance text only': Renew/Upgrade lifecycle scenarios rendered as co-term guidance with no SKU rows.
+  - 2026-09-15: FC1-FC4-10-EMS04-537-01 / -538-01 (on-prem forensics) exist in price list but not in OG forensics
+    table -> user chose to include them (consistent with OG on-prem upgrade matrix and forensics FAQ).
+  - OG lifecycle examples show literal -12 SKUs (FC2-10-EMS05-428-01-12, FC1-10-EMS05-428-01-12); emitted as -DD
+    because -12/-36/-60 all exist.
+  Build ID: forticlient-bomgen-20260915-194000
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FortiClient EMS — BOM Generator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FortiClient BOM Generator — FabricBOM</title>
+<meta name="description" content="Build a FortiClient Bill of Materials for FabricBOM. Choose deployment, solution tier, endpoint count, and add-on services, then add the result to your Project BOM.">
+<meta name="robots" content="noindex">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta name="build-timestamp" content="2026-09-15T19:40:00Z" />
+<meta name="build-id" content="forticlient-bomgen-20260915-194000" />
 <style>
 :root {
-  --forti-red:    #EE3124;
-  --forti-border: #DDE1E9;
-  --forti-bg:     #F2F4F7;
-  --forti-white:  #FFFFFF;
-  --forti-text:   #2A2F3A;
-  --forti-text-secondary: #6B7589;
-  --forti-text-muted:     #9BA5BA;
-  --forti-section-header: #F7F9FC;
-  --forti-input-border:   #C8CDD9;
-  --forti-table-head:     #EEF1F6;
-  --forti-table-stripe:   #F7F9FC;
-  --forti-info-bg:    #EEF3FF;
-  --forti-info-border:#B8CBF5;
-  --forti-info-text:  #3557A5;
-  --forti-warn-bg:    #FFF8EE;
-  --forti-warn-border:#F5D9A0;
-  --forti-warn-text:  #8A5800;
+  --forti-red:#EE3124; --forti-border:#DDE1E9; --forti-bg:#F2F4F7; --forti-white:#FFFFFF;
+  --forti-text:#2A2F3A; --forti-text-secondary:#6B7589; --forti-text-muted:#9BA5BA;
+  --forti-section-header:#F7F9FC; --forti-input-border:#C8CDD9; --forti-table-head:#EEF1F6;
+  --forti-table-stripe:#F7F9FC; --forti-info-bg:#EEF3FF; --forti-info-border:#B8CBF5;
+  --forti-info-text:#3557A5; --forti-warn-bg:#FFF8EE; --forti-warn-border:#F5D9A0; --forti-warn-text:#8A5800;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Segoe UI','Helvetica Neue',Arial,sans-serif;font-size:13px;line-height:1.5;color:var(--forti-text);background:var(--forti-bg);padding:20px;}
-h2{font-size:17px;font-weight:700;color:var(--forti-text);}
-h3{font-size:13px;font-weight:700;color:var(--forti-text);margin-bottom:10px;}
-label{display:block;font-size:12px;font-weight:600;color:var(--forti-text-secondary);margin-bottom:4px;}
-label .req{color:var(--forti-red);}
-input[type=number],select{background:#fff;border:1px solid var(--forti-input-border);border-radius:3px;padding:6px 9px;font-size:13px;width:100%;color:var(--forti-text);}
-input[type=number]:focus,select:focus{outline:none;border-color:var(--forti-red);box-shadow:0 0 0 2px rgba(238,49,36,.1);}
-input.invalid,select.invalid{border-color:var(--forti-red);}
-.err{display:none;color:var(--forti-red);font-size:11px;margin-top:3px;}
+* { box-sizing:border-box; }
+[hidden] { display:none !important; }
+body { margin:0; padding:20px; background:var(--forti-bg); color:var(--forti-text); font-family:'Segoe UI','Helvetica Neue',Arial,sans-serif; font-size:13px; line-height:1.5; }
+code, .sku { font-family:'Courier New',monospace; font-size:12px; color:#1A4E82; }
+p { margin:0 0 10px; }
+.visually-hidden { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 
-.card{background:var(--forti-white);border:1px solid var(--forti-border);border-radius:4px;margin-bottom:14px;overflow:hidden;}
-.card-header{background:var(--forti-section-header);border-bottom:1px solid var(--forti-border);padding:9px 18px;display:flex;align-items:center;gap:8px;}
-.card-header h3{margin:0;}
-.card-body{padding:16px 18px;}
+/* Header */
+.page-head { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+.page-icon { width:40px; height:40px; background-color:var(--forti-red); background-image:url('../forti-icons/FortiClient-white.svg'); background-size:70%; background-position:center; background-repeat:no-repeat; border-radius:4px; flex-shrink:0; }
+.page-head h1 { margin:0; font-size:18px; font-weight:600; }
+.page-sub { font-size:11px; color:var(--forti-text-secondary); }
 
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(210px,100%),1fr));gap:14px;}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-@media(max-width:500px){.grid-2{grid-template-columns:1fr;}}
+/* Cards */
+.card { background:var(--forti-white); border:1px solid var(--forti-border); border-radius:4px; margin-bottom:14px; overflow:hidden; }
+.card-header { background:var(--forti-section-header); border-bottom:1px solid var(--forti-border); padding:9px 18px; font-weight:600; font-size:13px; }
+.card-header .hint { font-weight:400; color:var(--forti-text-secondary); font-size:12px; margin-left:6px; }
+.card-body { padding:14px 18px; }
+.card-body > * + * { margin-top:12px; }
 
-.page-header{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
-.icon-box{width:44px;height:44px;background:var(--forti-red);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.icon-box svg{fill:#fff;}
-.page-header h2{font-size:20px;}
-.page-header .sub{font-size:11px;color:var(--forti-text-muted);margin-top:1px;}
+/* Forms */
+label { display:block; font-size:12px; font-weight:600; color:var(--forti-text-secondary); margin-bottom:4px; }
+.r { color:var(--forti-red); }
+input[type=text], input[type=number], select, textarea { background:white; border:1px solid var(--forti-input-border); border-radius:3px; padding:6px 9px; font-size:13px; width:100%; font-family:inherit; color:var(--forti-text); }
+input:focus, select:focus, textarea:focus { outline:none; border-color:var(--forti-red); box-shadow:0 0 0 2px rgba(238,49,36,.1); }
+input.invalid, select.invalid { border-color:var(--forti-red); background:#FEF8F8; }
+.field-err { display:block; color:#C0392B; font-size:11px; margin-top:4px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(min(210px, 100%), 1fr)); gap:14px; }
+.field-help { font-size:11px; color:var(--forti-text-muted); margin-top:4px; }
+fieldset { border:none; margin:0; padding:0; min-width:0; }
+legend { font-size:12px; font-weight:600; color:var(--forti-text-secondary); margin-bottom:6px; padding:0; }
 
-/* Tier cards */
-.tier-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;}
-.tier-card{border:2px solid var(--forti-border);border-radius:4px;padding:10px 12px;cursor:pointer;background:#fff;transition:border-color .15s,background .15s;user-select:none;}
-.tier-card:hover{border-color:#B8CBF5;}
-.tier-card.selected{border-color:var(--forti-red);background:#FEF8F8;}
-.tier-card .tc-name{font-weight:700;font-size:13px;color:var(--forti-text);}
-.tier-card .tc-desc{font-size:11px;color:var(--forti-text-secondary);margin-top:2px;}
+/* Model cards */
+.model-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(185px, 1fr)); gap:8px; }
+.model-card { border:1px solid var(--forti-border); border-radius:4px; padding:9px 12px; cursor:pointer; background:white; }
+.model-card:hover { border-color:var(--forti-input-border); }
+.model-card:focus-visible { outline:none; box-shadow:0 0 0 2px rgba(238,49,36,.35); }
+.model-card.selected { border:2px solid var(--forti-red); background:#FEF8F8; padding:8px 11px; }
+.model-card .m-name { font-weight:600; }
+.model-card .m-sub { font-size:11px; color:var(--forti-text-secondary); margin-top:2px; }
+.model-card .m-state { font-size:10px; font-weight:700; color:#C0392B; margin-top:4px; }
+.model-card:not(.selected) .m-state { display:none; }
 
-/* Deploy cards */
-.deploy-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.deploy-card{border:2px solid var(--forti-border);border-radius:4px;padding:10px 12px;cursor:pointer;background:#fff;transition:border-color .15s,background .15s;user-select:none;}
-.deploy-card:hover{border-color:#B8CBF5;}
-.deploy-card.selected{border-color:var(--forti-red);background:#FEF8F8;}
-.deploy-card .dc-name{font-weight:600;font-size:13px;}
-.deploy-card .dc-desc{font-size:11px;color:var(--forti-text-secondary);margin-top:2px;}
+/* Callouts */
+.callout { border-radius:3px; padding:9px 12px; font-size:12px; line-height:1.6; display:flex; gap:8px; }
+.callout > div { flex:1; }
+.callout[hidden] { display:none; }
+.info { background:var(--forti-info-bg); border:1px solid var(--forti-info-border); color:var(--forti-info-text); }
+.warn { background:var(--forti-warn-bg); border:1px solid var(--forti-warn-border); color:var(--forti-warn-text); }
+.callout ul { margin:4px 0 0; padding-left:18px; }
 
-/* Band indicator */
-.band-indicator{display:none;background:var(--forti-info-bg);border:1px solid var(--forti-info-border);border-radius:3px;padding:4px 10px;font-size:12px;color:var(--forti-info-text);margin-top:4px;}
-
-/* Add-on checkboxes */
-.addon-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--forti-border);}
-.addon-row:last-child{border-bottom:none;}
-.addon-row input[type=checkbox]{margin-top:2px;accent-color:var(--forti-red);flex-shrink:0;}
-.addon-row.disabled{opacity:.4;pointer-events:none;}
-.addon-label{font-weight:600;font-size:12px;color:var(--forti-text);}
-.addon-note{font-size:11px;color:var(--forti-text-muted);}
-
-/* Callout */
-.callout{border-radius:3px;padding:9px 12px;font-size:12px;line-height:1.6;display:flex;gap:8px;}
-.info{background:var(--forti-info-bg);border:1px solid var(--forti-info-border);color:var(--forti-info-text);}
-.warn{background:var(--forti-warn-bg);border:1px solid var(--forti-warn-border);color:var(--forti-warn-text);}
+/* Live indicator */
+#band-indicator { background:#EEF3FF; border:1px solid #B8CBF5; border-radius:3px; padding:5px 10px; font-size:12px; color:#3557A5; margin-top:6px; }
+#band-indicator[hidden] { display:none; }
 
 /* Buttons */
-.btn-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:18px;}
-button{border:none;border-radius:3px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;}
-.btn-primary{background:var(--forti-red);color:#fff;}
-.btn-primary:hover{background:#C82820;}
-.btn-success{background:#2E7D32;color:#fff;}
-.btn-success:hover{background:#245E27;}
-.btn-ghost{background:#fff;color:var(--forti-text);border:1px solid var(--forti-border);}
-.btn-ghost:hover{background:var(--forti-bg);}
-.btn-sm{padding:5px 10px;font-size:11px;}
-#smsg{font-size:12px;font-weight:600;}
-#smsg.ok{color:#2E7D32;}
-#smsg.err{color:var(--forti-red);}
-
-/* Comparison table */
-.cmp-table{width:100%;border-collapse:collapse;font-size:12px;}
-.cmp-table thead th{background:var(--forti-table-head);border:1px solid var(--forti-border);padding:7px 11px;font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--forti-text-secondary);text-align:center;}
-.cmp-table thead th:first-child{text-align:left;}
-.cmp-table tbody td{border:1px solid var(--forti-border);padding:6px 11px;vertical-align:middle;}
-.cmp-table tbody tr:nth-child(even) td{background:var(--forti-table-stripe);}
-.cmp-table .cat-row td{background:#EAECF3!important;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--forti-text-secondary);padding:4px 11px;border-top:2px solid #C5CAD9;}
-.cmp-table .chk{text-align:center;color:#2E7D32;font-size:14px;}
-.cmp-table .dash{text-align:center;color:var(--forti-text-muted);}
-.cmp-table .feat{color:var(--forti-text);}
-.tier-head-ztna{background:#3557A5!important;color:#fff!important;}
-.tier-head-epp{background:#1A7D3E!important;color:#fff!important;}
-.tier-head-mgd{background:#7B3FA0!important;color:#fff!important;}
+.btn { font-family:inherit; font-size:13px; font-weight:600; border-radius:3px; padding:7px 14px; cursor:pointer; border:1px solid transparent; }
+.btn:focus-visible { outline:none; box-shadow:0 0 0 2px rgba(238,49,36,.35); }
+.btn-primary { background:#CC2A1F; color:white; } /* forti-red darkened for 4.5:1 text contrast */
+.btn-primary:hover { background:#B42217; }
+.btn-add { background:#2E7D32; color:white; }
+.btn-add:hover { background:#276B2B; }
+.btn-ghost { background:white; color:var(--forti-text); border-color:var(--forti-input-border); }
+.btn-ghost:hover { background:var(--forti-section-header); }
+.btn-sm { font-size:12px; padding:4px 10px; }
+.actions { display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+.smsg, .emsg { font-size:12px; margin-left:4px; }
 
 /* BOM table */
-#bom-section{display:none;margin-top:4px;}
-table.bom{width:100%;border-collapse:collapse;font-size:12px;}
-table.bom thead th{background:var(--forti-table-head);border:1px solid var(--forti-border);padding:7px 11px;font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--forti-text-secondary);}
-table.bom tbody td{border:1px solid var(--forti-border);padding:7px 11px;vertical-align:top;}
-table.bom tbody tr:nth-child(even) td{background:var(--forti-table-stripe);}
-.section-row td{background:#EAECF3!important;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--forti-text-secondary);padding:5px 11px;border-top:2px solid #C5CAD9;}
-.badge{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;border-radius:2px;padding:1px 4px;display:inline-block;}
-.badge-req{background:#FEF0EE;color:#C0392B;border:1px solid #F5C6C2;}
-.badge-mand{background:#FFF8EE;color:#8A5800;border:1px solid #F5D9A0;}
-.badge-opt{background:#EEF3FF;color:#3557A5;border:1px solid #B8CBF5;}
-.badge-inc{background:#EEF3FF;color:#3557A5;border:1px solid #B8CBF5;}
-.sku-cell{font-family:'Courier New',monospace;font-size:11px;color:#1A4E82;}
-.nc{color:var(--forti-text-muted);}
+.table-wrap { overflow-x:auto; }
+table { width:100%; border-collapse:collapse; font-size:12px; }
+thead th { background:var(--forti-table-head); border:1px solid var(--forti-border); padding:7px 11px; font-size:10px; text-transform:uppercase; letter-spacing:.05em; color:var(--forti-text-secondary); text-align:left; }
+tbody td { border:1px solid var(--forti-border); padding:7px 11px; vertical-align:top; }
+tbody tr:nth-child(even) td { background:var(--forti-table-stripe); }
+.section-row td { background:#EAECF3!important; font-weight:700; font-size:10px; text-transform:uppercase; letter-spacing:.06em; color:var(--forti-text-secondary); padding:5px 11px; border-top:2px solid #C5CAD9; }
+.note-row td { background:var(--forti-warn-bg)!important; color:var(--forti-warn-text); }
+.nc { color:var(--forti-text-muted); }
+td.qty { text-align:center; white-space:nowrap; width:70px; }
+td.sku-cell { white-space:nowrap; }
+.badge { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; border-radius:2px; padding:1px 4px; display:inline-block; }
+.badge-req  { background:#FEF0EE; color:#C0392B; border:1px solid #F5C6C2; }
+.badge-opt  { background:#EEF3FF; color:#3557A5; border:1px solid #B8CBF5; }
+.badge-mand { background:#FFF8EE; color:#8A5800; border:1px solid #F5D9A0; }
+.badge-inc  { background:#EEF3FF; color:#3557A5; border:1px solid #B8CBF5; }
+.example-table input[type=number] { width:70px; padding:4px 6px; text-align:center; }
+
+/* Tabs */
+.tabs { display:flex; gap:0; border-bottom:1px solid var(--forti-border); margin-bottom:14px; flex-wrap:wrap; }
+.tab { padding:9px 18px; cursor:pointer; background:transparent; border:none; font-size:13px; font-family:inherit; color:var(--forti-text-secondary); border-bottom:2px solid transparent; margin-bottom:-1px; }
+.tab.active { color:var(--forti-text); border-bottom-color:var(--forti-red); font-weight:600; }
+.tab:focus-visible { outline:none; box-shadow:inset 0 0 0 2px rgba(238,49,36,.35); }
+.tab[hidden] { display:none; }
+.tab-panel { display:none; }
+.tab-panel.active { display:block; }
+
+/* Comparison table */
+.cmp-table { width:100%; border-collapse:collapse; font-size:12px; margin:0; }
+.cmp-table caption { text-align:left; padding-bottom:6px; font-weight:600; color:var(--forti-text-secondary); }
+.cmp-table thead th { background:var(--forti-table-head); border:1px solid var(--forti-border); padding:7px 11px; font-size:10px; text-transform:uppercase; letter-spacing:.05em; color:var(--forti-text-secondary); text-align:left; }
+.cmp-table tbody td, .cmp-table tbody th { border:1px solid var(--forti-border); padding:6px 11px; vertical-align:top; text-align:left; }
+.cmp-table tbody td:first-child, .cmp-table tbody th[scope=row] { background:var(--forti-section-header); font-weight:600; color:var(--forti-text); width:34%; }
+.cmp-table tbody tr:nth-child(even) td:not(:first-child) { background:var(--forti-table-stripe); }
+.cmp-table tr.cmp-sec th { background:#EAECF3; font-size:10px; text-transform:uppercase; letter-spacing:.06em; color:var(--forti-text-secondary); border-top:2px solid #C5CAD9; }
+.cmp-table .cmp-yes { color:#2E7D32; font-weight:600; }
+.cmp-table .cmp-no  { color:var(--forti-text-muted); }
+.cmp-table .cmp-self { color:var(--forti-text-muted); font-style:italic; }
+.cmp-foot { font-size:11px; color:var(--forti-text-secondary); margin-top:8px; }
+.cmp-foot p { margin:2px 0; }
+
+/* Add-on item */
+.addon-item { padding:10px 0; border-bottom:1px solid var(--forti-border); }
+.addon-item:last-child { border-bottom:none; }
+.addon-item .addon { display:flex; align-items:center; gap:8px; cursor:pointer; margin:0; }
+.addon-item .addon input[type=checkbox] { margin:0; flex-shrink:0; width:16px; height:16px; }
+.addon-item .addon-label { font-size:13px; font-weight:600; color:var(--forti-text); }
+.addon-item .addon-desc { margin:5px 0 0 24px; font-size:12px; line-height:1.5; color:var(--forti-text-secondary); }
+.addon-item .addon-constraint { margin:6px 0 0 24px; font-size:11px; color:var(--forti-warn-text); background:var(--forti-warn-bg); border:1px solid var(--forti-warn-border); border-radius:3px; padding:5px 9px; line-height:1.5; }
+.addon-item .addon-sku { margin:6px 0 0 24px; font-size:11px; color:var(--forti-text-muted); }
+.addon-item .addon-sku-code { color:#1A4E82; font-family:'Courier New', monospace; font-size:11px; }
+.addon-item .addon-status { margin:4px 0 0 24px; font-size:11px; font-weight:600; color:var(--forti-text-secondary); }
+.addon-item[aria-disabled="true"] { opacity:0.4; pointer-events:none; }
+
+/* FAQ */
+.og-faq { margin-top:18px; border:1px solid var(--forti-border); border-radius:3px; background:var(--forti-section-header); }
+.og-faq summary { padding:9px 14px; cursor:pointer; font-weight:600; font-size:12px; color:var(--forti-text-secondary); user-select:none; outline:none; }
+.og-faq summary:hover { background:var(--forti-table-stripe); }
+.og-faq summary:focus-visible { box-shadow:inset 0 0 0 2px var(--forti-red); }
+.og-faq[open] summary { border-bottom:1px solid var(--forti-border); }
+.og-faq dl { padding:4px 14px 12px; margin:0; font-size:12px; }
+.og-faq dt { font-weight:600; color:var(--forti-text); margin-top:10px; }
+.og-faq dd { margin:4px 0 0 0; color:var(--forti-text-secondary); line-height:1.5; }
+
+/* Build report */
+.st-exact { color:#2E7D32; font-weight:600; }
+.st-warn { color:var(--forti-warn-text); font-weight:600; }
+.st-bad { color:#C0392B; font-weight:600; }
+
+#stale-banner[hidden] { display:none; }
+
+@media print {
+  body { background:white; padding:0; }
+  .page-head, .tabs, #stale-banner, .build-stamp, #panel-builder > :not(#bom-section), #bom-section .actions { display:none !important; }
+  #panel-examples, #panel-buildreport { display:none !important; }
+  .card { border:none; }
+}
 </style>
 </head>
 <body>
+<script type="application/json" id="fabricbom-page-meta">
+{
+  "schemaVersion": "1.2.1",
+  "spec": "fabricbom-bomgen-spec-v1.2.1",
+  "product": "FortiClient",
+  "productDisplayName": "FortiClient",
+  "buildId": "forticlient-bomgen-20260915-194000",
+  "buildTimestamp": "2026-09-15T19:40:00Z",
+  "orderingGuide": "FC-OG-R27-20260429",
+  "priceList": "2026Q3-NULL-PRICE-LIST.csv",
+  "tabs": [
+    {
+      "id": "builder",
+      "label": "Builder",
+      "default": true
+    },
+    {
+      "id": "examples",
+      "label": "Example BOMs",
+      "default": false,
+      "presentIf": "ordering guide had examples"
+    },
+    {
+      "id": "buildreport",
+      "label": "Build Report",
+      "default": false,
+      "qaOnly": true
+    }
+  ],
+  "actions": {
+    "previewBom": {
+      "selector": "[data-fb-role=preview-bom]",
+      "jsFn": "generateBOM"
+    },
+    "addToProject": {
+      "selector": "[data-fb-role=add-to-project]",
+      "jsFn": "addToProjectBOM"
+    },
+    "resetForm": {
+      "selector": "[data-fb-role=reset-form]",
+      "jsFn": "resetForm"
+    },
+    "copyTsv": {
+      "selector": "[data-fb-role=copy-tsv]",
+      "jsFn": "copyTSV"
+    },
+    "printPreview": {
+      "selector": "[data-fb-role=print-preview]",
+      "jsFn": "window.print"
+    },
+    "addExample": {
+      "selector": "[data-fb-role=add-example]",
+      "jsFn": "addExampleToProjectBOM"
+    },
+    "resetExample": {
+      "selector": "[data-fb-role=reset-example]",
+      "jsFn": "resetExample"
+    }
+  },
+  "form": {
+    "deployment": {
+      "kind": "select",
+      "selector": "[data-fb-role=deployment-select]",
+      "values": [
+        "cloud",
+        "onprem"
+      ],
+      "apiFn": "setDeployment",
+      "notes": "Disabled for standalone; onprem disabled when model=managed"
+    },
+    "model": {
+      "kind": "radio-cards",
+      "selector": "[data-fb-role=model-card]",
+      "values": [
+        "ztna",
+        "epp",
+        "managed",
+        "standalone"
+      ],
+      "notes": "managed is cloud-only"
+    },
+    "quantity": {
+      "kind": "number",
+      "selector": "[data-fb-role=quantity-input]",
+      "min": 1,
+      "notes": "Endpoints for ztna/epp/managed (packed 10000/2000/500/25); users for standalone (min 50)"
+    },
+    "addons": {
+      "kind": "checkbox",
+      "selector": "[data-fb-role=addon]",
+      "values": [
+        "bps",
+        "forensics"
+      ],
+      "notes": "bps: banded FC1/FC2/FC5 by licensed endpoints, unavailable for managed (included) and standalone. forensics: replaces license SKUs with 537/538/539 bundles, unavailable for standalone.",
+      "liveSkuSelector": "[data-fb-role=addon-row][data-addon-id] [data-fb-role=addon-sku]"
+    }
+  },
+  "examples": [
+    "new-500-ztna",
+    "add-50-ztna"
+  ],
+  "postMessage": {
+    "addType": "FABRICBOM_ADD",
+    "staleType": "FABRICBOM_STALE"
+  }
+}
+</script>
 
-<!-- Page Header -->
-<div class="page-header">
-  <div class="icon-box">
-    <svg width="26" height="26" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.25 3.75 10.15 9 11.25C17.25 21.15 21 16.25 21 11V5l-9-4zm0 2.18l7 3.12V11c0 4.27-2.97 8.27-7 9.44C7.97 19.27 5 15.27 5 11V6.3l7-3.12zM11 7v6h2V7h-2zm0 8v2h2v-2h-2z"/></svg>
-  </div>
+<div id="stale-banner" role="alert" hidden style="background:#FEF0EE; color:#C0392B; border:1px solid #F5C6C2; border-radius:3px; padding:9px 12px; margin-bottom:14px; font-size:12px;">
+  ⚠ A newer version of this page is available on disk.
+  <button onclick="location.reload(true)" data-fb-role="reload-stale" style="margin-left:8px; background:var(--forti-red); color:white; border:none; padding:3px 10px; border-radius:3px; cursor:pointer;">Reload</button>
+</div>
+
+<header class="page-head" role="banner">
+  <div class="page-icon" role="img" aria-label="FortiClient"></div>
   <div>
-    <h2>FortiClient EMS</h2>
-    <div class="sub">BOM Generator · FC-OG-R26-20260303 · Endpoint Security / Zero Trust</div>
+    <h1>FortiClient</h1>
+    <div class="page-sub">Ordering Guide FC-OG-R27-20260429 · Verified against 2026Q3 price list (2026Q3-NULL-PRICE-LIST.csv)</div>
   </div>
+</header>
+
+<div role="navigation" aria-label="FortiClient BOM page sections">
+<nav role="tablist" aria-label="FortiClient BOM sections" class="tabs" data-fb-role="tablist">
+  <button role="tab" id="tab-builder" data-fb-role="tab" data-panel="builder" aria-selected="true" aria-controls="panel-builder" class="tab active" onclick="switchTab('builder')">Builder</button>
+  <button role="tab" id="tab-examples" data-fb-role="tab" data-panel="examples" aria-selected="false" aria-controls="panel-examples" class="tab" tabindex="-1" onclick="switchTab('examples')">Example BOMs</button>
+  <button role="tab" id="tab-buildreport" data-fb-role="tab" data-panel="buildreport" aria-selected="false" aria-controls="panel-buildreport" class="tab" tabindex="-1" onclick="switchTab('buildreport')" hidden>Build Report</button>
+</nav>
 </div>
 
-<!-- Feature Comparison -->
-<div class="card">
-  <div class="card-header">
-    <h3>License Tier Comparison</h3>
-  </div>
-  <div class="card-body" style="overflow-x:auto;padding:0;">
-    <table class="cmp-table">
-      <thead>
-        <tr>
-          <th style="text-align:left;min-width:220px;">Feature</th>
-          <th class="tier-head-ztna" style="min-width:90px;">VPN/ZTNA</th>
-          <th class="tier-head-epp" style="min-width:90px;">EPP/ATP</th>
-          <th class="tier-head-mgd" style="min-width:100px;">Managed</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="cat-row"><td colspan="4">Zero Trust Agent</td></tr>
-        <tr><td class="feat">Zero Trust Network Access (ZTNA)</td><td class="chk">✔</td><td class="chk">✔</td><td class="chk">✔</td></tr>
-        <tr><td class="feat">Central Management (EMS)</td><td class="chk">✔</td><td class="chk">✔</td><td class="chk">✔</td></tr>
-        <tr><td class="feat">Central Logging &amp; Reporting</td><td class="chk">✔</td><td class="chk">✔</td><td class="chk">✔</td></tr>
-        <tr><td class="feat">SSL VPN with MFA</td><td class="chk">✔</td><td class="chk">✔</td><td class="chk">✔</td></tr>
-        <tr><td class="feat">IPsec VPN with MFA</td><td class="chk">✔</td><td class="chk">✔</td><td class="chk">✔</td></tr>
-        <tr><td class="feat">Single Sign-On Mobility Agent</td><td class="chk">✔</td><td class="chk">✔</td><td class="chk">✔</td></tr>
-        <tr class="cat-row"><td colspan="4">IT Hygiene</td></tr>
-        <tr><td class="feat">Vulnerability Agent &amp; Remediation</td><td class="chk">✔</td><td class="chk">✔</td><td class="chk">✔</td></tr>
-        <tr><td class="feat">FortiGuard Web Filtering</td><td class="chk">✔</td><td class="chk">✔</td><td class="chk">✔</td></tr>
-        <tr><td class="feat">Software Inventory</td><td class="dash">—</td><td class="chk">✔</td><td class="chk">✔</td></tr>
-        <tr><td class="feat">Removable Media Control</td><td class="dash">—</td><td class="chk">✔</td><td class="chk">✔</td></tr>
-        <tr class="cat-row"><td colspan="4">CASB</td></tr>
-        <tr><td class="feat">Cloud/API-based CASB</td><td class="chk">✔</td><td class="chk">✔</td><td class="chk">✔</td></tr>
-        <tr><td class="feat">SaaS Application Control (Inline CASB)</td><td class="chk">✔</td><td class="chk">✔</td><td class="chk">✔</td></tr>
-        <tr><td class="feat">Malware Detection for Cloud Data</td><td class="chk">✔</td><td class="chk">✔</td><td class="chk">✔</td></tr>
-        <tr class="cat-row"><td colspan="4">Endpoint Security (EPP)</td></tr>
-        <tr><td class="feat">AI-powered Next-Gen Antivirus</td><td class="dash">—</td><td class="chk">✔</td><td class="chk">✔</td></tr>
-        <tr><td class="feat">FortiClient Cloud Sandbox (SaaS)</td><td class="dash">—</td><td class="chk">✔</td><td class="chk">✔</td></tr>
-        <tr><td class="feat">FortiSandbox Integration (PaaS/On-prem)</td><td class="chk">✔</td><td class="chk">✔</td><td class="chk">✔</td></tr>
-        <tr><td class="feat">Automated Endpoint Quarantine</td><td class="dash">—</td><td class="chk">✔</td><td class="chk">✔</td></tr>
-        <tr><td class="feat">Ransomware Protection</td><td class="dash">—</td><td class="chk">✔</td><td class="chk">✔</td></tr>
-        <tr><td class="feat">FortiGuard Outbreak Detection</td><td class="dash">—</td><td class="chk">✔</td><td class="chk">✔</td></tr>
-        <tr class="cat-row"><td colspan="4">Managed FortiClient Service (Fortinet Experts)</td></tr>
-        <tr><td class="feat">Endpoint Onboarding &amp; Initial Provisioning</td><td class="dash">—</td><td class="dash">—</td><td class="chk">✔</td></tr>
-        <tr><td class="feat">Security Fabric Setup/Integration</td><td class="dash">—</td><td class="dash">—</td><td class="chk">✔</td></tr>
-        <tr><td class="feat">Vulnerability &amp; Security Monitoring</td><td class="dash">—</td><td class="dash">—</td><td class="chk">✔</td></tr>
-        <tr class="cat-row"><td colspan="4">Additional / Support</td></tr>
-        <tr><td class="feat">BPS Consultation</td><td style="text-align:center;font-size:11px;color:var(--forti-text-secondary);">Add-on</td><td style="text-align:center;font-size:11px;color:var(--forti-text-secondary);">Add-on</td><td class="chk">✔</td></tr>
-        <tr><td class="feat">Endpoint Forensics Analysis</td><td style="text-align:center;font-size:11px;color:var(--forti-text-secondary);">Optional</td><td style="text-align:center;font-size:11px;color:var(--forti-text-secondary);">Optional</td><td style="text-align:center;font-size:11px;color:var(--forti-text-secondary);">Optional</td></tr>
-        <tr><td class="feat">24×7 Support</td><td class="chk">✔</td><td class="chk">✔</td><td class="chk">✔</td></tr>
-        <tr><td class="feat">On-premise / Air Gap Option</td><td class="chk">✔</td><td class="chk">✔</td><td class="dash">—</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+<main id="main-content" role="main">
 
-<!-- Configuration -->
-<div class="card">
-  <div class="card-header"><h3>1 · License Tier <span class="req">*</span></h3></div>
-  <div class="card-body">
-    <div class="tier-grid" id="tier-grid">
-      <div class="tier-card selected" onclick="selectTier('ztna')">
-        <div class="tc-name" style="color:#3557A5;">VPN / ZTNA</div>
-        <div class="tc-desc">ZTNA, VPN, CASB, Web Filtering</div>
+<!-- ======================= BUILDER ======================= -->
+<section id="panel-builder" role="tabpanel" aria-labelledby="tab-builder" data-fb-role="panel" class="tab-panel active">
+
+  <!-- 3a. Product introduction -->
+  <section class="card" data-fb-role="product-intro" aria-labelledby="intro-h">
+    <header class="card-header" id="intro-h">What is FortiClient?</header>
+    <div class="card-body">
+      <p>FortiClient is the software agent Fortinet installs on laptops and desktops. At its base tier it gives users secure remote access, either through a virtual private network (VPN) or through Zero Trust Network Access (ZTNA), which checks each device's security posture before letting it reach a specific application behind a FortiGate. Higher tiers add endpoint protection against malware and ransomware, or hand day-to-day operation to Fortinet's own team.</p>
+      <p>Every endpoint is managed from the Endpoint Management Server (EMS). The customer can run EMS on their own server or use FortiClient Cloud, where Fortinet hosts it. Licenses are sold per device in packs of 25, 500, 2,000, and 10,000, and each pack includes FortiCare Premium support.</p>
+      <div class="callout info" role="note"><div><strong>Where to start:</strong> choose Cloud or On-premise under <em>Deployment &amp; solution</em> first. Licenses can't be converted between the two later. Then pick a solution tier and enter the number of endpoints.</div></div>
+    </div>
+  </section>
+
+  <!-- 3b. Comparison -->
+  <section class="card" data-fb-role="comparison" aria-labelledby="cmp-h">
+    <header class="card-header" id="cmp-h">What each solution tier includes</header>
+    <div class="card-body">
+      <div class="table-wrap">
+        <table class="cmp-table">
+          <caption class="visually-hidden">Feature comparison of the FortiClient VPN/ZTNA, EPP/ATP and Managed solution tiers.</caption>
+          <thead><tr><th scope="col">Feature</th><th scope="col">VPN/ZTNA</th><th scope="col">EPP/ATP</th><th scope="col">Managed</th></tr></thead>
+          <tbody>
+            <tr class="cmp-sec"><th scope="colgroup" colspan="4">Zero trust agent</th></tr>
+            <tr><th scope="row">Zero Trust Network Access (ZTNA)</th><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">Central management</th><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">Central logging and reporting</th><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">SSL VPN with MFA*</th><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">IPsec VPN with MFA*</th><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">Single sign-on mobility agent</th><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr class="cmp-sec"><th scope="colgroup" colspan="4">IT hygiene</th></tr>
+            <tr><th scope="row">Vulnerability agent and remediation</th><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">FortiGuard web filtering</th><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">Software inventory</th><td class="cmp-no">— Not included</td><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">Removable media control</th><td class="cmp-no">— Not included</td><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr class="cmp-sec"><th scope="colgroup" colspan="4">CASB</th></tr>
+            <tr><th scope="row">Cloud/API-based CASB</th><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">SaaS application control (inline CASB)</th><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">FortiGuard real-time SaaS application database updates</th><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">Malware detection for cloud data</th><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr class="cmp-sec"><th scope="colgroup" colspan="4">Endpoint security (EPP)</th></tr>
+            <tr><th scope="row">FortiClient Cloud Sandbox (SaaS)</th><td class="cmp-no">— Not included</td><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">FortiSandbox integration (PaaS / public cloud / on-premise)</th><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">AI-powered next-generation antivirus</th><td class="cmp-no">— Not included</td><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">Automated endpoint quarantine</th><td class="cmp-no">— Not included</td><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">Ransomware protection</th><td class="cmp-no">— Not included</td><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">FortiGuard outbreak detection</th><td class="cmp-no">— Not included</td><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr class="cmp-sec"><th scope="colgroup" colspan="4">Managed service (delivered by Fortinet experts)</th></tr>
+            <tr><th scope="row">Endpoint onboarding</th><td class="cmp-no">— Not included</td><td class="cmp-no">— Not included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">Initial provisioning</th><td class="cmp-no">— Not included</td><td class="cmp-no">— Not included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">Security Fabric setup and integration</th><td class="cmp-no">— Not included</td><td class="cmp-no">— Not included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">Vulnerability monitoring</th><td class="cmp-no">— Not included</td><td class="cmp-no">— Not included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">Endpoint security monitoring</th><td class="cmp-no">— Not included</td><td class="cmp-no">— Not included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr class="cmp-sec"><th scope="colgroup" colspan="4">Additional services</th></tr>
+            <tr><th scope="row">Best Practice Service (BPS) consultation</th><td>Account add-on</td><td>Account add-on</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">Endpoint forensics analysis**</th><td>Optional</td><td>Optional</td><td>Optional</td></tr>
+            <tr><th scope="row">24×7 support</th><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">On-premise / air-gap option</th><td class="cmp-yes">✓ Included</td><td class="cmp-yes">✓ Included</td><td class="cmp-no">— Not included</td></tr>
+          </tbody>
+        </table>
       </div>
-      <div class="tier-card" onclick="selectTier('epp')">
-        <div class="tc-name" style="color:#1A7D3E;">EPP / ATP</div>
-        <div class="tc-desc">Full EPP + AI AV + Sandbox + ZTNA</div>
+      <div class="cmp-foot">
+        <p>EPP/ATP = Endpoint Protection Platform / Advanced Threat Protection. CASB = Cloud Access Security Broker. MFA = multifactor authentication.</p>
+        <p>* FortiClient licenses don't include FortiToken; order it separately if the customer needs MFA tokens.</p>
+        <p>** Forensics is ordered as a separate bundle SKU; use the <em>Endpoint Forensics service</em> option below.</p>
+        <p>Chromebook security (central management through EMS, web filtering and additional services) is also available. Chromebook and FortiSASE licensing are covered in their own ordering guides and aren't built on this page.</p>
       </div>
-      <div class="tier-card" onclick="selectTier('managed')">
-        <div class="tc-name" style="color:#7B3FA0;">Managed FortiClient</div>
-        <div class="tc-desc">Expert-managed, full stack (Cloud only)</div>
+      <div class="table-wrap" style="margin-top:14px;">
+        <table class="cmp-table">
+          <caption class="visually-hidden">Features included in the FortiClient Standalone VPN tier, which does not use EMS.</caption>
+          <thead><tr><th scope="col">Standalone VPN (no EMS)</th><th scope="col">Included</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">IPsec VPN</th><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">Single sign-on mobility agent</th><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">FortiPAM agent</th><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">FortiIdentity Cloud user management</th><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">FortiToken for MFA</th><td class="cmp-yes">✓ Included</td></tr>
+            <tr><th scope="row">Email-based support</th><td class="cmp-yes">✓ Included</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
-    <div id="managed-note" class="callout info" style="margin-top:10px;display:none;">
-      ℹ️ Managed FortiClient is only available as a Cloud deployment. On-premise is not available for this tier.
-    </div>
-  </div>
-</div>
+  </section>
 
-<div class="card">
-  <div class="card-header"><h3>2 · Deployment Type <span class="req">*</span></h3></div>
-  <div class="card-body">
-    <div class="deploy-grid" id="deploy-grid">
-      <div class="deploy-card selected" onclick="selectDeploy('cloud')">
-        <div class="dc-name">☁️ Cloud (FortiClient Cloud)</div>
-        <div class="dc-desc">Fortinet-hosted EMS instance · up to 250,000 endpoints</div>
-      </div>
-      <div class="deploy-card" id="onprem-card" onclick="selectDeploy('onprem')">
-        <div class="dc-name">🖥️ On-Premise (EMS Server)</div>
-        <div class="dc-desc">Linux 7.4 or Windows Server 7.2 · datacenter / public cloud</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-header"><h3>3 · Number of Endpoints <span class="req">*</span></h3></div>
-  <div class="card-body">
-    <div class="grid-2">
+  <!-- 3c. Configuration: deployment & solution -->
+  <section class="card" aria-labelledby="cfg-h">
+    <header class="card-header" id="cfg-h">Deployment &amp; solution</header>
+    <div class="card-body">
+      <div class="callout info" role="note"><div><strong>Cloud or on-premise?</strong> FortiClient Cloud is an EMS instance that Fortinet hosts, so there is no server to build or patch. It manages up to 250,000 endpoints and doesn't need a FortiCloud Premium subscription. On-premise EMS runs on the customer's Linux server (EMS 7.4) or Windows Server (EMS 7.2 and earlier), in their datacenter or public cloud. Choose on-premise for air-gapped networks.</div></div>
+      <div class="callout warn" role="note"><div><strong>No cross-upgrades:</strong> a cloud license can't be upgraded to on-premise, or the reverse. Moving between them means buying new SKUs for the new EMS instance. The Best Practice Service team can help with the migration.</div></div>
       <div>
-        <label>Total Endpoints <span class="req">*</span></label>
-        <input type="number" id="f-endpoints" min="1" max="250000" placeholder="e.g. 550" oninput="updatePackIndicator()">
-        <div class="err" id="err-endpoints">Enter a valid endpoint count (minimum 1).</div>
-        <div class="band-indicator" id="pack-indicator">
-          Packing: <span id="pack-text"></span>
+        <label for="f-deploy">Deployment <span class="r" aria-hidden="true">*</span></label>
+        <select id="f-deploy" data-fb-role="deployment-select" required aria-required="true" aria-describedby="deploy-help" onchange="onConfigChange()">
+          <option value="cloud">Cloud: FortiClient Cloud (Fortinet-hosted EMS)</option>
+          <option value="onprem">On-premise EMS (customer-hosted)</option>
+        </select>
+        <div id="deploy-help" class="field-help">Sets which license family (EMS05 cloud or EMS04 on-premise) is ordered.</div>
+      </div>
+      <div id="standalone-deploy-note" class="callout info" role="note" aria-live="polite" hidden><div>Standalone VPN doesn't use EMS, so the deployment choice doesn't apply. Users are managed through FortiIdentity Cloud.</div></div>
+
+      <div class="callout info" role="note"><div><strong>Which tier?</strong>
+        <ul>
+          <li><strong>VPN/ZTNA</strong> covers secure remote access plus basic hygiene: vulnerability scanning, web filtering and CASB.</li>
+          <li><strong>EPP/ATP</strong> adds full endpoint protection: AI-based antivirus, sandboxing, ransomware protection and automatic quarantine. It includes everything in VPN/ZTNA.</li>
+          <li><strong>Managed</strong> is EPP/ATP plus Fortinet experts who onboard, provision and monitor the endpoints. It is cloud-only and includes Best Practice Service consultation.</li>
+          <li><strong>Standalone VPN</strong> is per-user IPsec VPN for small sites that don't want EMS. The minimum order is 50 users.</li>
+        </ul>
+      </div></div>
+      <fieldset class="model-group">
+        <legend>Solution tier <span class="r" aria-hidden="true">*</span></legend>
+        <div role="radiogroup" aria-label="Solution tier" aria-required="true" class="model-grid" id="model-grid">
+          <div role="radio" tabindex="0" aria-checked="true" data-fb-role="model-card" data-model-id="ztna" class="model-card selected" onclick="selectModel('ztna')" onkeydown="cardKey(event,'ztna')">
+            <div class="m-name">VPN/ZTNA</div>
+            <div class="m-sub">Secure access, hygiene and CASB</div>
+            <div class="m-state">Selected</div>
+          </div>
+          <div role="radio" tabindex="-1" aria-checked="false" data-fb-role="model-card" data-model-id="epp" class="model-card" onclick="selectModel('epp')" onkeydown="cardKey(event,'epp')">
+            <div class="m-name">EPP/ATP</div>
+            <div class="m-sub">VPN/ZTNA plus endpoint protection</div>
+            <div class="m-state">Selected</div>
+          </div>
+          <div role="radio" tabindex="-1" aria-checked="false" data-fb-role="model-card" data-model-id="managed" class="model-card" onclick="selectModel('managed')" onkeydown="cardKey(event,'managed')">
+            <div class="m-name">Managed</div>
+            <div class="m-sub">EPP/ATP run by Fortinet experts. Cloud only.</div>
+            <div class="m-state">Selected</div>
+          </div>
+          <div role="radio" tabindex="-1" aria-checked="false" data-fb-role="model-card" data-model-id="standalone" class="model-card" onclick="selectModel('standalone')" onkeydown="cardKey(event,'standalone')">
+            <div class="m-name">Standalone VPN</div>
+            <div class="m-sub">No EMS, per user, minimum 50</div>
+            <div class="m-state">Selected</div>
+          </div>
+        </div>
+      </fieldset>
+      <div id="managed-onprem-note" class="callout warn" role="note" aria-live="polite" hidden><div><strong>Managed isn't available on-premise.</strong> Managed FortiClient runs only on FortiClient Cloud. Switch to Cloud to select it.</div></div>
+      <div id="fortitoken-note" class="callout warn" role="note" aria-live="polite"><div><strong>FortiToken is not included.</strong> The SSL and IPsec VPN multifactor authentication features need FortiToken, which is ordered separately (see the FortiToken ordering guide).</div></div>
+      <div id="mix-note" class="callout info" role="note" aria-live="polite"><div><strong>Mixing tiers on one EMS:</strong> a single EMS instance can run VPN/ZTNA and EPP/ATP licenses side by side. Fortinet still recommends one license type per EMS, especially when the licenses would expire on different dates. Need endpoint detection and response (EDR) or extended detection and response (XDR)? That's FortiEndpoint, which has its own ordering guide.</div></div>
+    </div>
+  </section>
+
+  <!-- 3c. Configuration: quantity -->
+  <section class="card" aria-labelledby="qty-h">
+    <header class="card-header" id="qty-h">Quantity</header>
+    <div class="card-body">
+      <div id="count-model-note" class="callout info" role="note" aria-live="polite"><div><strong>Licensed per device.</strong> Both FortiClient Cloud and on-premise EMS count endpoints, not users. The page fills the count with the largest packs first (10,000 / 2,000 / 500 / 25), rounds any remainder up to a 25-pack, and merges small packs into the next size when they add up to it.</div></div>
+      <div id="standalone-moq-note" class="callout info" role="note" aria-live="polite" hidden><div><strong>Licensed per user.</strong> Each Standalone VPN user license covers up to 3 of that user's endpoints. The minimum order through this SKU is 50 users. Smaller deployments (minimum 5) can be bought from the FortiCloud Marketplace with FortiPoints.</div></div>
+      <div style="max-width:320px;">
+        <label for="f-qty"><span id="f-qty-label-text">Endpoints to license</span> <span class="r" aria-hidden="true">*</span></label>
+        <input id="f-qty" type="number" min="1" step="1" value="25" required aria-required="true" data-fb-role="quantity-input" aria-describedby="f-qty-err band-indicator" oninput="onConfigChange()">
+        <span id="f-qty-err" class="field-err" data-fb-role="field-error" role="alert" hidden>Enter a whole number of endpoints, 1 or more.</span>
+        <div id="band-indicator" role="status" aria-live="polite" hidden>
+          <span id="band-text"></span>
         </div>
       </div>
-      <div style="display:flex;flex-direction:column;justify-content:flex-end;">
-        <div class="callout info" style="font-size:11px;">
-          Licenses pack largest-first: 10000 · 2000 · 500 · 25 device packs.
+      <div id="overprov-note" class="callout info" role="note" aria-live="polite" hidden><div id="overprov-text"></div></div>
+      <div id="cloud-max-warn" class="callout warn" role="note" aria-live="polite" hidden><div><strong>Over the FortiClient Cloud limit.</strong> One FortiClient Cloud instance manages at most 250,000 endpoints. Plan multiple instances or an on-premise design, and confirm the architecture with Fortinet before quoting.</div></div>
+    </div>
+  </section>
+
+  <!-- 3d. Add-on services -->
+  <section class="card" aria-labelledby="addon-h">
+    <header class="card-header" id="addon-h">Additional services</header>
+    <div class="card-body">
+      <div class="callout info" role="note"><div><strong>Onboarding options:</strong> the customer can deploy it themselves using Fortinet's documentation, get expert guidance through Best Practice Service, have onboarding done for them with the Managed tier, or hire Professional Services for an SLA-backed project.</div></div>
+      <div role="group" aria-label="Additional services">
+        <div class="addon-item" data-fb-role="addon-row" data-addon-id="bps" id="row-bps">
+          <label class="addon">
+            <input type="checkbox" id="addon-bps" data-fb-role="addon" data-addon-id="bps" checked aria-describedby="bps-desc bps-con bps-status" onchange="onAddonChange()">
+            <span class="addon-label">FortiCare Best Practice Service (BPS) consultation</span>
+          </label>
+          <div class="addon-desc" id="bps-desc">An annual subscription that gives the customer on-demand access to FortiClient and EMS specialists. They can help with deployment design, stable upgrade paths, license upgrades, and EMS migrations with little data loss. Fortinet recommends adding it to every new deal.</div>
+          <div class="addon-constraint" id="bps-con">The BPS band follows the <strong>licensed</strong> endpoint count: 25–999 uses FC1, 1,000–9,999 uses FC2, and 10,000 or more uses FC5. Order one per customer. It's already included with Managed and isn't offered with Standalone VPN.</div>
+          <div class="addon-status" id="bps-status" aria-live="polite"></div>
+          <div class="addon-sku">SKU: <code class="addon-sku-code" data-fb-role="addon-sku" id="bps-sku">—</code></div>
+        </div>
+        <div class="addon-item" data-fb-role="addon-row" data-addon-id="forensics" id="row-forensics">
+          <label class="addon">
+            <input type="checkbox" id="addon-forensics" data-fb-role="addon" data-addon-id="forensics" aria-describedby="for-desc for-con for-status" onchange="onAddonChange()">
+            <span class="addon-label">Endpoint Forensics service (with SOC-as-a-Service support)</span>
+          </label>
+          <div class="addon-desc" id="for-desc">When an incident happens, FortiGuard Labs analysts remotely collect and examine evidence from the affected endpoints and deliver a detailed report. Selecting this swaps each license pack for the matching bundle that includes forensics and Security Operations Center as a Service (SOCaaS) support.</div>
+          <div class="addon-constraint" id="for-con">This <strong>replaces</strong> the base license SKUs; it isn't an extra line. The customer needs FortiAnalyzer, on-premise or Cloud, to forward FortiClient logs to SOCaaS, and FortiAnalyzer isn't included. Add FortiAnalyzer Cloud log storage, or check that the on-premise FortiAnalyzer has room. On-premise EMS must be 7.2.2 or later. Not available for Standalone VPN.</div>
+          <div class="addon-status" id="for-status" aria-live="polite"></div>
+          <div class="addon-sku">SKU: <code class="addon-sku-code" data-fb-role="addon-sku" id="for-sku">—</code></div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </section>
 
-<!-- Add-ons -->
-<div class="card">
-  <div class="card-header"><h3>4 · Add-on Options</h3></div>
-  <div class="card-body">
-    <div class="addon-row" id="addon-forensics-row">
-      <input type="checkbox" id="addon-forensics">
-      <div>
-        <div class="addon-label">Endpoint Forensics Analysis</div>
-        <div class="addon-note">Remote incident response by FortiGuard Labs analysts. Separate SKU bundle. Requires EMS 7.2.2+.</div>
+  <!-- 3f. Actions -->
+  <section class="card" aria-label="BOM actions">
+    <div class="card-body">
+      <div class="actions">
+        <button class="btn btn-primary" data-fb-role="preview-bom" onclick="generateBOM()">Preview BOM</button>
+        <button class="btn btn-add" data-fb-role="add-to-project" onclick="addToProjectBOM()">Add to Project BOM</button>
+        <button class="btn btn-ghost" data-fb-role="reset-form" onclick="resetForm()">Reset</button>
+        <span id="smsg" class="smsg" data-fb-role="status" role="status" aria-live="polite" aria-atomic="true"></span>
       </div>
     </div>
-    <div class="addon-row" id="addon-bps-row">
-      <input type="checkbox" id="addon-bps">
-      <div>
-        <div class="addon-label">FortiCare Best Practices (BPS) Consultation</div>
-        <div class="addon-note">Expert consultation — deployment, upgrades, migrations. Recommended for every new deal. Included in Managed tier.</div>
+  </section>
+
+  <!-- 3g. Preview -->
+  <section class="card" id="bom-section" aria-labelledby="bom-h" hidden>
+    <header class="card-header" id="bom-h">BOM preview <span class="hint" id="bom-label"></span></header>
+    <div class="card-body">
+      <div class="table-wrap">
+        <table id="bom-preview" data-fb-role="preview-table">
+          <caption class="visually-hidden">Preview of the FortiClient BOM rows that will be added to the Project BOM.</caption>
+          <thead><tr><th scope="col">Part Number</th><th scope="col">Description</th><th scope="col">Qty</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+          <tbody id="bom-body"></tbody>
+        </table>
+      </div>
+      <p class="field-help">Warning and note rows appear here only; they aren't sent to the Project BOM. Set the 1, 3 or 5-year term in the Project BOM.</p>
+      <div class="actions">
+        <button class="btn btn-ghost btn-sm" data-fb-role="copy-tsv" onclick="copyTSV()">Copy TSV</button>
+        <button class="btn btn-ghost btn-sm" data-fb-role="print-preview" onclick="window.print()">Print</button>
       </div>
     </div>
-  </div>
-</div>
+  </section>
 
-<!-- Callouts -->
-<div class="callout warn" style="margin-bottom:14px;">
-  ⚠️ FortiClient licenses do <strong>not</strong> include FortiToken entitlement — purchase separately. Direct upgrade between on-premise and cloud SKUs is <strong>not</strong> supported; new SKUs are required.
-</div>
+  <details class="og-faq" data-fb-role="og-faq">
+    <summary>Ordering process notes</summary>
+    <dl>
+      <dt>What's the simplest way to order?</dt>
+      <dd>Buy per-device packs for a 1 to 5-year term. The Example BOMs tab walks through a new order, adding endpoints, renewing and upgrading.</dd>
+      <dt>How do I move a customer from one FortiClient tier to another?</dt>
+      <dd>Use the co-term tool, which upgrades the existing licenses through the end of their current term. Upgrades only work within cloud or within on-premise, never across them. The upgrade matrix is on the Example BOMs tab.</dd>
+      <dt>The customer has older EMS01 or EMS03 licenses. Can they upgrade to EMS04 or EMS05?</dt>
+      <dd>No. The feature sets changed, so there's no direct upgrade path. Quote new EMS04 or EMS05 SKUs at renewal. If they're on-premise with the older SKUs, renewal is a good time to consider moving to FortiClient Cloud.</dd>
+      <dt>Where did the FortiSASE option go?</dt>
+      <dd>It's still available, and FortiClient licenses can be upgraded to FortiSASE. The SKUs are covered in the FortiSASE ordering guide.</dd>
+      <dt>Is there certification for the customer's administrators?</dt>
+      <dd>Yes. The FCP FortiClient EMS Administrator course covers provisioning endpoints, Security Fabric integration, and configuring the ZTNA agent and endpoint security features. Training SKUs and delivery options are listed on training.fortinet.com.</dd>
+    </dl>
+  </details>
+</section>
 
-<!-- Action Buttons -->
-<div class="btn-row">
-  <button class="btn-primary" onclick="generateBOM()">Preview BOM</button>
-  <button class="btn-success" onclick="addToProjectBOM()">Add to Project BOM</button>
-  <button class="btn-ghost" onclick="resetForm()">Reset</button>
-  <span id="smsg"></span>
-</div>
+<!-- ======================= EXAMPLES ======================= -->
+<section id="panel-examples" role="tabpanel" aria-labelledby="tab-examples" data-fb-role="panel" class="tab-panel" hidden>
+  <div class="callout info" role="note" style="margin-bottom:14px;"><div>These scenarios come from the ordering guide's order lifecycle. Change the quantities if you need to, then add the example straight to the Project BOM. The Builder tab isn't affected. Set the term in the Project BOM.</div></div>
+  <div id="examples-host"></div>
 
-<!-- BOM Preview -->
-<div id="bom-section">
-  <div class="card">
-    <div class="card-header" style="justify-content:space-between;">
-      <h3 id="bom-title">BOM Preview</h3>
-      <div style="display:flex;gap:6px;">
-        <button class="btn-ghost btn-sm" onclick="copyTSV()">Copy TSV</button>
-        <button class="btn-ghost btn-sm" onclick="window.print()">Print</button>
+  <section class="card" data-fb-role="lifecycle-guidance" aria-labelledby="life-h">
+    <header class="card-header" id="life-h">Renewals and upgrades (co-term tool)</header>
+    <div class="card-body">
+      <p style="color:var(--forti-text-secondary); font-size:12px;">These steps use renewal SKUs that the co-term tool creates for each quote. They aren't on the price list, so there's no part number to add from this page. Build them in the co-term tool.</p>
+      <div class="callout info" role="note"><div><strong>Renew all endpoints.</strong> Say a customer bought one 500-pack and later added two 25-packs, for 550 endpoints. At the first renewal, run all three packs through the co-term tool together. It renews each pack at its own band (two 25-pack band lines and one 500-pack band line) and moves every contract to the same expiry date.</div></div>
+      <div class="callout info" role="note"><div><strong>Upgrade all endpoints.</strong> To move those 550 VPN/ZTNA endpoints to EPP/ATP, use the co-term tool to upgrade every pack through the end of the current term. After that, renew normally at the EPP/ATP tier.</div></div>
+      <div class="callout warn" role="note"><div><strong>Upgrade limits:</strong> no upgrades between cloud and on-premise. Chromebook licenses can't be upgraded to or from any other tier. EMS01 and EMS03 licenses can't be upgraded to EMS04 or EMS05.</div></div>
+
+      <div class="table-wrap">
+        <table class="cmp-table" data-fb-role="upgrade-matrix-cloud">
+          <caption>Cloud license upgrades. Find the current license in the first column and read across.</caption>
+          <thead><tr><th scope="col">Upgrade from</th><th scope="col">ZTNA/VPN</th><th scope="col">EPP/ATP</th><th scope="col">Managed</th><th scope="col">SASE agent-based*</th><th scope="col">SASE agentless*</th><th scope="col">Chromebook</th><th scope="col">Managed + Forensics</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">ZTNA/VPN</th><td class="cmp-self">Current license</td><td class="cmp-yes">✓ Supported</td><td class="cmp-yes">✓ Supported</td><td class="cmp-yes">✓ Supported</td><td class="cmp-no">— Not supported</td><td class="cmp-no">— Not supported</td><td class="cmp-yes">✓ Supported</td></tr>
+            <tr><th scope="row">EPP/ATP</th><td class="cmp-yes">✓ Supported</td><td class="cmp-self">Current license</td><td class="cmp-yes">✓ Supported</td><td class="cmp-yes">✓ Supported</td><td class="cmp-no">— Not supported</td><td class="cmp-no">— Not supported</td><td class="cmp-yes">✓ Supported</td></tr>
+            <tr><th scope="row">Managed</th><td class="cmp-yes">✓ Supported</td><td class="cmp-yes">✓ Supported</td><td class="cmp-self">Current license</td><td class="cmp-yes">✓ Supported</td><td class="cmp-no">— Not supported</td><td class="cmp-no">— Not supported</td><td class="cmp-yes">✓ Supported</td></tr>
+            <tr><th scope="row">Chromebook</th><td class="cmp-no">— Not supported</td><td class="cmp-no">— Not supported</td><td class="cmp-no">— Not supported</td><td class="cmp-no">— Not supported</td><td class="cmp-no">— Not supported</td><td class="cmp-self">Current license</td><td class="cmp-no">— Not supported</td></tr>
+          </tbody>
+        </table>
       </div>
+      <div class="table-wrap">
+        <table class="cmp-table" data-fb-role="upgrade-matrix-onprem">
+          <caption>On-premise license upgrades</caption>
+          <thead><tr><th scope="col">Upgrade from</th><th scope="col">ZTNA/VPN</th><th scope="col">EPP/ATP</th><th scope="col">ZTNA + Forensics</th><th scope="col">EPP/ATP + Forensics</th><th scope="col">Chromebook</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">ZTNA/VPN</th><td class="cmp-self">Current license</td><td class="cmp-yes">✓ Supported</td><td class="cmp-yes">✓ Supported</td><td class="cmp-yes">✓ Supported</td><td class="cmp-no">— Not supported</td></tr>
+            <tr><th scope="row">EPP/ATP</th><td class="cmp-yes">✓ Supported</td><td class="cmp-self">Current license</td><td class="cmp-yes">✓ Supported</td><td class="cmp-yes">✓ Supported</td><td class="cmp-no">— Not supported</td></tr>
+            <tr><th scope="row">Chromebook</th><td class="cmp-no">— Not supported</td><td class="cmp-no">— Not supported</td><td class="cmp-no">— Not supported</td><td class="cmp-no">— Not supported</td><td class="cmp-self">Current license</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="cmp-foot">* SASE upgrades are ordered through the FortiSASE ordering guide.</p>
     </div>
-    <div style="overflow-x:auto;">
-      <table class="bom">
-        <thead><tr>
-          <th>Part Number</th>
-          <th>Description</th>
-          <th style="text-align:center;">Qty</th>
-          <th>Type</th>
-          <th>Notes</th>
-        </tr></thead>
-        <tbody id="bom-tbody"></tbody>
-      </table>
+  </section>
+
+  <section class="card" aria-labelledby="size-h">
+    <header class="card-header" id="size-h">Sizing and architecture notes</header>
+    <div class="card-body">
+      <div class="callout warn" role="note"><div><strong>Forensics needs log capacity.</strong> Forensics bundles forward FortiClient logs to SOCaaS through FortiAnalyzer, which isn't included. For FortiAnalyzer Cloud, add log storage. For on-premise FortiAnalyzer, confirm it has room for the extra endpoint logs.</div></div>
+      <div class="callout info" role="note"><div><strong>Capacity:</strong> one FortiClient Cloud instance manages up to 250,000 endpoints. On-premise EMS can run on Linux (7.4) or Windows Server (7.2 and earlier), in the customer's datacenter or in a public cloud.</div></div>
     </div>
-  </div>
-</div>
+  </section>
+</section>
+
+<!-- ======================= BUILD REPORT (QA) ======================= -->
+<section id="panel-buildreport" role="tabpanel" aria-labelledby="tab-buildreport" data-fb-role="panel" class="tab-panel" hidden>
+  <section class="card" aria-labelledby="br-h">
+    <header class="card-header" id="br-h">Build report</header>
+    <div class="card-body">
+      <p style="font-size:12px; color:var(--forti-text-secondary);">Ordering guide FC-OG-R27-20260429 · Price list 2026Q3-NULL-PRICE-LIST.csv · Build forticlient-bomgen-20260915-194000</p>
+      <div class="table-wrap">
+        <table>
+          <caption class="visually-hidden">SKU reconciliation results for this page</caption>
+          <thead><tr><th scope="col">Status</th><th scope="col">SKU</th><th scope="col">Terms in price list</th><th scope="col">Family</th><th scope="col">Description (price list)</th></tr></thead>
+          <tbody id="br-body"></tbody>
+        </table>
+      </div>
+      <div class="callout warn" role="note"><div><strong>Unresolved (not emitted):</strong> FC1Z-15-EMS05-428-02-00, FC2Z-15-EMS05-428-02-00, FC1Z-15-EMS05-429-02-00, FC2Z-15-EMS05-429-02-00. These co-term renewal and upgrade SKUs aren't in the price list. On 2026-09-15 the user chose to show them as guidance text only.</div></div>
+      <div class="callout info" role="note"><div><strong>Build notes:</strong>
+        <ul>
+          <li>The Q3 price list has no <code>Description #1</code>, <code>Term (Month)</code> or <code>Comments</code> columns. Descriptions come from <code>Item</code> with the "1 Year" wording removed, and terms come from the SKU suffix.</li>
+          <li>With no <code>Comments</code> column, end-of-life, end-of-sale and replacement flags couldn't be checked.</li>
+          <li>Every SKU also has -24 and -48 (2-year and 4-year) versions in the price list. The Project BOM only substitutes -12, -36 and -60.</li>
+          <li>EMS04-537 and EMS04-538 (on-premise forensics) aren't in the ordering guide's forensics table but are on the price list. On 2026-09-15 the user chose to include them, consistent with the guide's on-premise upgrade matrix and forensics FAQ.</li>
+          <li>FC1-10-FCTST-1284-02 is filed under the FortiIdentity Cloud product family in the price list (exact SKU match).</li>
+        </ul>
+      </div></div>
+    </div>
+  </section>
+</section>
+</main>
+
+<footer class="build-stamp" style="margin-top:18px; padding-top:10px; border-top:1px solid var(--forti-border); font-size:11px; color:var(--forti-text-muted); text-align:right;">
+  Build <code>forticlient-bomgen-20260915-194000</code> · Generated 2026-09-15 19:40 UTC
+</footer>
 
 <script>
-// ─── State ──────────────────────────────────────────────────────────────────
-let _tier    = 'ztna';   // 'ztna' | 'epp' | 'managed'
-let _deploy  = 'cloud';  // 'cloud' | 'onprem'
+'use strict';
+// ================= Data (baked at build time) =================
+// Descriptions: 2026Q3-NULL-PRICE-LIST.csv "Item" column (term phrase removed).
+const SKU_DB = {
+ "FC1-10-EMS05-428-01-DD": "Endpoint-based Licenses - VPN/ZTNA FortiClient VPN/ZTNA Agent Subscription for 25 endpoints. Includes EMS hosted by FortiCloud with FortiCare Premium.",
+ "FC1-10-EMS05-429-01-DD": "Endpoint-based Licenses - EPP/ATP FortiClient EPP/ATP Subscription for 25 endpoints. Includes VPN/ZTNA Agent, EPP/ATP and EMS hosted by FortiCloud with FortiCare Premium.",
+ "FC1-10-EMS05-485-01-DD": "Endpoint-based Licenses - Managed FortiClient Managed FortiClient Subscription for 25 endpoints. Includes VPN/ZTNA Agent,EPP/ATP, Deployment Assistance, Endpoint Monitoring Service and FortiClient Cloud with FortiCare Premium.",
+ "FC1-10-EMS05-537-01-DD": "Endpoint-based Licenses - VPN/ZTNA Agent plus FortiGuard Forensics Subscription FortiClient VPN/ZTNA Agent Subscriptions (EMS hosted by FortiCloud) plus FortiClient Forensic Service and SOCaaS Support (FAZ required - not included) with FortiCare Premium for 25 endpoints.",
+ "FC1-10-EMS05-538-01-DD": "Endpoint-based Licenses - VPN/ZTNA Agent and EPP/ATP plus FortiGuard Forensics Subscription FortiClient VPN/ZTNA Agent and EPP/ATP Subscriptions (EMS hosted by FortiCloud) plus FortiClient Forensic Service and SOCaaS Support (FAZ required - not included) with FortiCare Premium for 25 endpoints.",
+ "FC1-10-EMS05-539-01-DD": "Endpoint-based Licenses - Managed FortiClient VPN/ZTNA Agent and EPP/ATP Subscription Plus FortiGuard Forensics Service Managed FortiClient VPN/ZTNA Agent and EPP/ATP Subscriptions (EMS hosted by FortiCloud) plus FortiClient Forensic Service and SOCaaS Support with FortiCare Premium for 25 endpoints",
+ "FC1-10-EMS04-428-01-DD": "Endpoint-based Licenses - VPN/ZTNA (On Premise Deployments) FortiClient VPN/ZTNA Agent Subscriptions for 25 endpoints, includes on-prem EMS and FortiCare Premium.",
+ "FC1-10-EMS04-429-01-DD": "Endpoint-based Licenses - EPP/ATP (On Premise Deployments) FortiClient EPP/ATP Subscription for 25 endpoints, Includes VPN/ZTNA Agent, EPP/ATP on-prem EMS with FortiCare Premium.",
+ "FC1-10-EMS04-537-01-DD": "Endpoint-based Licenses - FortiClient VPN/ZTNA Agent plus FortiGuard Forensics Subscription FortiClient VPN/ZTNA Agent Subscriptions (On Premises EMS) plus FortiClient Forensic Service and SOCaaS Support (FAZ required - not included) with FortiCare Premium for 25 endpoints.",
+ "FC1-10-EMS04-538-01-DD": "Endpoint-based Licenses - FortiClient EPP/ATP plus FortiGuard Forensics Subscription FortiClient VPN/ZTNA Agent and EPP/ATP Subscriptions (On Premises EMS) plus FortiClient Forensic Service and SOCaaS Support (FAZ required - not included) with FortiCare Premium for 25 endpoints.",
+ "FC2-10-EMS05-428-01-DD": "Endpoint-based Licenses - VPN/ZTNA FortiClient VPN/ZTNA Agent Subscription for 500 endpoints. Includes EMS hosted by FortiCloud with FortiCare Premium.",
+ "FC2-10-EMS05-429-01-DD": "Endpoint-based Licenses - EPP/ATP FortiClient EPP/ATP Subscription for 500 endpoints. Includes VPN/ZTNA Agent, EPP/ATP and EMS hosted by FortiCloud with FortiCare Premium.",
+ "FC2-10-EMS05-485-01-DD": "Endpoint-based Licenses - Managed FortiClient Managed FortiClient Subscription for 500 endpoints. Includes VPN/ZTNA Agent,EPP/ATP, Deployment Assistance, Endpoint Monitoring Service and FortiClient Cloud with FortiCare Premium.",
+ "FC2-10-EMS05-537-01-DD": "Endpoint-based Licenses - VPN/ZTNA Agent plus FortiGuard Forensics Subscription FortiClient VPN/ZTNA Agent Subscriptions (EMS hosted by FortiCloud) plus FortiClient Forensic Service (FAZ required - not included) and SOCaaS Support with FortiCare Premium for 500 endpoints.",
+ "FC2-10-EMS05-538-01-DD": "Endpoint-based Licenses - VPN/ZTNA Agent and EPP/ATP plus FortiGuard Forensics Subscription FortiClient VPN/ZTNA Agent and EPP/ATP Subscriptions (EMS hosted by FortiCloud) plus FortiClient Forensic Service and SOCaaS Support (FAZ required - not included) with FortiCare Premium for 500 endpoints.",
+ "FC2-10-EMS05-539-01-DD": "Endpoint-based Licenses - Managed FortiClient VPN/ZTNA Agent and EPP/ATP Subscription Plus FortiGuard Forensics Service Managed FortiClient VPN/ZTNA Agent and EPP/ATP Subscriptions (EMS hosted by FortiCloud) plus FortiClient Forensic Service and SOCaaS Support with FortiCare Premium for 500 endpoints",
+ "FC2-10-EMS04-428-01-DD": "Endpoint-based Licenses - VPN/ZTNA (On Premise Deployments) FortiClient VPN/ZTNA Agent Subscriptions for 500 endpoints, includes on-prem EMS and FortiCare Premium.",
+ "FC2-10-EMS04-429-01-DD": "Endpoint-based Licenses - EPP/ATP (On Premise Deployments) FortiClient EPP/ATP Subscription for 500 endpoints. Includes VPN/ZTNA Agent, EPP/ATP on-prem EMS with FortiCare Premium.",
+ "FC2-10-EMS04-537-01-DD": "Endpoint-based Licenses - FortiClient VPN/ZTNA Agent plus FortiGuard Forensics Subscription FortiClient VPN/ZTNA Agent Subscriptions (On Premises EMS) plus FortiClient Forensic Service and SOCaaS Support (FAZ required - not included) with FortiCare Premium for 500 endpoints.",
+ "FC2-10-EMS04-538-01-DD": "Endpoint-based Licenses - FortiClient EPP/ATP plus FortiGuard Forensics Subscription FortiClient VPN/ZTNA Agent and EPP/ATP Subscriptions (On Premises EMS) plus FortiClient Forensic Service and SOCaaS Support (FAZ required - not included) with FortiCare Premium for 500 endpoints.",
+ "FC3-10-EMS05-428-01-DD": "Endpoint-based Licenses - VPN/ZTNA FortiClient VPN/ZTNA Agent Subscription for 2000 endpoints. Includes EMS hosted by FortiCloud with FortiCare Premium.",
+ "FC3-10-EMS05-429-01-DD": "Endpoint-based Licenses - EPP/ATP FortiClient EPP/ATP Subscription for 2000 endpoints. Includes VPN/ZTNA Agent, EPP/ATP and EMS hosted by FortiCloud with FortiCare Premium.",
+ "FC3-10-EMS05-485-01-DD": "Endpoint-based Licenses - Managed FortiClient Managed FortiClient Subscription for 2000 endpoints. Includes VPN/ZTNA Agent, EPP/ATP, Deployment Assistance, Endpoint Monitoring Service and FortiClient Cloud with FortiCare Premium.",
+ "FC3-10-EMS05-537-01-DD": "Endpoint-based Licenses - VPN/ZTNA Agent plus FortiGuard Forensics Subscription FortiClient VPN/ZTNA Agent Subscriptions (EMS hosted by FortiCloud) plus FortiClient Forensic Service and SOCaaS Support (FAZ required - not included) with FortiCare Premium for 2,000 endpoints.",
+ "FC3-10-EMS05-538-01-DD": "Endpoint-based Licenses - VPN/ZTNA Agent and EPP/ATP plus FortiGuard Forensics Subscription FortiClient VPN/ZTNA Agent and EPP/ATP Subscriptions (EMS hosted by FortiCloud) plus FortiClient Forensic Service and SOCaaS Support (FAZ required - not included) with FortiCare Premium for 2,000 endpoints.",
+ "FC3-10-EMS05-539-01-DD": "Endpoint-based Licenses - Managed FortiClient VPN/ZTNA Agent and EPP/ATP Subscription Plus FortiGuard Forensics Service Managed FortiClient VPN/ZTNA Agent and EPP/ATP Subscriptions (EMS hosted by FortiCloud) plus FortiClient Forensic Service and SOCaaS Support with FortiCare Premium for 2,000 endpoints.",
+ "FC3-10-EMS04-428-01-DD": "Endpoint-based Licenses - VPN/ZTNA (On Premise Deployments) FortiClient VPN/ZTNA Agent Subscriptions for 2000 endpoints, includes on-prem EMS and FortiCare Premium.",
+ "FC3-10-EMS04-429-01-DD": "Endpoint-based Licenses - EPP/ATP (On Premise Deployments) FortiClient EPP/ATP Subscription for 2000 endpoints. Includes VPN/ZTNA Agent, EPP/ATP on-prem EMS with FortiCare Premium.",
+ "FC3-10-EMS04-537-01-DD": "Endpoint-based Licenses - FortiClient VPN/ZTNA Agent plus FortiGuard Forensics Subscription FortiClient VPN/ZTNA Agent Subscriptions (On Premises EMS) plus FortiClient Forensic Service and SOCaaS Support (FAZ required - not included) with FortiCare Premium for 2,000 endpoints.",
+ "FC3-10-EMS04-538-01-DD": "Endpoint-based Licenses - FortiClient EPP/ATP plus FortiGuard Forensics Subscription FortiClient VPN/ZTNA Agent and EPP/ATP Subscriptions (On Premises EMS) plus FortiClient Forensic Service and SOCaaS Support (FAZ required - not included) with FortiCare Premium for 2,000 endpoints.",
+ "FC4-10-EMS05-428-01-DD": "Endpoint-based Licenses - VPN/ZTNA FortiClient VPN/ZTNA Agent Subscription for 10,000 endpoints. Includes EMS hosted by FortiCloud with FortiCare Premium.",
+ "FC4-10-EMS05-429-01-DD": "Endpoint-based Licenses - EPP/ATP FortiClient EPP/ATP Subscription for 10,000 endpoints. Includes VPN/ZTNA Agent, EPP/ATP and EMS hosted by FortiCloud with FortiCare Premium.",
+ "FC4-10-EMS05-485-01-DD": "Endpoint-based Licenses - Managed FortiClient Managed FortiClient Subscription for 10,000 endpoints. Includes VPN/ZTNA Agent, EPP/ATP, Deployment Assistance, Endpoint Monitoring Service and FortiClient Cloud with FortiCare Premium.",
+ "FC4-10-EMS05-537-01-DD": "Endpoint-based Licenses - VPN/ZTNA Agent plus FortiGuard Forensics Subscription FortiClient VPN/ZTNA Agent Subscriptions (EMS hosted by FortiCloud) plus FortiClient Forensic Service and SOCaaS Support (FAZ required - not included) with FortiCare Premium for 10,000 endpoints.",
+ "FC4-10-EMS05-538-01-DD": "Endpoint-based Licenses - VPN/ZTNA Agent and EPP/ATP plus FortiGuard Forensics Subscription FortiClient VPN/ZTNA Agent and EPP/ATP Subscriptions (EMS hosted by FortiCloud) plus FortiClient Forensic Service and SOCaaS Support (FAZ required - not included) with FortiCare Premium for 10,000 endpoints.",
+ "FC4-10-EMS05-539-01-DD": "Endpoint-based Licenses - Managed FortiClient VPN/ZTNA Agent and EPP/ATP Subscription Plus FortiGuard Forensics Service Managed FortiClient VPN/ZTNA Agent and EPP/ATP Subscriptions (EMS hosted by FortiCloud) plus FortiClient Forensic Service and SOCaaS Support with FortiCare Premium for 10,000 endpoints.",
+ "FC4-10-EMS04-428-01-DD": "Endpoint-based Licenses - VPN/ZTNA (On Premise Deployments) FortiClient VPN/ZTNA Agent Subscriptions for 10,000 endpoints, includes on-prem EMS and FortiCare Premium.",
+ "FC4-10-EMS04-429-01-DD": "Endpoint-based Licenses - EPP/ATP (On Premise Deployments) FortiClient EPP/ATP Subscription for 10,000 endpoints. Includes VPN/ZTNA Agent, EPP/ATP on-prem EMS with FortiCare Premium.",
+ "FC4-10-EMS04-537-01-DD": "Endpoint-based Licenses - FortiClient VPN/ZTNA Agent plus FortiGuard Forensics Subscription FortiClient VPN/ZTNA Agent Subscriptions (On Premises EMS) plus FortiClient Forensic Service and SOCaaS Support (FAZ required - not included) with FortiCare Premium for 10,000 endpoints.",
+ "FC4-10-EMS04-538-01-DD": "Endpoint-based Licenses - FortiClient EPP/ATP plus FortiGuard Forensics Subscription FortiClient VPN/ZTNA Agent and EPP/ATP Subscriptions (On Premises EMS) plus FortiClient Forensic Service and SOCaaS Support (FAZ required - not included) with FortiCare Premium for 10,000 endpoints.",
+ "FC1-10-FCBPS-310-02-DD": "FortiCare BPS Subscription for FortiClient FortiClient Best Practice Service for up to 999 Endpoints/users",
+ "FC2-10-FCBPS-310-02-DD": "FortiCare BPS Subscription for FortiClient FortiClient Best Practice Service for 1,000 - 9999 Endpoints/Users",
+ "FC5-10-FCBPS-310-02-DD": "FortiCare BPS Subscription for FortiClient FortiClient Best Practice Service for 10,000+ Endpoints/Users",
+ "FC1-10-FCTST-1284-02-DD": "FortiClient StandAlone VPN Standalone FortiClient VPN Bundle including Firmware & General Updates, email support and VPN. Subscription for up to 3 endpoints. MOQ 50 seats. MoQ for Marketplace purchase is 5."
+};
+const BUILD_REPORT = [{"status": "exact", "sku": "FC1-10-EMS05-428-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC1-10-EMS05-429-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC1-10-EMS05-485-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC1-10-EMS05-537-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC1-10-EMS05-538-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC1-10-EMS05-539-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC1-10-EMS04-428-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC1-10-EMS04-429-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "user-added", "sku": "FC1-10-EMS04-537-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "user-added", "sku": "FC1-10-EMS04-538-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC2-10-EMS05-428-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC2-10-EMS05-429-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC2-10-EMS05-485-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC2-10-EMS05-537-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC2-10-EMS05-538-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC2-10-EMS05-539-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC2-10-EMS04-428-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC2-10-EMS04-429-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "user-added", "sku": "FC2-10-EMS04-537-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "user-added", "sku": "FC2-10-EMS04-538-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC3-10-EMS05-428-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC3-10-EMS05-429-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC3-10-EMS05-485-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC3-10-EMS05-537-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC3-10-EMS05-538-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC3-10-EMS05-539-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC3-10-EMS04-428-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC3-10-EMS04-429-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "user-added", "sku": "FC3-10-EMS04-537-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "user-added", "sku": "FC3-10-EMS04-538-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC4-10-EMS05-428-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC4-10-EMS05-429-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC4-10-EMS05-485-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC4-10-EMS05-537-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC4-10-EMS05-538-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC4-10-EMS05-539-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC4-10-EMS04-428-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC4-10-EMS04-429-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "user-added", "sku": "FC4-10-EMS04-537-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "user-added", "sku": "FC4-10-EMS04-538-01-DD", "terms": "-12, -24, -36, -48, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC1-10-FCBPS-310-02-DD", "terms": "-12, -36, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC2-10-FCBPS-310-02-DD", "terms": "-12, -36, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC5-10-FCBPS-310-02-DD", "terms": "-12, -36, -60", "family": "FortiClient"}, {"status": "exact", "sku": "FC1-10-FCTST-1284-02-DD", "terms": "-12, -36, -60", "family": "FortiIdentity Cloud"}];
+
+const PRODUCT = 'FortiClient';
+const CLOUD_MAX = 250000;
+const STANDALONE_MOQ = 50;
+const PACKS = [ // largest first
+  { size:10000, band:'FC4', label:'10000-pack' },
+  { size:2000,  band:'FC3', label:'2000-pack' },
+  { size:500,   band:'FC2', label:'500-pack' },
+  { size:25,    band:'FC1', label:'25-pack' },
+];
+const DEPLOY = {
+  cloud:  { ems:'EMS05', name:'Cloud (FortiClient Cloud)' },
+  onprem: { ems:'EMS04', name:'On-premise EMS' },
+};
+const SOLUTIONS = {
+  ztna:       { name:'VPN/ZTNA', code:'428', forCode:'537', deployments:['cloud','onprem'] },
+  epp:        { name:'EPP/ATP',  code:'429', forCode:'538', deployments:['cloud','onprem'] },
+  managed:    { name:'Managed',  code:'485', forCode:'539', deployments:['cloud'] },
+  standalone: { name:'Standalone VPN', sku:'FC1-10-FCTST-1284-02-DD' },
+};
+const BPS_BANDS = [ // checked in order
+  { min:10000, sku:'FC5-10-FCBPS-310-02-DD', band:'FC5', range:'10,000+ endpoints' },
+  { min:1000,  sku:'FC2-10-FCBPS-310-02-DD', band:'FC2', range:'1,000–9,999 endpoints' },
+  { min:0,     sku:'FC1-10-FCBPS-310-02-DD', band:'FC1', range:'25–999 endpoints' },
+];
+const DEFAULTS = { deployment:'cloud', model:'ztna', qty:25, addons:{ bps:true, forensics:false } };
+
+// ================= State =================
 let _lastRows = [];
 let _lastLabel = '';
-let _lastMeta  = {};
+let _lastMeta = {};
+let _selectedModelId = DEFAULTS.model;
+const _addonPref = { bps:DEFAULTS.addons.bps, forensics:DEFAULTS.addons.forensics };
 
-// ─── SKU Data ────────────────────────────────────────────────────────────────
-// Cloud packs — [band: '1'|'2'|'3'|'4' for 25/500/2000/10000]
-const CLOUD_SKUS = {
-  ztna:    { '1':'FC1-10-EMS05-428-01-DD', '2':'FC2-10-EMS05-428-01-DD', '3':'FC3-10-EMS05-428-01-DD', '4':'FC4-10-EMS05-428-01-DD' },
-  epp:     { '1':'FC1-10-EMS05-429-01-DD', '2':'FC2-10-EMS05-429-01-DD', '3':'FC3-10-EMS05-429-01-DD', '4':'FC4-10-EMS05-429-01-DD' },
-  managed: { '1':'FC1-10-EMS05-485-01-DD', '2':'FC2-10-EMS05-485-01-DD', '3':'FC3-10-EMS05-485-01-DD', '4':'FC4-10-EMS05-485-01-DD' },
+const _examples = {
+  'new-500-ztna': {
+    title: 'New order: 500 VPN/ZTNA endpoints (cloud)',
+    scenario: 'A new FortiClient Cloud customer needs VPN/ZTNA on 500 devices. One 500-pack covers the whole deployment.',
+    defaultRows: [
+      { sku:'FC2-10-EMS05-428-01-DD', qty:1, kind:'req', note:'500-pack' },
+    ],
+  },
+  'add-50-ztna': {
+    title: 'Add 50 VPN/ZTNA endpoints (cloud)',
+    scenario: 'The same customer grows by 50 devices. Two 25-packs cover the increase. At the first renewal, bring these onto the original expiry date with the co-term tool (see below).',
+    defaultRows: [
+      { sku:'FC1-10-EMS05-428-01-DD', qty:2, kind:'req', note:'25-pack' },
+    ],
+  },
 };
-const ONPREM_SKUS = {
-  ztna: { '1':'FC1-10-EMS04-428-01-DD', '2':'FC2-10-EMS04-428-01-DD', '3':'FC3-10-EMS04-428-01-DD', '4':'FC4-10-EMS04-428-01-DD' },
-  epp:  { '1':'FC1-10-EMS04-429-01-DD', '2':'FC2-10-EMS04-429-01-DD', '3':'FC3-10-EMS04-429-01-DD', '4':'FC4-10-EMS04-429-01-DD' },
-};
+for (const ex of Object.values(_examples)) ex.defaultRows.forEach(r => { r.desc = SKU_DB[r.sku]; });
 
-// Forensics bundles — cloud only, tier combos
-const FORENSICS_SKUS = {
-  ztna:    { '1':'FC1-10-EMS05-537-01-DD', '2':'FC2-10-EMS05-537-01-DD', '3':'FC3-10-EMS05-537-01-DD', '4':'FC4-10-EMS05-537-01-DD' },
-  epp:     { '1':'FC1-10-EMS05-538-01-DD', '2':'FC2-10-EMS05-538-01-DD', '3':'FC3-10-EMS05-538-01-DD', '4':'FC4-10-EMS05-538-01-DD' },
-  managed: { '1':'FC1-10-EMS05-539-01-DD', '2':'FC2-10-EMS05-539-01-DD', '3':'FC3-10-EMS05-539-01-DD', '4':'FC4-10-EMS05-539-01-DD' },
-};
+// ================= Helpers =================
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = n => Number(n).toLocaleString('en-US');
 
-// BPS SKUs (by endpoint count)
-const BPS_SKUS = [
-  { min:25,    max:999,   sku:'FC1-10-FCBPS-310-02-DD', desc:'FortiCare BPS Consultation (25–999 Endpoints)' },
-  { min:1000,  max:9999,  sku:'FC2-10-FCBPS-310-02-DD', desc:'FortiCare BPS Consultation (1000–9999 Endpoints)' },
-  { min:10000, max:999999,sku:'FC5-10-FCBPS-310-02-DD', desc:'FortiCare BPS Consultation (10000+ Endpoints)' },
-];
-
-// Pack tiers: largest first
-const PACK_TIERS = [
-  { size:10000, band:'4', label:'10000-pack' },
-  { size:2000,  band:'3', label:'2000-pack'  },
-  { size:500,   band:'2', label:'500-pack'   },
-  { size:25,    band:'1', label:'25-pack'    },
-];
-
-const TIER_NAMES = { ztna:'VPN/ZTNA', epp:'EPP/ATP', managed:'Managed FortiClient' };
-const DEPLOY_NAMES = { cloud:'Cloud', onprem:'On-Premise' };
-
-// ─── UI Interactions ─────────────────────────────────────────────────────────
-function selectTier(t) {
-  _tier = t;
-  document.querySelectorAll('.tier-card').forEach(c => c.classList.remove('selected'));
-  const idx = { ztna:0, epp:1, managed:2 }[t];
-  document.querySelectorAll('.tier-card')[idx].classList.add('selected');
-
-  const managedNote = document.getElementById('managed-note');
-  const onpremCard  = document.getElementById('onprem-card');
-
-  if (t === 'managed') {
-    managedNote.style.display = 'flex';
-    onpremCard.style.opacity = '0.4';
-    onpremCard.style.pointerEvents = 'none';
-    if (_deploy === 'onprem') { _deploy = 'cloud'; refreshDeployCards(); }
-  } else {
-    managedNote.style.display = 'none';
-    onpremCard.style.opacity = '';
-    onpremCard.style.pointerEvents = '';
-  }
-
-  // BPS is included in managed
-  const bpsRow = document.getElementById('addon-bps-row');
-  if (t === 'managed') {
-    bpsRow.classList.add('disabled');
-    document.getElementById('addon-bps').checked = false;
-  } else {
-    bpsRow.classList.remove('disabled');
-  }
-
-  updatePackIndicator();
+function setDisabled(el, isDisabled) {
+  if (!el) return;
+  el.setAttribute('aria-disabled', String(isDisabled));
+  if ('disabled' in el) el.disabled = isDisabled;
+  el.style.opacity = isDisabled ? '0.4' : '';
+  el.style.pointerEvents = isDisabled ? 'none' : '';
+  if (isDisabled) el.setAttribute('tabindex', '-1');
+  else if (el.matches('input,select,button,div.addon-item')) el.removeAttribute('tabindex');
 }
 
-function selectDeploy(d) {
-  if (_tier === 'managed' && d === 'onprem') return;
-  _deploy = d;
-  refreshDeployCards();
-  updatePackIndicator();
-}
+function setShown(el, show) { if (!el) return; if (show) el.removeAttribute('hidden'); else el.setAttribute('hidden', ''); }
 
-function refreshDeployCards() {
-  document.querySelectorAll('.deploy-card').forEach(c => c.classList.remove('selected'));
-  const idx = { cloud:0, onprem:1 }[_deploy];
-  document.querySelectorAll('.deploy-card')[idx].classList.add('selected');
-
-  // Forensics: on-premise supported but note it
-  const forensicsRow = document.getElementById('addon-forensics-row');
-  forensicsRow.classList.remove('disabled');
-}
-
-// ─── Pack Indicator ───────────────────────────────────────────────────────────
-function updatePackIndicator() {
-  const n = parseInt(document.getElementById('f-endpoints').value, 10);
-  const ind = document.getElementById('pack-indicator');
-  if (!n || n < 1) { ind.style.display = 'none'; return; }
-  const packs = packDevices(n);
-  const txt = packs.map(p => `${p.qty}×${p.label}`).join(' + ');
-  document.getElementById('pack-text').textContent = txt;
-  ind.style.display = 'block';
-}
-
-// ─── Packing Algorithm ────────────────────────────────────────────────────────
-function packDevices(total) {
-  let remaining = total;
-  const result = [];
-  for (const tier of PACK_TIERS) {
-    const qty = Math.floor(remaining / tier.size);
-    if (qty > 0) {
-      result.push({ ...tier, qty });
-      remaining -= qty * tier.size;
-    }
-  }
-  if (remaining > 0) {
-    const smallest = PACK_TIERS[PACK_TIERS.length - 1];
-    result.push({ ...smallest, qty: 1 });
-  }
-  return result;
-}
-
-// ─── BPS SKU helper ───────────────────────────────────────────────────────────
-function getBpsSku(n) {
-  return BPS_SKUS.find(b => n >= b.min && n <= b.max);
-}
-
-// ─── Validation ───────────────────────────────────────────────────────────────
-function clearValidation() {
-  ['f-endpoints'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.classList.remove('invalid');
-  });
-  ['err-endpoints'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.style.display = 'none';
-  });
-}
-
-// ─── generateBOM ──────────────────────────────────────────────────────────────
-function generateBOM() {
-  clearValidation();
-  let ok = true;
-  const epField = document.getElementById('f-endpoints');
-  const nEP = parseInt(epField.value, 10);
-
-  if (!nEP || nEP < 1) {
-    epField.classList.add('invalid');
-    document.getElementById('err-endpoints').style.display = 'block';
-    ok = false;
-  }
-  if (!ok) {
-    setMsg('Please fix errors above.', false);
+function validate(fieldId, errId, condition, message) {
+  const field = $(fieldId), err = $(errId);
+  if (message) err.textContent = message;
+  if (!condition) {
+    field.classList.add('invalid');
+    field.setAttribute('aria-invalid', 'true');
+    err.removeAttribute('hidden');
     return false;
   }
-
-  const rows = [];
-  const addForensics = document.getElementById('addon-forensics').checked;
-  const addBps       = document.getElementById('addon-bps').checked;
-  const isManaged    = _tier === 'managed';
-  const isOnprem     = _deploy === 'onprem';
-  const tierName     = TIER_NAMES[_tier];
-  const deployName   = DEPLOY_NAMES[_deploy];
-
-  // Choose SKU map
-  let skuMap;
-  if (addForensics) {
-    // Use forensics SKU bundle (replaces base license)
-    skuMap = FORENSICS_SKUS[_tier] || FORENSICS_SKUS['ztna'];
-  } else if (isOnprem) {
-    skuMap = ONPREM_SKUS[_tier] || ONPREM_SKUS['ztna'];
-  } else {
-    skuMap = CLOUD_SKUS[_tier];
-  }
-
-  // Pack
-  const packs = packDevices(nEP);
-
-  // ── Section: FortiClient License
-  const licLabel = addForensics
-    ? `FortiClient ${tierName} + Forensics (${deployName})`
-    : `FortiClient ${tierName} (${deployName})`;
-  rows.push({ section: licLabel });
-
-  for (const pack of packs) {
-    const sku  = skuMap[pack.band];
-    const desc = addForensics
-      ? `FortiClient ${tierName} + Endpoint Forensics — ${pack.label} — ${deployName}`
-      : `FortiClient ${tierName} — ${pack.label} — ${deployName}`;
-    rows.push({ sku, desc, qty: pack.qty, kind:'req', note:`${pack.label} · co-term -DD` });
-  }
-
-  // Forensics note
-  if (addForensics) {
-    rows.push({ sku:'⚠', desc:'Forensics SKU bundle includes Endpoint Forensics Analysis service.', qty:null, kind:'note', note:'FortiAnalyzer On-Prem or Cloud required for SOCaaS log forwarding.' });
-  }
-
-  // ── Section: Add-on Services
-  const hasAddons = addBps && !isManaged;
-  if (hasAddons) {
-    rows.push({ section: 'Add-on Services' });
-  }
-
-  if (addBps && !isManaged) {
-    const bps = getBpsSku(nEP);
-    if (bps) {
-      rows.push({ sku: bps.sku, desc: bps.desc, qty: 1, kind:'opt', note:'Subscription add-on — recommended for every new deal' });
-    }
-  }
-
-  if (isManaged) {
-    rows.push({ section: 'Managed Tier Notes' });
-    rows.push({ sku:'ℹ', desc:'BPS Consultation is included in the Managed FortiClient service.', qty:null, kind:'note', note:'' });
-    rows.push({ sku:'ℹ', desc:'Managed FortiClient available as Cloud deployment only.', qty:null, kind:'note', note:'' });
-  }
-
-  // ── Section: Important Reminders
-  rows.push({ section: 'Ordering Notes' });
-  rows.push({ sku:'⚠', desc:'FortiToken entitlement is NOT included — purchase separately if MFA tokens are required.', qty:null, kind:'note', note:'' });
-  if (isOnprem) {
-    rows.push({ sku:'⚠', desc:'On-premise to Cloud SKU upgrade is NOT supported. New SKUs required for EMS migration.', qty:null, kind:'note', note:'' });
-  }
-
-  _lastRows  = rows;
-  _lastLabel = `FortiClient ${tierName} × ${nEP} endpoints (${deployName})`;
-  _lastMeta  = { Tier: tierName, Deployment: deployName, Endpoints: nEP, Forensics: addForensics ? 'Yes' : 'No', BPS: (addBps && !isManaged) ? 'Yes' : (isManaged ? 'Included' : 'No') };
-
-  renderBOM(rows);
-  document.getElementById('bom-title').textContent = `BOM Preview — ${_lastLabel}`;
-  const sec = document.getElementById('bom-section');
-  sec.style.display = 'block';
-  sec.scrollIntoView({ behavior:'smooth', block:'start' });
-  setMsg('BOM generated.', true);
+  field.classList.remove('invalid');
+  field.removeAttribute('aria-invalid');
+  err.setAttribute('hidden', '');
   return true;
 }
 
-// ─── renderBOM ────────────────────────────────────────────────────────────────
+function cartRowsFrom(rows) {
+  return rows.filter(r => {
+    if (r.section) return false;
+    if (!r.sku || typeof r.sku !== 'string') return false;
+    const s = r.sku.trim();
+    if (!s) return false;
+    if (/^[⚠!—\-?]+$/.test(s)) return false;
+    return true;
+  });
+}
+
+// ================= Tabs =================
+function switchTab(panelId) {
+  const tab = document.querySelector(`[role="tab"][data-panel="${panelId}"]`);
+  if (!tab || tab.hidden) return;
+  document.querySelectorAll('[role="tab"]').forEach(t => {
+    const active = t.dataset.panel === panelId;
+    t.classList.toggle('active', active);
+    t.setAttribute('aria-selected', String(active));
+    t.setAttribute('tabindex', active ? '0' : '-1');
+  });
+  document.querySelectorAll('[role="tabpanel"]').forEach(p => {
+    const active = p.id === 'panel-' + panelId;
+    p.classList.toggle('active', active);
+    if (active) p.removeAttribute('hidden'); else p.setAttribute('hidden', '');
+  });
+}
+document.querySelector('[role="tablist"]').addEventListener('keydown', e => {
+  if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+  const tabs = [...document.querySelectorAll('[role="tab"]')].filter(t => !t.hidden);
+  const i = tabs.indexOf(document.activeElement);
+  if (i < 0) return;
+  const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+  next.focus(); switchTab(next.dataset.panel);
+});
+
+// ================= Solution cards =================
+function cards() { return [...document.querySelectorAll('[data-fb-role="model-card"]')]; }
+function syncCardTabindex() {
+  cards().forEach(c => c.setAttribute('tabindex', c.dataset.modelId === _selectedModelId ? '0' : '-1'));
+}
+function selectModel(id) {
+  const card = document.querySelector(`[data-fb-role="model-card"][data-model-id="${id}"]`);
+  if (!card || card.getAttribute('aria-disabled') === 'true') return false;
+  _selectedModelId = id;
+  cards().forEach(c => {
+    const on = c.dataset.modelId === id;
+    c.classList.toggle('selected', on);
+    c.setAttribute('aria-checked', String(on));
+  });
+  syncCardTabindex();
+  onConfigChange();
+  return true;
+}
+function cardKey(e, id) {
+  if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); selectModel(id); return; }
+  const dir = { ArrowRight:1, ArrowDown:1, ArrowLeft:-1, ArrowUp:-1 }[e.key];
+  if (!dir) return;
+  e.preventDefault();
+  const list = cards();
+  let i = list.findIndex(c => c.dataset.modelId === id);
+  for (let n = 0; n < list.length; n++) {
+    i = (i + dir + list.length) % list.length;
+    if (list[i].getAttribute('aria-disabled') !== 'true') { selectModel(list[i].dataset.modelId); list[i].focus(); return; }
+  }
+}
+
+// ================= SKU derivation (single source for form + add-on display) =================
+function licenseSku(band, ems, code) { return `${band}-10-${ems}-${code}-01-DD`; }
+
+function packEndpoints(total) {
+  const counts = PACKS.map(() => 0);
+  let rem = total;
+  PACKS.forEach((p, i) => { counts[i] = Math.floor(rem / p.size); rem -= counts[i] * p.size; });
+  if (rem > 0) counts[PACKS.length - 1] += 1;
+  // merge smaller packs into the next size up when they add up to it
+  for (let i = PACKS.length - 1; i > 0; i--) {
+    const ratio = PACKS[i - 1].size / PACKS[i].size;
+    const k = Math.floor(counts[i] / ratio);
+    if (k > 0) { counts[i] -= k * ratio; counts[i - 1] += k; }
+  }
+  return PACKS.map((p, i) => ({ ...p, qty: counts[i] })).filter(p => p.qty > 0);
+}
+
+function bpsBandFor(licensed) { return BPS_BANDS.find(b => licensed >= b.min); }
+
+function readForm() {
+  const raw = $('f-qty').value.trim();
+  const n = Number(raw);
+  return {
+    model: _selectedModelId,
+    deployment: $('f-deploy').value,
+    qtyRaw: raw,
+    qty: (raw !== '' && Number.isInteger(n)) ? n : NaN,
+  };
+}
+
+function deriveConfig() {
+  const f = readForm();
+  const cfg = { ...f, packs:[], licensed:0, standalone: f.model === 'standalone' };
+  const qtyOk = Number.isInteger(f.qty) && f.qty >= (cfg.standalone ? STANDALONE_MOQ : 1);
+  cfg.qtyOk = qtyOk;
+  if (cfg.standalone) {
+    cfg.bps = { available:false, reason:'Not offered for Standalone VPN (no EMS).' };
+    cfg.forensics = { available:false, reason:'Needs EMS. Not available for Standalone VPN.' };
+    return cfg;
+  }
+  const sol = SOLUTIONS[f.model];
+  const ems = DEPLOY[f.deployment].ems;
+  cfg.ems = ems;
+  if (qtyOk) {
+    cfg.packs = packEndpoints(f.qty);
+    cfg.licensed = cfg.packs.reduce((s, p) => s + p.qty * p.size, 0);
+  }
+  // BPS
+  if (f.model === 'managed') cfg.bps = { available:false, reason:'Already included with Managed FortiClient.' };
+  else {
+    const band = qtyOk ? bpsBandFor(cfg.licensed) : null;
+    cfg.bps = { available:true, band, sku: band ? band.sku : null };
+  }
+  // Forensics (swaps the license SKU family)
+  cfg.forensics = {
+    available: true,
+    skus: cfg.packs.map(p => ({ qty:p.qty, sku: licenseSku(p.band, ems, sol.forCode), pack:p })),
+    pattern: `FC#-10-${ems}-${sol.forCode}-01-DD`,
+  };
+  cfg.forensicsOn = $('addon-forensics').checked && !$('addon-forensics').disabled;
+  cfg.bpsOn = $('addon-bps').checked && !$('addon-bps').disabled;
+  cfg.licenseLines = cfg.packs.map(p => ({
+    qty: p.qty, pack: p,
+    sku: licenseSku(p.band, ems, cfg.forensicsOn ? sol.forCode : sol.code),
+  }));
+  return cfg;
+}
+
+// ================= UI sync =================
+function applyAddonAvailability(id, available) {
+  const row = $('row-' + id), cb = $('addon-' + id);
+  const wasDisabled = cb.disabled;
+  if (!available && !wasDisabled) { _addonPref[id] = cb.checked; cb.checked = false; }
+  setDisabled(row, !available);
+  setDisabled(cb, !available);
+  if (available && wasDisabled) cb.checked = _addonPref[id];
+}
+
+function updateAvailability() {
+  const m = _selectedModelId, dep = $('f-deploy');
+  // Standalone: deployment not applicable
+  setDisabled(dep, m === 'standalone');
+  // Managed is cloud-only
+  const onpremOpt = dep.querySelector('option[value="onprem"]');
+  onpremOpt.disabled = (m === 'managed');
+  onpremOpt.setAttribute('aria-disabled', String(m === 'managed'));
+  const managedCard = document.querySelector('[data-model-id="managed"]');
+  setDisabled(managedCard, dep.value === 'onprem' && m !== 'managed');
+  syncCardTabindex();
+}
+
+function recomputeAddonSkus(cfg) {
+  cfg = cfg || deriveConfig();
+  applyAddonAvailability('bps', cfg.bps.available);
+  applyAddonAvailability('forensics', cfg.forensics.available);
+  cfg = deriveConfig(); // re-read checkbox state after availability changes
+
+  // BPS
+  if (!cfg.bps.available) { $('bps-sku').textContent = '—'; $('bps-status').textContent = 'Unavailable: ' + cfg.bps.reason; }
+  else if (!cfg.bps.band) { $('bps-sku').textContent = 'FC#-10-FCBPS-310-02-DD'; $('bps-status').textContent = 'Enter a valid endpoint count to pick the band.'; }
+  else { $('bps-sku').textContent = cfg.bps.sku; $('bps-status').textContent = `Band ${cfg.bps.band.band} (${cfg.bps.band.range}), based on ${fmt(cfg.licensed)} licensed endpoints.`; }
+
+  // Forensics
+  if (!cfg.forensics.available) { $('for-sku').textContent = '—'; $('for-status').textContent = 'Unavailable: ' + cfg.forensics.reason; }
+  else if (!cfg.forensics.skus.length) { $('for-sku').textContent = cfg.forensics.pattern; $('for-status').textContent = 'Enter a valid endpoint count to see the bundle SKUs.'; }
+  else {
+    $('for-sku').textContent = cfg.forensics.skus.map(s => `${s.qty}× ${s.sku}`).join(' + ');
+    $('for-status').textContent = cfg.forensicsOn ? 'Selected: these bundles replace the base license SKUs.' : '';
+  }
+  return cfg;
+}
+
+function updateIndicator(cfg) {
+  const ind = $('band-indicator'), txt = $('band-text');
+  if (cfg.standalone) {
+    $('f-qty-label-text').textContent = 'Users to license (minimum 50)';
+    $('f-qty').min = String(STANDALONE_MOQ);
+    if (cfg.qtyOk) { txt.textContent = `${fmt(cfg.qty)} users, each covering up to 3 endpoints (up to ${fmt(cfg.qty * 3)} endpoints)`; setShown(ind, true); }
+    else setShown(ind, false);
+    return;
+  }
+  $('f-qty-label-text').textContent = 'Endpoints to license';
+  $('f-qty').min = '1';
+  if (!cfg.qtyOk) { setShown(ind, false); return; }
+  const packs = cfg.packs.map(p => `${p.qty} × ${p.label}`).join(' + ');
+  const bps = cfg.bps.band ? ` · BPS band ${cfg.bps.band.band}` : '';
+  txt.textContent = `Packs: ${packs} = ${fmt(cfg.licensed)} licensed endpoints${bps}`;
+  setShown(ind, true);
+}
+
+function updateCallouts(cfg) {
+  const m = cfg.model;
+  setShown($('standalone-deploy-note'), m === 'standalone');
+  setShown($('managed-onprem-note'), cfg.deployment === 'onprem' && m !== 'standalone');
+  setShown($('fortitoken-note'), m !== 'standalone');
+  setShown($('mix-note'), m !== 'standalone');
+  setShown($('count-model-note'), m !== 'standalone');
+  setShown($('standalone-moq-note'), m === 'standalone');
+  setShown($('cloud-max-warn'), m !== 'standalone' && cfg.deployment === 'cloud' && cfg.qtyOk && cfg.qty > CLOUD_MAX);
+  const over = !cfg.standalone && cfg.qtyOk && cfg.licensed > cfg.qty;
+  if (over) $('overprov-text').innerHTML = `<strong>Rounded up to whole packs:</strong> the packs cover ${fmt(cfg.licensed)} endpoints, ${fmt(cfg.licensed - cfg.qty)} more than the ${fmt(cfg.qty)} you entered. Check pricing: sometimes a single larger pack costs less than several small ones.`;
+  setShown($('overprov-note'), over);
+}
+
+function onConfigChange() {
+  updateAvailability();
+  const cfg = recomputeAddonSkus();
+  updateIndicator(cfg);
+  updateCallouts(cfg);
+  if (!$('bom-section').hasAttribute('hidden')) generateBOM({ quiet:true });
+}
+function onAddonChange() {
+  ['bps','forensics'].forEach(id => { const cb = $('addon-' + id); if (!cb.disabled) _addonPref[id] = cb.checked; });
+  onConfigChange();
+}
+
+// ================= Builder: BOM =================
+function generateBOM(opts) {
+  opts = opts || {};
+  const cfg = deriveConfig();
+  const qtyMsg = cfg.standalone
+    ? 'Standalone VPN needs at least 50 users, as a whole number.'
+    : 'Enter a whole number of endpoints, 1 or more.';
+  const ok = validate('f-qty', 'f-qty-err', cfg.qtyOk, qtyMsg);
+  if (!ok) {
+    if (opts.quiet) setShown($('bom-section'), false);
+    const s = $('smsg'); s.textContent = 'Fix the highlighted field to build the BOM.'; s.style.color = '#C0392B';
+    return false;
+  }
+  const rows = [];
+  let label, meta;
+
+  if (cfg.standalone) {
+    rows.push({ section:'FortiClient Standalone VPN (per user)' });
+    rows.push({ sku:SOLUTIONS.standalone.sku, desc:SKU_DB[SOLUTIONS.standalone.sku], qty:cfg.qty, kind:'req', note:'Per user · up to 3 endpoints each · minimum 50 · co-term -DD' });
+    rows.push({ sku:'—', desc:'Managed through FortiIdentity Cloud (no EMS). Includes FortiToken for MFA and email-based support.', qty:null, kind:'note', note:'' });
+    label = `FortiClient Standalone VPN · ${fmt(cfg.qty)} users`;
+    meta = { solution:'Standalone VPN', users:cfg.qty };
+  } else {
+    const sol = SOLUTIONS[cfg.model];
+    const dep = DEPLOY[cfg.deployment];
+    rows.push({ section:`FortiClient ${sol.name}${cfg.forensicsOn ? ' + Forensics' : ''} · ${dep.name}` });
+    cfg.licenseLines.forEach(l => rows.push({
+      sku:l.sku, desc:SKU_DB[l.sku], qty:l.qty, kind:'req',
+      note:`${l.pack.label} (${fmt(l.pack.size * l.qty)} endpoints) · includes FortiCare Premium · co-term -DD`,
+    }));
+    if (cfg.forensicsOn) rows.push({ sku:'⚠', desc:'Forensics and SOCaaS need FortiAnalyzer (on-premise or Cloud), which is not included. Add FortiAnalyzer Cloud log storage or confirm on-premise capacity.' + (cfg.deployment === 'onprem' ? ' EMS must be 7.2.2 or later.' : ''), qty:null, kind:'note' });
+    if (cfg.licensed > cfg.qty) rows.push({ sku:'—', desc:`Packs cover ${fmt(cfg.licensed)} endpoints (${fmt(cfg.qty)} requested).`, qty:null, kind:'note' });
+    if (cfg.deployment === 'cloud' && cfg.qty > CLOUD_MAX) rows.push({ sku:'⚠', desc:'More than 250,000 endpoints exceeds a single FortiClient Cloud instance. Confirm the architecture with Fortinet.', qty:null, kind:'note' });
+
+    rows.push({ section:'Additional services' });
+    if (cfg.model === 'managed') rows.push({ sku:'—', desc:'Best Practice Service consultation is included with Managed FortiClient.', qty:null, kind:'inc', note:'No separate SKU' });
+    else if (cfg.bpsOn) rows.push({ sku:cfg.bps.sku, desc:SKU_DB[cfg.bps.sku], qty:1, kind:'opt', note:`Band ${cfg.bps.band.band} (${cfg.bps.band.range}) · one per customer · co-term -DD` });
+    else rows.push({ sku:'—', desc:'Best Practice Service not selected. Fortinet recommends it for every new deal.', qty:null, kind:'note' });
+    rows.push({ sku:'⚠', desc:'FortiToken is not included with FortiClient licenses. Order it separately if MFA tokens are needed.', qty:null, kind:'note' });
+
+    const packTxt = cfg.packs.map(p => `${p.qty}×${p.size}`).join(' + ');
+    label = `FortiClient ${sol.name}${cfg.forensicsOn ? ' + Forensics' : ''} · ${cfg.deployment === 'cloud' ? 'Cloud' : 'On-prem'} · ${fmt(cfg.qty)} endpoints (${packTxt})`;
+    meta = {
+      deployment: dep.name, solution: sol.name, endpointsRequested: cfg.qty, endpointsLicensed: cfg.licensed,
+      packs: packTxt, forensics: !!cfg.forensicsOn,
+      bps: cfg.model === 'managed' ? 'included' : (cfg.bpsOn ? cfg.bps.band.band : 'none'),
+    };
+  }
+
+  _lastRows = rows; _lastLabel = label; _lastMeta = meta;
+  renderBOM(rows);
+  $('bom-label').textContent = label;
+  const wasHidden = $('bom-section').hasAttribute('hidden');
+  setShown($('bom-section'), true);
+  if (wasHidden && !opts.quiet) $('bom-section').scrollIntoView({ behavior:'smooth', block:'nearest' });
+  if (!opts.quiet) { const s = $('smsg'); s.textContent = ''; }
+  return true;
+}
+
+function badge(kind) {
+  const map = { req:['badge-req','Required'], mand:['badge-mand','Mandatory'], opt:['badge-opt','Optional'], inc:['badge-inc','Included'] };
+  const b = map[kind]; return b ? `<span class="badge ${b[0]}">${b[1]}</span>` : '';
+}
+
 function renderBOM(rows) {
-  const tbody = document.getElementById('bom-tbody');
-  tbody.innerHTML = '';
-  for (const r of rows) {
-    const tr = document.createElement('tr');
-    if (r.section !== undefined) {
-      tr.className = 'section-row';
-      tr.innerHTML = `<td colspan="5">${r.section}</td>`;
-    } else {
-      const isNote = r.kind === 'note';
-      const badgeMap = { req:'badge-req', opt:'badge-opt', mand:'badge-mand', inc:'badge-inc', note:'' };
-      const badgeLbl = { req:'Required', opt:'Optional', mand:'Mandatory', inc:'Included', note:'' };
-      const badge = r.kind && r.kind !== 'note'
-        ? `<span class="badge ${badgeMap[r.kind]}">${badgeLbl[r.kind]}</span>` : '';
-      tr.innerHTML = `
-        <td class="sku-cell">${r.sku || ''}</td>
-        <td class="${isNote?'nc':''}">${r.desc||''}</td>
-        <td style="text-align:center;">${r.qty != null ? r.qty : ''}</td>
-        <td>${badge}</td>
-        <td class="nc" style="font-size:11px;">${r.note||''}</td>`;
-    }
-    tbody.appendChild(tr);
-  }
+  $('bom-body').innerHTML = rows.map(r => {
+    if (r.section) return `<tr class="section-row"><td colspan="5">${esc(r.section)}</td></tr>`;
+    const isNote = cartRowsFrom([r]).length === 0;
+    const isWarn = r.sku === '⚠';
+    const glyph = isWarn ? '⚠' : (r.kind === 'note' ? 'ⓘ' : r.sku);
+    return `<tr class="${isWarn ? 'note-row' : ''}">
+      <td class="sku-cell">${isNote ? `<span role="img" aria-label="${isWarn ? 'Warning' : (r.kind === 'inc' ? 'No SKU' : 'Note')}">${esc(glyph)}</span>` : `<code>${esc(r.sku)}</code>`}</td>
+      <td class="${isNote ? '' : 'nc'}">${esc(r.desc)}</td>
+      <td class="qty">${r.qty == null ? '' : esc(r.qty)}</td>
+      <td>${badge(r.kind)}</td>
+      <td class="nc">${esc(r.note || '')}</td></tr>`;
+  }).join('');
 }
 
-// ─── addToProjectBOM ──────────────────────────────────────────────────────────
 function addToProjectBOM() {
-  if (!generateBOM()) return;
-  window.parent.postMessage({
-    type:    'FORTIBOM_ADD',
-    product: 'FortiClient',
-    label:   _lastLabel,
-    rows:    _lastRows,
-    meta:    _lastMeta
-  }, '*');
-  setMsg('✔ Added to Project BOM!', true);
-}
-
-// ─── resetForm ────────────────────────────────────────────────────────────────
-function resetForm() {
-  _tier = 'ztna'; _deploy = 'cloud';
-  document.getElementById('f-endpoints').value = '';
-  document.getElementById('addon-forensics').checked = false;
-  document.getElementById('addon-bps').checked       = false;
-  selectTier('ztna');
-  selectDeploy('cloud');
-  refreshDeployCards();
-  clearValidation();
-  document.getElementById('pack-indicator').style.display = 'none';
-  document.getElementById('bom-section').style.display = 'none';
-  setMsg('', true);
-}
-
-// ─── Copy TSV ─────────────────────────────────────────────────────────────────
-function copyTSV() {
-  if (!_lastRows.length) return;
-  const lines = ['Part Number\tDescription\tQty\tType\tNotes'];
-  for (const r of _lastRows) {
-    if (r.section !== undefined) {
-      lines.push(`[${r.section}]\t\t\t\t`);
-    } else {
-      lines.push(`${r.sku||''}\t${r.desc||''}\t${r.qty!=null?r.qty:''}\t${r.kind||''}\t${r.note||''}`);
-    }
+  if (!generateBOM()) return false;
+  const s = $('smsg');
+  if (window.parent && window.parent !== window) {
+    window.parent.postMessage({
+      type: 'FABRICBOM_ADD',
+      product: PRODUCT,
+      label: _lastLabel,
+      rows: cartRowsFrom(_lastRows),
+      meta: _lastMeta,
+    }, '*');
+    s.textContent = '✓ Added to Project BOM.';
+    s.style.color = '#2E7D32';
+  } else {
+    s.textContent = 'Preview only. Open this page inside FabricBOM to add it to a Project BOM.';
+    s.style.color = 'var(--forti-text-secondary)';
   }
-  navigator.clipboard.writeText(lines.join('\n')).then(() => setMsg('Copied to clipboard!', true));
+  return true;
 }
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
-function setMsg(txt, ok) {
-  const el = document.getElementById('smsg');
-  el.textContent = txt;
-  el.className = ok ? 'ok' : 'err';
+function resetForm() {
+  $('f-deploy').value = DEFAULTS.deployment;
+  $('f-qty').value = String(DEFAULTS.qty);
+  _addonPref.bps = DEFAULTS.addons.bps; _addonPref.forensics = DEFAULTS.addons.forensics;
+  ['bps','forensics'].forEach(id => { setDisabled($('row-' + id), false); setDisabled($('addon-' + id), false); $('addon-' + id).checked = _addonPref[id]; });
+  cards().forEach(c => setDisabled(c, false));
+  validate('f-qty', 'f-qty-err', true);
+  setShown($('bom-section'), false);
+  _lastRows = []; _lastLabel = ''; _lastMeta = {};
+  $('smsg').textContent = '';
+  selectModel(DEFAULTS.model);
 }
 
-// Init
-refreshDeployCards();
+function copyTSV() {
+  const lines = [['Part Number','Description','Qty','Type','Notes'].join('\t')];
+  _lastRows.forEach(r => {
+    if (r.section) { lines.push(r.section); return; }
+    lines.push([r.sku, r.desc, r.qty ?? '', r.kind, r.note || ''].join('\t'));
+  });
+  const text = lines.join('\n');
+  const s = $('smsg');
+  const done = () => { s.textContent = '✓ Copied BOM as TSV.'; s.style.color = '#2E7D32'; };
+  const fallback = () => {
+    const ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) { s.textContent = 'Copy failed. Select the table and copy it manually.'; s.style.color = '#C0392B'; }
+    ta.remove();
+  };
+  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done, fallback); else fallback();
+}
+
+// ================= Examples =================
+function renderExamples() {
+  $('examples-host').innerHTML = Object.entries(_examples).map(([id, ex]) => `
+  <section class="card example-card" data-example-id="${id}" data-fb-role="example-card" aria-labelledby="ex-h-${id}">
+    <header class="card-header" id="ex-h-${id}">${esc(ex.title)}</header>
+    <div class="card-body">
+      <p style="color:var(--forti-text-secondary); font-size:12px;">${esc(ex.scenario)}</p>
+      <div class="table-wrap">
+      <table class="example-table">
+        <caption class="visually-hidden">Example BOM rows for ${esc(ex.title)}</caption>
+        <thead><tr><th scope="col">Part Number</th><th scope="col">Description</th><th scope="col">Qty</th><th scope="col">Type</th></tr></thead>
+        <tbody>${ex.defaultRows.map((r, i) => `
+          <tr><td class="sku-cell"><code>${esc(r.sku)}</code></td><td class="nc">${esc(r.desc)}</td>
+          <td class="qty"><label class="visually-hidden" for="ex-${id}-q${i}">Quantity for ${esc(r.sku)}</label>
+            <input type="number" id="ex-${id}-q${i}" min="0" step="1" value="${r.qty}" data-fb-role="example-qty" data-example-id="${id}" data-row="${i}"></td>
+          <td>${badge(r.kind)}</td></tr>`).join('')}
+        </tbody>
+      </table>
+      </div>
+      <div class="actions">
+        <button class="btn btn-add" data-fb-role="add-example" data-example-id="${id}" onclick="addExampleToProjectBOM('${id}')">Add Example to Project BOM</button>
+        <button class="btn btn-ghost" data-fb-role="reset-example" data-example-id="${id}" onclick="resetExample('${id}')">Reset Example</button>
+        <span class="emsg" id="emsg-${id}" data-fb-role="status" role="status" aria-live="polite" aria-atomic="true"></span>
+      </div>
+    </div>
+  </section>`).join('');
+}
+
+function readExampleRows(exampleId) {
+  const ex = _examples[exampleId];
+  return ex.defaultRows.map((r, i) => {
+    const el = $(`ex-${exampleId}-q${i}`);
+    const n = Number(el.value);
+    const ok = el.value.trim() !== '' && Number.isInteger(n) && n >= 0;
+    el.setAttribute('aria-invalid', String(!ok));
+    el.classList.toggle('invalid', !ok);
+    return { ...r, qty: ok ? n : NaN };
+  });
+}
+
+function addExampleToProjectBOM(exampleId) {
+  const ex = _examples[exampleId];
+  if (!ex) return false;
+  const msg = $('emsg-' + exampleId);
+  const rows = readExampleRows(exampleId);
+  if (rows.some(r => Number.isNaN(r.qty))) { msg.textContent = 'Quantities must be whole numbers, 0 or more.'; msg.style.color = '#C0392B'; return false; }
+  const sendRows = rows.filter(r => r.qty > 0);
+  if (!sendRows.length) { msg.textContent = 'Set at least one quantity above zero.'; msg.style.color = '#C0392B'; return false; }
+  if (window.parent && window.parent !== window) {
+    window.parent.postMessage({
+      type: 'FABRICBOM_ADD',
+      product: PRODUCT,
+      label: 'FortiClient — Example: ' + ex.title,
+      rows: cartRowsFrom(sendRows),
+      meta: { source:'example', exampleId },
+    }, '*');
+    msg.textContent = '✓ Added to Project BOM.'; msg.style.color = '#2E7D32';
+  } else {
+    msg.textContent = 'Open this page inside FabricBOM to add it to a Project BOM.'; msg.style.color = 'var(--forti-text-secondary)';
+  }
+  return true;
+}
+
+function resetExample(exampleId) {
+  const ex = _examples[exampleId]; if (!ex) return;
+  ex.defaultRows.forEach((r, i) => { const el = $(`ex-${exampleId}-q${i}`); el.value = r.qty; el.removeAttribute('aria-invalid'); el.classList.remove('invalid'); });
+  $('emsg-' + exampleId).textContent = '';
+}
+
+// ================= Build report tab =================
+function renderBuildReport() {
+  const cls = { 'exact':'st-exact', 'user-added':'st-warn' };
+  const lbl = { 'exact':'✓ exact', 'user-added':'⚠ price-list only (user approved)' };
+  $('br-body').innerHTML = BUILD_REPORT.map(r => `<tr><td class="${cls[r.status] || 'st-bad'}">${esc(lbl[r.status] || r.status)}</td><td><code>${esc(r.sku)}</code></td><td>${esc(r.terms)}</td><td>${esc(r.family)}</td><td class="nc">${esc(SKU_DB[r.sku])}</td></tr>`).join('');
+}
+
+// ================= Programmatic Page API =================
+window.fabricbomPage = Object.freeze({
+  schemaVersion: '1.2.1',
+  product: PRODUCT,
+  buildId: document.querySelector('meta[name="build-id"]')?.content || '',
+  getMeta() { return JSON.parse(document.getElementById('fabricbom-page-meta').textContent); },
+  getState() {
+    return {
+      activeTab: document.querySelector('[role="tab"][aria-selected="true"]')?.dataset.panel || null,
+      model: _selectedModelId,
+      deployment: $('f-deploy').value,
+      quantity: Number(document.querySelector('[data-fb-role=quantity-input]')?.value || 0),
+      addons: [...document.querySelectorAll('[data-fb-role=addon]:checked')].map(el => el.dataset.addonId),
+      addonSkus: Object.fromEntries([...document.querySelectorAll('[data-fb-role=addon-row]')].map(r => [r.dataset.addonId, r.querySelector('[data-fb-role=addon-sku]').textContent])),
+      previewRows: _lastRows.map(r => ({ ...r })),
+    };
+  },
+  setTab: (panelId) => switchTab(panelId),
+  setModel: (modelId) => selectModel(modelId),
+  setDeployment: (dep) => { const el = $('f-deploy'); const opt = el.querySelector(`option[value="${dep}"]`); if (!el.disabled && opt && !opt.disabled) { el.value = dep; el.dispatchEvent(new Event('change', { bubbles:true })); return true; } return false; },
+  setQuantity: (n) => { const el = document.querySelector('[data-fb-role=quantity-input]'); if (el) { el.value = String(n); el.dispatchEvent(new Event('input', { bubbles:true })); } },
+  setAddon: (addonId, on) => { const el = document.querySelector(`[data-fb-role=addon][data-addon-id="${addonId}"]`); if (el && el.disabled === false) { el.checked = !!on; el.dispatchEvent(new Event('change', { bubbles:true })); } },
+  preview: () => generateBOM(),
+  addToProject: () => addToProjectBOM(),
+  reset: () => resetForm(),
+  listExamples: () => Object.keys(_examples),
+  addExample: (exampleId) => addExampleToProjectBOM(exampleId),
+});
+
+// ================= Init =================
+renderExamples();
+renderBuildReport();
+if (new URLSearchParams(location.search).get('qa') === '1') $('tab-buildreport').removeAttribute('hidden');
+onConfigChange();
+
+// ================= Cache-busting self-check =================
+(function checkVersion() {
+  const baked = document.querySelector('meta[name="build-timestamp"]')?.content;
+  if (!baked) return;
+  if (location.protocol === 'file:') return;
+  fetch(location.pathname + '?_cb=' + Date.now(), { cache:'no-store' })
+    .then(r => r.ok ? r.text() : null)
+    .then(html => {
+      if (!html) return;
+      const m = html.match(/<meta name="build-timestamp" content="([^"]+)"/);
+      if (m && m[1] !== baked) {
+        document.getElementById('stale-banner').removeAttribute('hidden');
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({
+            type: 'FABRICBOM_STALE',
+            buildId: document.querySelector('meta[name="build-id"]')?.content,
+            bakedTimestamp: baked,
+            liveTimestamp: m[1],
+          }, '*');
+        }
+      }
+    })
+    .catch(() => {});
+})();
 </script>
 </body>
 </html>
