@@ -46,7 +46,7 @@ Designed to be run entirely offline. Install it as a web app on most modern brow
 - **Discount matrix columns** — add, rename, re-type, and remove extra partner-type and named-account columns directly in the Discount Matrix; no CSV round trip needed, and rates carry over on rename
 
 ### Export & Sharing
-- **Export ▸ Excel (.xlsx)** — project details plus a filterable line-item table (section, product, part number, description, qty, type, notes), with list price, extended price, and totals when a price list is loaded; built with the bundled SheetJS library, so it works offline. The workbook also carries a hidden **FabricBOM data** sheet (the same project data a share link holds) so it can be reopened in FabricBOM
+- **Export ▸ Excel (.xlsx)** — project details plus a filterable line-item table (section, heading, sub-heading, part number, description, qty, type, notes), with list price, extended price, and totals when a price list is loaded; built with the bundled SheetJS library, so it works offline. The workbook also carries a hidden **FabricBOM data** sheet (the same project data a share link holds) so it can be reopened in FabricBOM
 - **Export ▸ CSV (.csv)** — the same line-item table as a plain CSV for importing into other tools
 - **Export ▸ Print / Save as PDF** — browser-native print layout optimized for customer-ready output
 - **Export ▸ Copy share link** — a compressed URL containing the full BOM; pastes as a named hyperlink in email / Teams / Slack and as a plain URL elsewhere, and recipients open it directly in their browser

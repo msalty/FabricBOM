@@ -3417,7 +3417,7 @@ async function buildBOMTable() {
     const pr = await getPricingIDB();
     if (pr && pr.data && pr.data.rows && pr.data.rows.length) priceMap = new Map(pr.data.rows.map(r => [r['SKU'], r['Price']]));
   } catch(_) { /* pricing unavailable */ }
-  const header = ['Section','Product','Sub-section','Part Number','Description','Qty','Type','Notes'];
+  const header = ['Section','Heading','Sub-heading','Part Number','Description','Qty','Type','Notes'];
   if (priceMap) header.push('List Price','Extended');
   const rows = [];
   let section = '', total = 0, totalExclOpt = 0, hasOpt = false, anyPrice = false;
@@ -3821,8 +3821,8 @@ const IMPORT_DATA_VERSION = 'v1';
 const IMPORT_COLS = ['section','product','sub','sku','desc','qty','type','note'];  // export column order
 const IMPORT_COL_ALIASES = {
   section: ['section'],
-  product: ['product','product group'],
-  sub:     ['sub-section','subsection','sub section'],
+  product: ['heading','product','product group'],   // "Product" in files exported before the rename
+  sub:     ['sub-heading','subheading','sub heading','sub-section','subsection','sub section'],   // "Sub-section" in files exported before the rename
   sku:     ['part number','part #','part no','part no.','part num','sku','item number'],
   desc:    ['description','desc'],
   qty:     ['qty','qty.','quantity'],
@@ -3946,7 +3946,7 @@ function parseSpreadsheetImport(wb, fileKind) {
   let curSection = '', curEntry = null, curSub = '';
   for (const [secV, prodV, subV, skuV, descV, qtyV, typeV, noteV] of rows) {
     const sec = String(secV).trim();
-    // A blank Section / Product cell means "same as the row above".
+    // A blank Section / Heading cell means "same as the row above".
     const label = String(prodV).trim() || (curEntry ? curEntry.label : 'Imported items');
     if (sec && sec !== curSection) {
       const pg = pGroups.get(sec);
