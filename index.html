@@ -59,6 +59,7 @@
   .nsl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--forti-text-muted);padding:20px 16px 8px;white-space:nowrap;overflow:hidden;}
   .ni{display:flex;align-items:center;gap:10px;padding:9px 16px;cursor:pointer;transition:background .12s;border-left:2px solid transparent;color:inherit;}
   .ni:hover{background:var(--forti-sidebar-hover);}
+  .ni:focus-visible{outline:2px solid rgba(238,49,36,.75);outline-offset:-2px;}
   .ni.active{background:var(--forti-sidebar-active);border-left-color:var(--forti-red);}
   .ni.proj{border-left-color:transparent;}
   .ni.proj.live{border-left-color:#F7941D;}
@@ -89,7 +90,9 @@
   .nav-action svg{width:13px;height:13px;flex-shrink:0;}
 
   /* CONTENT */
-  #content{flex:1;background:var(--forti-content-bg);overflow:hidden;display:flex;flex-direction:column;min-height:0;}
+  /* color: body text is near-white for the dark chrome; content panes are light,
+     so anything here that doesn't set its own color must default to dark text. */
+  #content{flex:1;background:var(--forti-content-bg);color:var(--c-text);overflow:hidden;display:flex;flex-direction:column;min-height:0;}
   #ch{height:40px;background:#fff;border-bottom:1px solid #DDE1E9;display:flex;align-items:center;padding:0 20px;gap:6px;flex-shrink:0;flex-wrap:nowrap;overflow:hidden;min-width:0;}
   .bci{font-size:12px;color:#6B7589;white-space:nowrap;flex-shrink:0;}
   .bcs{font-size:11px;color:#B0B8CC;flex-shrink:0;}
@@ -116,6 +119,7 @@
   /* Light cards */
   .lc{background:var(--c-white);border:1px solid var(--c-border);border-radius:4px;overflow:hidden;}
   .lch{background:var(--c-sh);border-bottom:1px solid var(--c-border);padding:9px 18px;display:flex;align-items:center;gap:8px;}
+  .lch > svg{flex-shrink:0;}
   .lch h2{font-size:11px;font-weight:700;color:var(--c-text);letter-spacing:.04em;text-transform:uppercase;}
   .lcb{padding:18px;}
   .pfg{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(210px,100%),1fr));gap:14px;}
@@ -138,6 +142,20 @@
   #sbar .btn{padding:5px 8px;font-size:11px;gap:5px;}
   #sbar .btn svg{width:12px;height:12px;}
   #sbar .act-row{gap:6px;}
+  /* wrap: on very narrow phones the buttons drop to another row instead of overflowing */
+  .sbar-right{margin-left:auto;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;align-items:center;}
+  @media (max-width:600px){ .sbar-right{gap:6px;} }
+  @media (max-width:400px){ #sbar .btn{padding-left:6px;padding-right:6px;} }
+  /* Save button: shows "Save" + dot while there are unsaved changes, "Saved" once stored */
+  #save-btn .save-dot{margin-left:1px;}
+  #save-btn .ico-saved{display:none;}
+  #save-btn.is-saved{color:#2E7D32;}
+  #save-btn.is-saved .ico-saved{display:block;}
+  #save-btn.is-saved .ico-save,#save-btn.is-saved .save-dot{display:none;}
+  #save-btn.is-dirty{border-color:#F7941D;}
+  /* Text that drops on phones so a control collapses to its icon. The full
+     name stays in the control's title / aria-label. */
+  @media (max-width:600px){ .lbl-wide{display:none;} }
   .si .sl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--c-textm);}
   .si .sv{font-size:13px;font-weight:600;color:var(--c-text);}
   .si.hi .sv{color:var(--forti-red);}
@@ -428,7 +446,11 @@
   .pi-edit-btn:hover{background:var(--c-sh);border-color:var(--c-text2);}
   .pi-edit-btn.active{background:#EEF3FF;border-color:#B8CBF5;color:#3557A5;}
   .pi-edit-btn svg{width:11px;height:11px;flex-shrink:0;}
-  .pi-clear-btn{margin-left:0;background:#FEF0EE;color:#C0392B;border:1px solid #F5C6C2;border-radius:3px;padding:3px 5px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:background .12s,border-color .12s;}
+  /* Edit mode shows a check ("Done"); view mode shows a pencil ("Edit") */
+  .pi-edit-btn .ico-edit{display:none;}
+  #proj-info-card.view-mode .pi-edit-btn .ico-edit{display:block;}
+  #proj-info-card.view-mode .pi-edit-btn .ico-done{display:none;}
+  .pi-clear-btn{margin-left:0;background:#FEF0EE;color:#C0392B;border:1px solid #F5C6C2;border-radius:3px;padding:3px 6px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:4px;font-size:11px;font-weight:500;font-family:inherit;white-space:nowrap;transition:background .12s,border-color .12s;}
   .pi-clear-btn:hover{background:#F5C6C2;}
   .pi-clear-btn svg{width:13px;height:13px;flex-shrink:0;}
   #proj-info-card{border-left:3px solid var(--forti-red);box-shadow:0 2px 8px rgba(0,0,0,.07);}
@@ -502,6 +524,7 @@
   #pi-readonly-wrap:hover{background:var(--c-sh);border-color:var(--c-text2);}
   #pi-readonly-wrap input{cursor:pointer;accent-color:var(--forti-red);margin:0;}
   #pi-readonly-wrap span{font-size:11px;font-weight:500;color:var(--c-text2);font-family:inherit;}
+  #pi-readonly-wrap svg{width:11px;height:12px;flex-shrink:0;color:var(--c-text2);}
   #proj-info-card.view-mode #pi-readonly-wrap{display:none!important;}
 
   /* BOM Read Only state */
@@ -553,7 +576,7 @@
     .bg-del,.bg-edit,.bg-copy,.bgr-actions,.row-grip{display:none!important;}
     .col-grip{width:0!important;max-width:0!important;padding:0!important;border-width:0!important;}
     .lc,.bg{break-inside:avoid;}
-    .pi-edit-btn,.pi-clear-btn,.pi-expand-btn{display:none!important;}
+    .pi-edit-btn,.pi-clear-btn,.pi-expand-btn,#pi-readonly-wrap,#pw-lock-btn,#pw-unlock-btn,#sbar{display:none!important;}
     #proj-info-card .pfg{display:none!important;}
     #proj-info-card #pi-view{display:block!important;}
     #proj-info-card #pi-summary{display:none!important;}
@@ -615,13 +638,13 @@
       </button>
     </div>
     <div class="nsl" style="padding-bottom:4px;">Project</div>
-    <div class="ni proj" id="nav-proj" onclick="showPBV()">
+    <div class="ni proj" id="nav-proj" onclick="showPBV()" tabindex="0" role="button">
       <svg class="ni-icon" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="2" stroke="#E8EAF0" stroke-width="1.2"/><path d="M5 6h8M5 9h8M5 12h5" stroke="#E8EAF0" stroke-width="1.2" stroke-linecap="round"/></svg>
       <span class="ni-label">Project BOM</span>
       <span id="nav-bom-save-dot" class="save-dot" style="margin-left:2px;"></span>
       <span class="ni-badge" id="sb-badge">0</span>
     </div>
-    <div class="ni" id="nav-saved" onclick="showSavedProjects()">
+    <div class="ni" id="nav-saved" onclick="showSavedProjects()" tabindex="0" role="button">
       <svg class="ni-icon" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/><rect x="5" y="2" width="6" height="5" rx="1" stroke="currentColor" stroke-width="1.1"/><rect x="4" y="9" width="10" height="5" rx="1" stroke="currentColor" stroke-width="1.1"/></svg>
       <span class="ni-label">Saved Projects</span>
       <span class="ni-badge" id="sp-badge">0</span>
@@ -639,13 +662,13 @@
     <div id="plugin-nav-items"></div>
     <div class="n-sep"></div>
     <div class="nsl">Configuration</div>
-    <div class="ni" id="nav-settings" onclick="showSettings()">
+    <div class="ni" id="nav-settings" onclick="showSettings()" tabindex="0" role="button">
       <svg class="ni-icon" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="2.2" stroke="currentColor" stroke-width="1.2"/><path d="M9 1.8v1.8M9 14.4v1.8M3.92 3.92l1.27 1.27M12.81 12.81l1.27 1.27M1.8 9h1.8M14.4 9h1.8M3.92 14.08l1.27-1.27M12.81 5.19l1.27-1.27" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
       <span class="ni-label">Settings</span>
     </div>
     <div class="n-sep"></div>
     <div class="nsl">Info</div>
-    <div class="ni" onclick="showAbout()">
+    <div class="ni" onclick="showAbout()" tabindex="0" role="button">
       <svg class="ni-icon" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7.5" stroke="#8A93A8" stroke-width="1.2"/><path d="M9 8v5M9 6.5v.5" stroke="#8A93A8" stroke-width="1.4" stroke-linecap="round"/></svg>
       <span class="ni-label">About</span>
     </div>
@@ -680,8 +703,8 @@
         </ol>
         <div class="hint">Multiple runs of the same product are supported</div>
         <div class="hint">Already know your SKUs? Use <strong>Add SKU</strong> or load a project from <strong>Saved Projects</strong> — the product pages are optional.</div>
-        <div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap;">
-          <button class="btn bs" onclick="openImport()"><svg viewBox="0 0 13 13" fill="none"><path d="M6.5 9V1M9.5 6l-3 3-3-3" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round"/></svg>Import FBOM</button>
+        <div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap;justify-content:center;">
+          <button class="btn bs" onclick="openImport()" title="Open a FabricBOM project file (.fbom)"><svg viewBox="0 0 13 13" fill="none"><path d="M6.5 9V1.5M3.5 4.5l3-3 3 3" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round"/></svg>Open .fbom file</button>
           <button class="btn bp" onclick="openSkuModal()"><svg viewBox="0 0 13 13" fill="none"><rect x="1" y="3" width="11" height="7" rx="1" stroke="#fff" stroke-width="1.1"/><path d="M3.5 6.5h6M6.5 5v3" stroke="#fff" stroke-width="1.1" stroke-linecap="round"/></svg>Add SKU</button>
           <a class="demo-bom-link btn bs" href="#" target="_blank" rel="noopener" style="display:none;text-decoration:none;align-items:center;gap:6px;"><svg viewBox="0 0 13 13" fill="none" style="width:13px;height:13px;"><path d="M7.5 1.5h4v4M11 2L6 7M5.5 2.5H2a1 1 0 0 0-1 1V11a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V7.5" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="demo-bom-label">Demo BOM</span></a>
         </div>
@@ -701,23 +724,26 @@
             <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Details
           </button>
-          <button class="pi-clear-btn" id="pi-clear-btn" onclick="clearPiFields()" title="Clear all project information fields" aria-label="Clear project information fields">
-            <svg viewBox="0 0 13 13" fill="none"><path d="M2 3.5h9M5 3.5V2h3v1.5M5.5 6v4M7.5 6v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M3 3.5l.5 7a1 1 0 0 0 1 .9h4a1 1 0 0 0 1-.9l.5-7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          <button class="pi-clear-btn" id="pi-clear-btn" onclick="clearPiFields()" title="Clear the Project Information fields (the BOM items are kept)" aria-label="Clear project information fields">
+            <svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M7.6 2.2l3.2 3.2a1 1 0 0 1 0 1.4L6.6 11H4.2L2.2 9a1 1 0 0 1 0-1.4l5.4-5.4z" stroke="currentColor" stroke-width="1.15" stroke-linejoin="round"/><path d="M4.4 5.4l3.2 3.2M6.6 11h4.9" stroke="currentColor" stroke-width="1.15" stroke-linecap="round"/></svg>
+            <span class="lbl-wide">Clear</span>
           </button>
-          <label id="pi-readonly-wrap" title="Lock the BOM and project info against edits">
-            <input type="checkbox" id="pi-readonly" onchange="handleReadOnlyChange(this)">
-            <span>RO</span>
+          <label id="pi-readonly-wrap" title="Read-only: lock the BOM and project info against edits">
+            <input type="checkbox" id="pi-readonly" onchange="handleReadOnlyChange(this)" aria-label="Read-only: lock the BOM and project info against edits">
+            <svg viewBox="0 0 11 13" fill="none" aria-hidden="true"><rect x="1.5" y="5.5" width="8" height="7" rx="1" stroke="currentColor" stroke-width="1.1"/><path d="M3.5 5.5V3.5a2 2 0 0 1 4 0v2" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="5.5" cy="9" r="1" fill="currentColor"/></svg>
+            <span class="lbl-wide">Read-only</span>
           </label>
-          <button id="pw-lock-btn" onclick="openPwViewModal()" title="Password protected — click to manage" aria-label="Manage BOM password protection">
-            <svg viewBox="0 0 11 13" fill="none"><rect x="1.5" y="5.5" width="8" height="7" rx="1" stroke="currentColor" stroke-width="1.1"/><path d="M3.5 5.5V3.5a2 2 0 0 1 4 0v2" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="5.5" cy="9" r="1" fill="currentColor"/></svg>
+          <button id="pw-lock-btn" onclick="openPwViewModal()" title="Password protected — click to view or remove the password" aria-label="Manage BOM password protection">
+            <svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><circle cx="4.3" cy="8.7" r="2.6" stroke="currentColor" stroke-width="1.1"/><path d="M6.2 6.8L11.2 1.8M9.4 3.6l1.5 1.5M7.9 5.1l1.1 1.1" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
           </button>
           <button id="pw-unlock-btn" onclick="openPwUnlockModal()" title="This BOM is password-protected — click to unlock">
             <svg viewBox="0 0 11 13" fill="none"><rect x="1.5" y="5.5" width="8" height="7" rx="1" stroke="currentColor" stroke-width="1.1"/><path d="M3.5 5.5V3.5a2 2 0 0 1 4 0v2" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="5.5" cy="9" r="1" fill="currentColor"/></svg>
             Unlock
           </button>
-          <button class="pi-edit-btn" id="pi-edit-btn" onclick="togglePiEdit()" title="Toggle edit mode">
-            <svg viewBox="0 0 11 11" fill="none"><path d="M7.5 1.5l2 2L3 10H1V8L7.5 1.5z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg>
-            <span id="pi-edit-label">View</span>
+          <button class="pi-edit-btn" id="pi-edit-btn" onclick="togglePiEdit()" title="Done editing — collapse to a one-line summary">
+            <svg class="ico-done" viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M1.8 5.8l2.4 2.4 5-5.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg class="ico-edit" viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M7.5 1.5l2 2L3 10H1V8L7.5 1.5z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg>
+            <span id="pi-edit-label">Done</span>
           </button>
         </div>
         <div class="lcb">
@@ -751,11 +777,16 @@
             <svg viewBox="0 0 13 13" fill="none"><path d="M4.5 2H3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><rect x="4.5" y="1" width="3" height="2" rx=".6" stroke="currentColor" stroke-width="1.1"/><path d="M4.5 6.5h3.5M4.5 8.8h2.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
             Paste<span class="paste-lbl" id="paste-lbl"></span><span class="paste-x" onclick="event.stopPropagation();clearClip()" title="Clear the copied item">&times;</span>
           </button>
-          <div style="margin-left:auto;display:flex;gap:8px;align-items:center;">
-            <button class="btn bs" id="project-btn" onclick="toggleProjectMenu(event)"><svg viewBox="0 0 13 13" fill="none"><rect x="1" y="1" width="11" height="11" rx="1" stroke="currentColor" stroke-width="1.1"/><rect x="4" y="1" width="5" height="4" rx=".5" stroke="currentColor" stroke-width="1.1"/><rect x="3" y="7" width="7" height="4" rx=".5" stroke="currentColor" stroke-width="1.1"/></svg>File<svg viewBox="0 0 10 6" fill="none" style="width:9px;height:9px;margin-left:1px;"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-            <button class="btn bs" id="copy-export-btn" onclick="toggleCopyMenu(event)"><svg viewBox="0 0 13 13" fill="none"><rect x="3.5" y="1" width="8" height="9" rx="1" stroke="#6B7589" stroke-width="1.1"/><rect x="1" y="3" width="8" height="9" rx="1" stroke="#6B7589" stroke-width="1.1"/></svg>Share<svg viewBox="0 0 10 6" fill="none" style="width:9px;height:9px;margin-left:1px;"><path d="M1 1l4 4 4-4" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-            <button id="clear-btn" class="btn bd" onclick="clearCart()" title="Clear All" aria-label="Clear all BOM items"><svg viewBox="0 0 13 13" fill="none"><path d="M2 3.5h9M5 3.5V2h3v1.5M5.5 6v4M7.5 6v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M3 3.5l.5 7a1 1 0 0 0 1 .9h4a1 1 0 0 0 1-.9l.5-7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></button>
-            <button id="pin-btn" onclick="togglePin()" title="Pin toolbar" aria-label="Pin toolbar to top"><svg viewBox="0 0 13 13" fill="none"><rect x="0.5" y="0.5" width="8.5" height="8.5" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M9 4H11A1.5 1.5 0 0 1 12.5 5.5V11A1.5 1.5 0 0 1 11 12.5H5.5A1.5 1.5 0 0 1 4 11V9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
+          <div class="sbar-right">
+            <button class="btn bs" id="save-btn" onclick="saveProject()" title="Save this project to Saved Projects">
+              <svg class="ico-save" viewBox="0 0 13 13" fill="none" aria-hidden="true"><rect x="1" y="1" width="11" height="11" rx="1" stroke="currentColor" stroke-width="1.1"/><rect x="4" y="1" width="5" height="4" rx=".5" stroke="currentColor" stroke-width="1.1"/><rect x="3" y="7" width="7" height="4" rx=".5" stroke="currentColor" stroke-width="1.1"/></svg>
+              <svg class="ico-saved" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M2 7l3 3 6-6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span id="save-btn-label">Save</span><span id="save-btn-dot" class="save-dot"></span>
+            </button>
+            <button class="btn bs" id="project-btn" onclick="toggleProjectMenu(event)" title="New, save, open, and .fbom project files"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M1.5 3.2a1 1 0 0 1 1-1h2.7l1.3 1.5h4a1 1 0 0 1 1 1v5.6a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg>File<svg viewBox="0 0 10 6" fill="none" style="width:9px;height:9px;margin-left:1px;" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button class="btn bs" id="copy-export-btn" onclick="toggleCopyMenu(event)" title="Download as Excel / CSV / PDF, copy a share link, or copy to the clipboard"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.5 1v8M3.5 6l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Export<svg viewBox="0 0 10 6" fill="none" style="width:9px;height:9px;margin-left:1px;" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button id="clear-btn" class="btn bd" onclick="clearCart()" title="Clear all items from the Project BOM" aria-label="Clear all BOM items"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M2 3.5h9M5 3.5V2h3v1.5M5.5 6v4M7.5 6v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M3 3.5l.5 7a1 1 0 0 0 1 .9h4a1 1 0 0 0 1-.9l.5-7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg><span class="lbl-wide">Clear BOM</span></button>
+            <button id="pin-btn" onclick="togglePin()" title="Keep this toolbar visible while scrolling" aria-label="Pin toolbar to top"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M4.2 1.5h4.6M5.2 1.5v3.4L3.2 7.6h6.6L7.8 4.9V1.5M6.5 7.6V12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           </div>
         </div>
       </div>
@@ -765,8 +796,8 @@
         <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><path d="M4 4h8l6 22h20l4-14H14" stroke="#9BA5BA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="40" r="3" fill="#9BA5BA"/><circle cx="36" cy="40" r="3" fill="#9BA5BA"/></svg>
         <h3>Project BOM is empty</h3>
         <p>Select a product from the left sidebar, configure it, and click <strong>Add to Project BOM</strong>. You can add multiple products and run the same product page multiple times to build a complete project quote.</p>
-        <div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap;">
-          <button class="btn bs" onclick="openImport()"><svg viewBox="0 0 13 13" fill="none"><path d="M6.5 9V1M9.5 6l-3 3-3-3" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round"/></svg>Import FBOM</button>
+        <div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap;justify-content:center;">
+          <button class="btn bs" onclick="openImport()" title="Open a FabricBOM project file (.fbom)"><svg viewBox="0 0 13 13" fill="none"><path d="M6.5 9V1.5M3.5 4.5l3-3 3 3" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round"/></svg>Open .fbom file</button>
           <button class="btn bp" onclick="openSkuModal()"><svg viewBox="0 0 13 13" fill="none"><rect x="1" y="3" width="11" height="7" rx="1" stroke="#fff" stroke-width="1.1"/><path d="M3.5 6.5h6M6.5 5v3" stroke="#fff" stroke-width="1.1" stroke-linecap="round"/></svg>Add SKU</button>
           <a class="demo-bom-link btn bs" href="#" target="_blank" rel="noopener" style="display:none;text-decoration:none;align-items:center;gap:6px;"><svg viewBox="0 0 13 13" fill="none" style="width:13px;height:13px;"><path d="M7.5 1.5h4v4M11 2L6 7M5.5 2.5H2a1 1 0 0 0-1 1V11a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V7.5" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="demo-bom-label">Demo BOM</span></a>
         </div>
@@ -1030,12 +1061,16 @@
 
 <!-- Copy/Export dropdown menu (position:fixed so it escapes overflow-y:auto parents) -->
 <div id="copy-menu">
+  <div class="dm-section">Download</div>
+  <button class="dm-item" onclick="downloadBOM('xlsx')"><svg viewBox="0 0 13 13" fill="none"><rect x="1" y="1" width="11" height="11" rx="1" stroke="currentColor" stroke-width="1.1"/><path d="M1 4.5h11M1 8h11M4.5 4.5v7.5" stroke="currentColor" stroke-width="1.1"/></svg>Excel (.xlsx)</button>
+  <button class="dm-item" onclick="downloadBOM('csv')"><svg viewBox="0 0 13 13" fill="none"><path d="M7.5 1H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V4.5L7.5 1z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/><path d="M4 7h5M4 9.2h5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>CSV (.csv)</button>
+  <button class="dm-item" onclick="closeCopyMenu();window.print()"><svg viewBox="0 0 13 13" fill="none"><rect x="1.5" y="4" width="10" height="6" rx="1" stroke="currentColor" stroke-width="1.1"/><path d="M3.5 4V2h6v2M3.5 10h6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>Print / Save as PDF</button>
+  <div class="dm-sep"></div>
   <div class="dm-section">Share</div>
-  <button class="dm-item" onclick="shareHyperlink()"><svg viewBox="0 0 13 13" fill="none"><path d="M5.5 7.5a3 3 0 0 0 4.243 0l1.5-1.5a3 3 0 0 0-4.243-4.243L6.25 2.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 5.5a3 3 0 0 0-4.243 0L1.757 7a3 3 0 0 0 4.243 4.243L6.75 10.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>Share Hyperlink</button>
-  <button class="dm-item" onclick="shareBOM()"><svg viewBox="0 0 13 13" fill="none"><circle cx="10" cy="2.5" r="1.5" stroke="currentColor" stroke-width="1.1"/><circle cx="10" cy="10.5" r="1.5" stroke="currentColor" stroke-width="1.1"/><circle cx="3" cy="6.5" r="1.5" stroke="currentColor" stroke-width="1.1"/><path d="M8.5 3.5L4.5 5.5M4.5 7.5L8.5 9.5" stroke="currentColor" stroke-width="1.1"/></svg>Share BOM URL</button>
+  <button class="dm-item" onclick="copyShareLink()" title="Copies a link that opens this BOM in FabricBOM — paste it into email, Teams, or Slack"><svg viewBox="0 0 13 13" fill="none"><path d="M5.5 7.5a3 3 0 0 0 4.243 0l1.5-1.5a3 3 0 0 0-4.243-4.243L6.25 2.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 5.5a3 3 0 0 0-4.243 0L1.757 7a3 3 0 0 0 4.243 4.243L6.75 10.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>Copy share link</button>
   <div class="dm-sep"></div>
   <div class="dm-section">Copy to Clipboard</div>
-  <button class="dm-item" onclick="copyTSV()"><svg viewBox="0 0 13 13" fill="none"><rect x="3.5" y="1" width="8" height="9" rx="1" stroke="currentColor" stroke-width="1.1"/><rect x="1" y="3" width="8" height="9" rx="1" stroke="currentColor" stroke-width="1.1"/></svg>Copy TSV</button>
+  <button class="dm-item" onclick="copyTSV()" title="Tab-separated — pastes straight into Excel or a table in email"><svg viewBox="0 0 13 13" fill="none"><rect x="3.5" y="1" width="8" height="9" rx="1" stroke="currentColor" stroke-width="1.1"/><rect x="1" y="3" width="8" height="9" rx="1" stroke="currentColor" stroke-width="1.1"/></svg>Copy table (for Excel)</button>
   <button class="dm-item" onclick="copyBOMCSV()"><svg viewBox="0 0 13 13" fill="none"><rect x="1" y="1" width="11" height="11" rx="1" stroke="currentColor" stroke-width="1.1"/><path d="M1 4.5h11M4.5 4.5v7" stroke="currentColor" stroke-width="1.1"/></svg>Copy CSV</button>
   <button class="dm-item" onclick="copyMD()"><svg viewBox="0 0 13 13" fill="none"><rect x="1" y="2.5" width="11" height="8" rx="1" stroke="currentColor" stroke-width="1.1"/><path d="M3.5 8.5V4.5l2 2.5 2-2.5v4M9.5 8.5V4.5l-1.5 2" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>Copy Markdown</button>
 </div>
@@ -1061,12 +1096,11 @@
   <div class="dm-section">Project</div>
   <button class="dm-item" onclick="newProject();closeProjectMenu()"><svg viewBox="0 0 13 13" fill="none"><path d="M7 1H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V5L7 1z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/><path d="M7 1v4h4" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/><path d="M6.5 6v4M4.5 8h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>New Project</button>
   <button class="dm-item" onclick="saveProject();closeProjectMenu()"><svg viewBox="0 0 13 13" fill="none"><rect x="1" y="1" width="11" height="11" rx="1" stroke="currentColor" stroke-width="1.1"/><rect x="4" y="1" width="5" height="4" rx=".5" stroke="currentColor" stroke-width="1.1"/><rect x="3" y="7" width="7" height="4" rx=".5" stroke="currentColor" stroke-width="1.1"/></svg>Save Project</button>
+  <button class="dm-item" onclick="closeProjectMenu();showSavedProjects()"><svg viewBox="0 0 13 13" fill="none"><path d="M1.5 3.2a1 1 0 0 1 1-1h2.7l1.3 1.5h4a1 1 0 0 1 1 1v5.6a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg>Open Saved Project…</button>
   <div class="dm-sep"></div>
-  <div class="dm-section">File</div>
-  <button class="dm-item" onclick="exportCSV();closeProjectMenu()"><svg viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3.5 6l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Export FabricBOM</button>
-  <button class="dm-item" onclick="openImport();closeProjectMenu()"><svg viewBox="0 0 13 13" fill="none"><path d="M6.5 9V1M9.5 6l-3 3-3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Import FabricBOM</button>
-  <div class="dm-sep"></div>
-  <button class="dm-item" onclick="window.print();closeProjectMenu()"><svg viewBox="0 0 13 13" fill="none"><rect x="1.5" y="4" width="10" height="6" rx="1" stroke="currentColor" stroke-width="1.1"/><path d="M3.5 4V2h6v2M3.5 10h6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>Print</button>
+  <div class="dm-section">FabricBOM file (.fbom)</div>
+  <button class="dm-item" onclick="exportCSV();closeProjectMenu()" title="Download this project as a .fbom file you can reopen later or send to another FabricBOM user"><svg viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3.5 6l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Download .fbom file</button>
+  <button class="dm-item" onclick="openImport();closeProjectMenu()"><svg viewBox="0 0 13 13" fill="none"><path d="M6.5 9V1.5M3.5 4.5l3-3 3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Open .fbom file…</button>
 </div>
 
 <!-- Import CSV Modal -->
@@ -1074,7 +1108,7 @@
   <div id="imp-box">
     <h3>
       <svg width="14" height="14" viewBox="0 0 13 13" fill="none"><path d="M6.5 9V1M9.5 6l-3 3-3-3" stroke="#2A2F3A" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="#2A2F3A" stroke-width="1.3" stroke-linecap="round"/></svg>
-      Import Project from FabricBOM
+      Open a FabricBOM file (.fbom)
     </h3>
     <div id="imp-body">
       <div id="imp-drop" onclick="document.getElementById('imp-file').click()" ondragover="impDragOver(event)" ondragleave="impDragLeave(event)" ondrop="impDrop(event)">
@@ -1480,7 +1514,7 @@ async function buildNav() {
     any = true;
     const lbl = document.createElement('div'); lbl.className='nsl'; lbl.textContent=cat; lbl.style.paddingTop='14px'; frag.appendChild(lbl);
     for (const p of items) {
-      const el = document.createElement('div'); el.className='ni';
+      const el = document.createElement('div'); el.className='ni'; el.tabIndex=0; el.setAttribute('role','button');
       el.dataset.productPath = `products/${p.file}`;
       el.innerHTML = `${icon(p.file)}<span class="ni-label">${p.label}</span>`;
       el.onclick = () => loadProduct(`products/${p.file}`, p.label, el);
@@ -1491,6 +1525,16 @@ async function buildNav() {
   c.replaceChildren(frag);
 }
 async function exists(path) { try { return (await fetch(path,{method:'HEAD'})).ok; } catch { return false; } }
+
+// Sidebar items are <div role="button" tabindex="0">; make Enter / Space activate
+// them like real buttons so the whole nav works from the keyboard.
+document.getElementById('sidebar').addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const ni = e.target.closest('.ni[role="button"]');
+  if (!ni || ni !== e.target) return;
+  e.preventDefault();
+  ni.click();
+});
 
 // ── NAV STATE PERSISTENCE ─────────────────────────────────────────────────────
 const NAV_STATE_KEY = 'fabricbom_nav_state';
@@ -1673,7 +1717,7 @@ async function renderPluginNav() {
   for (const [cat, items] of Object.entries(groups)) {
     const lbl = document.createElement('div'); lbl.className='nsl'; lbl.textContent=cat; lbl.style.paddingTop='14px'; container.appendChild(lbl);
     for (const p of items) {
-      const el = document.createElement('div'); el.className='ni'; el.id=`nav-plugin-${p.id}`;
+      const el = document.createElement('div'); el.className='ni'; el.id=`nav-plugin-${p.id}`; el.tabIndex=0; el.setAttribute('role','button');
       el.innerHTML = `${pluginNavIcon(p.icon)}<span class="ni-label">${p.name}</span>`;
       // Pre-resolve blob URL now so the click is instant
       if (p.type === 'html') _resolvePluginURL(p).catch(()=>{});
@@ -1831,12 +1875,14 @@ function closeSidebar() {
     document.getElementById('sidebar-overlay').classList.remove('on');
   }
 }
+const PIN_TITLE_ON  = 'Toolbar stays visible while scrolling — click to unpin';
+const PIN_TITLE_OFF = 'Keep this toolbar visible while scrolling';
 function togglePin() {
   const sbar = document.getElementById('sbar');
   const btn = document.getElementById('pin-btn');
   const nowPinned = !sbar.classList.toggle('unpinned');
   btn.classList.toggle('pinned', nowPinned);
-  btn.title = nowPinned ? 'Unpin toolbar' : 'Pin toolbar';
+  btn.title = nowPinned ? PIN_TITLE_ON : PIN_TITLE_OFF;
   localStorage.setItem('sbar-pinned', nowPinned ? 'true' : 'false');
 }
 
@@ -1997,12 +2043,24 @@ function updateBadges() {
 function updateSaveIndicator() {
   const cls = cart.length === 0 ? '' : (bomDirty ? 'save-dot dirty' : 'save-dot saved');
   const title = cart.length === 0 ? '' : (bomDirty ? 'Unsaved changes' : 'Saved');
-  ['bom-save-dot','nav-bom-save-dot'].forEach(id => {
+  ['bom-save-dot','nav-bom-save-dot','save-btn-dot'].forEach(id => {
     const el = document.getElementById(id);
     if (!el) return;
     el.className = cls || 'save-dot';
     el.title = title;
   });
+  // Toolbar Save button: "Save" + orange dot while dirty, green "Saved" once stored.
+  const sb = document.getElementById('save-btn');
+  if (sb) {
+    const saved = cart.length > 0 && !bomDirty;
+    const dirty = cart.length > 0 && bomDirty;
+    sb.classList.toggle('is-saved', saved);
+    sb.classList.toggle('is-dirty', dirty);
+    document.getElementById('save-btn-label').textContent = saved ? 'Saved' : 'Save';
+    sb.title = saved ? 'Saved to Saved Projects — no unsaved changes'
+             : dirty ? 'Unsaved changes — click to save this project to Saved Projects'
+             : 'Save this project to Saved Projects';
+  }
 }
 function markDirty() { bomDirty = true; updateSaveIndicator(); }
 function markSaved() { bomDirty = false; updateSaveIndicator(); }
@@ -2113,7 +2171,8 @@ function newProject() {
   const card = document.getElementById('proj-info-card');
   card.classList.remove('view-mode');
   document.getElementById('pi-edit-btn').classList.remove('active');
-  document.getElementById('pi-edit-label').textContent = 'View';
+  document.getElementById('pi-edit-btn').title = PI_TITLE_DONE;
+  document.getElementById('pi-edit-label').textContent = 'Done';
   updateBadges(); renderGroups(); saveCart(); markSaved();
   showPBV();
   toast('✓ New BOM — project reset');
@@ -2382,7 +2441,7 @@ async function renderGroups() {
           <button class="bgr-btn${_bomClip && _bomClip.srcId === entry.id ? ' copied' : ''}" onclick="copyEntry(${entry.id})" title="Copy this section and everything in it" aria-label="Copy section"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><rect x="3.5" y="1" width="8" height="9" rx="1" stroke="currentColor" stroke-width="1.1"/><rect x="1" y="3" width="8" height="9" rx="1" stroke="currentColor" stroke-width="1.1"/></svg></button>
           ${pasteIntoBtn(entry.id)}
           <button class="bgr-btn" onclick="openEditGroup(${entry.id})" title="Edit group header"><svg viewBox="0 0 11 11" fill="none"><path d="M7.5 1.5l2 2L3 10H1V8L7.5 1.5z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg></button>
-          <button class="bgr-btn del" onclick="removeFromCart(${entry.id})">✕</button>
+          <button class="bgr-btn del" onclick="removeFromCart(${entry.id})" title="Delete this section header (the products under it are kept)" aria-label="Delete section header">✕</button>
         </div>`;
       addDragListeners(el);
       c.appendChild(el);
@@ -2435,8 +2494,8 @@ async function renderGroups() {
           <div style="flex:1;min-width:0;"><input type="text" class="label-input bgp" value="${h(entry.label)}" onchange="updateEntryLabel(${entry.id},this.value)"><div class="bgm">${lines} line item${lines!==1?'s':''} · ${qty.toLocaleString()} units/licenses</div></div>
           ${entry.product !== 'Custom SKU' ? `<span class="bg-tag">${h(entry.product)}</span>` : ''}
           <button class="bg-copy${_bomClip && _bomClip.srcId === entry.id ? ' copied' : ''}" onclick="copyEntry(${entry.id})" title="Copy this group — then paste a duplicate anywhere in the BOM" aria-label="Copy group"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><rect x="3.5" y="1" width="8" height="9" rx="1" stroke="currentColor" stroke-width="1.1"/><rect x="1" y="3" width="8" height="9" rx="1" stroke="currentColor" stroke-width="1.1"/></svg></button>
-          <button class="bg-edit" onclick="openSkuModalForEdit(${entry.id})" title="Edit rows"><svg viewBox="0 0 11 11" fill="none"><path d="M7.5 1.5l2 2L3 10H1V8L7.5 1.5z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg></button>
-          <button class="bg-del" onclick="removeFromCart(${entry.id})">✕</button>
+          <button class="bg-edit" onclick="openSkuModalForEdit(${entry.id})" title="Edit rows" aria-label="Edit rows"><svg viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M7.5 1.5l2 2L3 10H1V8L7.5 1.5z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg></button>
+          <button class="bg-del" onclick="removeFromCart(${entry.id})" title="Remove this product from the BOM" aria-label="Remove product">✕</button>
         </div>
         <div class="bt-wrap"><table class="bt"><thead><tr>
           <th class="col-grip"></th><th class="col-exp"></th><th style="width:200px;">Part Number</th><th class="col-desc">Description</th>
@@ -2894,13 +2953,44 @@ function rowsWithTerm(rows) {
 }
 
 // ── SAVED PROJECTS ────────────────────────────────────────────────────────────
+// Saves are grouped into one project (with version history) by Customer name.
+function _latestSaveFor(cust) {
+  const n = (cust || '').trim().toLowerCase();
+  return savedProjects.find(p => p.projectKey && (p.meta.cust || '').trim().toLowerCase() === n);
+}
+// What a save captures that the user can see — ignores encryption blobs, whose
+// random IVs differ on every save even when nothing changed.
+function _projectFingerprint(meta, cartArr) {
+  return JSON.stringify([meta.cust||'', meta.opp||'', meta.eng||'', meta.date||'', meta.notes||'', meta.term||'', cartArr]);
+}
+function matchesLatestSave() {
+  if (!cart.length) return true;
+  const meta = getMeta();
+  const latest = _latestSaveFor(meta.cust);
+  return !!latest && _projectFingerprint(latest.meta, latest.cart) === _projectFingerprint(meta, cart);
+}
+
 function saveProject() {
   if (!cart.length) { toast('⚠ Nothing to save — add items to the BOM first'); return; }
+  // Unnamed saves would all pile up as versions of one "Unnamed Project", so ask
+  // for a name first. Skipped when the fields are locked (read-only / password).
+  const custEl = document.getElementById('pi-cust');
+  const pwLocked = !!(bomPasswordHash && !bomUnlocked);
+  if (!custEl.value.trim() && !pwLocked && !isReadOnly()) {
+    const name = (prompt('Name this project (Customer / Opportunity):', '') || '').trim();
+    if (!name) { toast('Save cancelled — a project name is needed'); return; }
+    custEl.value = name;
+    custEl.dispatchEvent(new Event('input'));
+    updatePiSummary();
+    updatePiView();
+  }
+  if (matchesLatestSave()) {
+    markSaved();
+    toast('✓ Already saved — no changes since the last save');
+    return;
+  }
   const meta = getMeta();
-  const normalizedCust = (meta.cust || '').trim().toLowerCase();
-  const existing = savedProjects.find(p =>
-    p.projectKey && (p.meta.cust || '').trim().toLowerCase() === normalizedCust
-  );
+  const existing = _latestSaveFor(meta.cust);
   const projectKey = existing ? existing.projectKey : 'pk_' + Date.now();
   const snapshot = {
     id: 'save_' + Date.now(),
@@ -3156,51 +3246,42 @@ function deserializeBOM(json) {
   return { ok: true, meta, items, prodCount, grpCount };
 }
 
-function shareBOM() {
+// One "Copy share link" action. The clipboard gets both a rich hyperlink named
+// after the project (Outlook, Teams, Slack) and the plain URL (anywhere that
+// only takes text), so there is no need to pick between two near-identical items.
+function copyShareLink() {
   closeCopyMenu();
   if (!cart.length) { toast('Nothing to share — add items first'); return; }
   let compressed;
   try {
     compressed = LZString.compressToEncodedURIComponent(serializeBOM());
   } catch(e) {
-    toast('Could not generate share URL: ' + e.message);
+    toast('Could not generate share link: ' + e.message);
     return;
   }
-  if (compressed.length > 100000) {
-    toast('Warning: BOM is very large — URL may not work in all browsers.');
-  }
-  const url = location.origin + location.pathname + '#bom=' + compressed;
-  clipboardWrite(url, '✓ Share URL copied to clipboard');
-  history.replaceState(null, '', '#bom=' + compressed);
-}
-
-function shareHyperlink() {
-  closeCopyMenu();
-  if (!cart.length) { toast('Nothing to share — add items first'); return; }
-  let compressed;
-  try {
-    compressed = LZString.compressToEncodedURIComponent(serializeBOM());
-  } catch(e) {
-    toast('Could not generate share URL: ' + e.message);
-    return;
-  }
+  const big = compressed.length > 100000;
+  const okMsg = big ? '✓ Link copied — note: this BOM is very large, so the link may not open in every browser'
+                    : '✓ Share link copied — paste it into email, Teams, or Slack';
   const url = location.origin + location.pathname + '#bom=' + compressed;
   const displayName = getMeta().cust;
   const html = `<a href="${url}">${displayName.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}</a>`;
   history.replaceState(null, '', '#bom=' + compressed);
-  if (navigator.clipboard && navigator.clipboard.write) {
+  if (navigator.clipboard && navigator.clipboard.write && typeof ClipboardItem !== 'undefined') {
     const item = new ClipboardItem({
       'text/html': new Blob([html], { type: 'text/html' }),
       'text/plain': new Blob([url], { type: 'text/plain' })
     });
     navigator.clipboard.write([item]).then(
-      () => toast('✓ Hyperlink copied to clipboard'),
-      () => clipboardWrite(url, '✓ Share URL copied (hyperlink unavailable)')
+      () => toast(okMsg),
+      () => clipboardWrite(url, okMsg)
     );
   } else {
-    clipboardWrite(url, '✓ Share URL copied (hyperlink unavailable)');
+    clipboardWrite(url, okMsg);
   }
 }
+// Former menu entries, kept so anything still calling them keeps working.
+function shareBOM() { copyShareLink(); }
+function shareHyperlink() { copyShareLink(); }
 
 function backupProjects() {
   if (!savedProjects.length) { toast('No saved projects to back up'); return; }
@@ -3287,17 +3368,145 @@ function exportCSV() {
   a.download=`FabricBOM_${p.cust.replace(/[^a-zA-Z0-9]/g,'_')}_${new Date().toISOString().slice(0,10)}.fbom`;
   a.click(); toast('✓ FabricBOM exported');
 }
+
+// ── DOWNLOAD AS EXCEL / CSV ──────────────────────────────────────────────────
+// A customer-ready flat table, one row per line item with its section and
+// product repeated so the sheet sorts and filters cleanly. List Price /
+// Extended columns appear when a price list is loaded. The .fbom file (above)
+// stays the format for reopening a project in FabricBOM.
+const KIND_LABELS = { req:'Required', mand:'Mandatory', opt:'Optional', inc:'Included', excl:'Excluded', attn:'Attention', note:'Note' };
+
+async function buildBOMTable() {
+  let priceMap = null;
+  try {
+    const pr = await getPricingIDB();
+    if (pr && pr.data && pr.data.rows && pr.data.rows.length) priceMap = new Map(pr.data.rows.map(r => [r['SKU'], r['Price']]));
+  } catch(_) { /* pricing unavailable */ }
+  const header = ['Section','Product','Sub-section','Part Number','Description','Qty','Type','Notes'];
+  if (priceMap) header.push('List Price','Extended');
+  const rows = [];
+  let section = '', total = 0, totalExclOpt = 0, hasOpt = false, anyPrice = false;
+  for (const entry of cart) {
+    if (entry._type === 'group') { section = entry.label || ''; continue; }
+    let sub = '';
+    for (const r of rowsWithTerm(entry.rows)) {
+      if (r.section !== undefined) { sub = r.section; continue; }
+      const baseKind = r._kindOverride !== undefined ? r._kindOverride : r.kind;
+      const isNote = baseKind === 'note';
+      let lp = NaN;
+      if (priceMap && !isNote) {
+        const raw = priceMap.get(r.sku || '');
+        lp = raw ? parseFloat(String(raw).replace(/[^0-9.]/g, '')) : NaN;
+      }
+      // Same rule as the BOM table: with pricing loaded, an unpriced SKU is flagged Attention.
+      const kind = (!isNote && r._kindOverride === undefined && priceMap && r.sku && isNaN(lp)) ? 'attn' : baseKind;
+      const row = [section, entry.label || entry.product || '', sub, isNote ? '' : (r.sku || ''), r.desc || '',
+                   typeof r.qty === 'number' ? r.qty : '', KIND_LABELS[kind] || '', r.note || ''];
+      if (priceMap) {
+        const ext = (!isNaN(lp) && typeof r.qty === 'number') ? (kind === 'excl' ? 0 : lp * r.qty) : '';
+        row.push(isNaN(lp) ? '' : lp, ext);
+        if (ext !== '' && kind !== 'excl') {
+          anyPrice = true; total += ext;
+          if (kind === 'opt') hasOpt = true; else totalExclOpt += ext;
+        }
+      }
+      rows.push(row);
+    }
+  }
+  return { header, rows, priced: !!priceMap, anyPrice, total, totalExclOpt, hasOpt };
+}
+
+function bomInfoRows() {
+  const v = id => document.getElementById(id).value.trim();
+  const locked = !!(bomPasswordHash && !bomUnlocked);
+  const term = document.getElementById('pi-term').value;
+  const out = [['Customer / Opportunity', locked ? '(password protected)' : (v('pi-cust') || 'Unnamed Project')]];
+  if (!locked && v('pi-opp')) out.push(['Opportunity ID', v('pi-opp')]);
+  if (v('pi-eng')) out.push(['SE / Engineer', v('pi-eng')]);
+  if (v('pi-date')) out.push(['Date', v('pi-date')]);
+  out.push(['License Term', PI_TERM_LABELS[term] || term]);
+  if (!locked && v('pi-notes')) out.push(['Project Scope / Notes', v('pi-notes')]);
+  return out;
+}
+
+function saveBlob(blob, filename) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(a.href); }, 1000);
+}
+
+async function downloadBOM(fmt) {
+  closeCopyMenu();
+  if (!cart.some(e => !e._type)) { toast('Nothing to export — add items to the BOM first'); return; }
+  const t = await buildBOMTable();
+  const base = `FabricBOM_${getMeta().cust.replace(/[^a-zA-Z0-9]/g,'_')}_${new Date().toISOString().slice(0,10)}`;
+
+  if (fmt === 'csv') {
+    // Plain table (no title block) so it imports cleanly into other tools.
+    // The byte-order mark makes Excel read the UTF-8 (em dashes, ×) correctly.
+    const cell = c => `"${String(c).replace(/"/g,'""')}"`;
+    const csv = '﻿' + [t.header, ...t.rows].map(r => r.map(cell).join(',')).join('\r\n');
+    saveBlob(new Blob([csv], { type:'text/csv;charset=utf-8;' }), base + '.csv');
+    toast('✓ CSV downloaded');
+    return;
+  }
+
+  if (typeof XLSX === 'undefined') { toast('⚠ Excel export unavailable — the spreadsheet library did not load'); return; }
+  const info = bomInfoRows();
+  const aoa = [['FabricBOM — Project BOM'], ...info, [], t.header, ...t.rows];
+  const hdrRow = info.length + 2;                       // 0-based index of the column header row
+  const lastDataRow = hdrRow + t.rows.length;
+  if (t.priced && t.anyPrice) {
+    const pad = new Array(t.header.length - 2).fill('');
+    aoa.push([], [...pad, 'Total', t.total]);
+    if (t.hasOpt) aoa.push([...pad, 'Total excl. Optional', t.totalExclOpt]);
+  }
+  const ws = XLSX.utils.aoa_to_sheet(aoa);
+  if (t.priced) {
+    const fmtZ = getSetting('roundPrices') ? '$#,##0' : '$#,##0.00';
+    const cols = [t.header.length - 2, t.header.length - 1];
+    for (let r = hdrRow + 1; r < aoa.length; r++) {
+      for (const c of cols) {
+        const cellRef = ws[XLSX.utils.encode_cell({ r, c })];
+        if (cellRef && cellRef.t === 'n') cellRef.z = fmtZ;
+      }
+    }
+  }
+  const widths = [22, 34, 28, 24, 60, 6, 11, 30, 13, 14];
+  ws['!cols'] = t.header.map((_, i) => ({ wch: widths[i] }));
+  ws['!autofilter'] = { ref: XLSX.utils.encode_range({ s:{ r:hdrRow, c:0 }, e:{ r:lastDataRow, c:t.header.length - 1 } }) };
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'BOM');
+  const out = XLSX.write(wb, { bookType:'xlsx', type:'array' });
+  saveBlob(new Blob([out], { type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), base + '.xlsx');
+  toast('✓ Excel file downloaded');
+}
 // ── COPY / EXPORT DROPDOWN ───────────────────────────────────────────────────
+// Open a fixed-position dropdown under its button, nudged so it stays fully on
+// screen — on a phone the right-hand buttons sit near the edge, and a tall menu
+// opened low on the page would otherwise run off the bottom.
+function placeMenu(menu, btn) {
+  const rect = btn.getBoundingClientRect();
+  menu.style.visibility = 'hidden';
+  menu.classList.add('on');
+  const w = menu.offsetWidth, hgt = menu.offsetHeight, pad = 8;
+  let left = Math.min(rect.left, window.innerWidth - w - pad);
+  let top  = rect.bottom + 4;
+  if (top + hgt > window.innerHeight - pad && rect.top - hgt - 4 >= pad) top = rect.top - hgt - 4;
+  menu.style.left = Math.max(pad, left) + 'px';
+  menu.style.top  = Math.max(pad, top) + 'px';
+  menu.style.visibility = '';
+}
 function toggleCopyMenu(e) {
   e.stopPropagation();
   const menu = document.getElementById('copy-menu');
   if (menu.classList.contains('on')) { menu.classList.remove('on'); return; }
   closeProjectMenu();
   closeAddMenu();
-  const rect = e.currentTarget.getBoundingClientRect();
-  menu.style.top  = (rect.bottom + 4) + 'px';
-  menu.style.left = rect.left + 'px';
-  menu.classList.add('on');
+  placeMenu(menu, e.currentTarget);
 }
 function closeCopyMenu() { document.getElementById('copy-menu').classList.remove('on'); }
 function toggleAddMenu(e) {
@@ -3306,10 +3515,7 @@ function toggleAddMenu(e) {
   if (menu.classList.contains('on')) { menu.classList.remove('on'); return; }
   closeCopyMenu();
   closeProjectMenu();
-  const rect = e.currentTarget.getBoundingClientRect();
-  menu.style.top  = (rect.bottom + 4) + 'px';
-  menu.style.left = rect.left + 'px';
-  menu.classList.add('on');
+  placeMenu(menu, e.currentTarget);
 }
 function closeAddMenu() { document.getElementById('add-menu').classList.remove('on'); }
 function openSkuModal() {
@@ -3384,10 +3590,7 @@ async function toggleProjectMenu(e) {
     const pricing = await getPricingIDB();
 
   } catch(_) {}
-  const rect = btn.getBoundingClientRect();
-  menu.style.top  = (rect.bottom + 4) + 'px';
-  menu.style.left = rect.left + 'px';
-  menu.classList.add('on');
+  placeMenu(menu, btn);
 }
 function closeProjectMenu() { document.getElementById('project-menu').classList.remove('on'); }
 document.addEventListener('click', function(e) {
@@ -4446,6 +4649,11 @@ function updatePiSummary() {
   document.getElementById('pi-summary').innerHTML = html;
 }
 
+// Edit mode shows the full form and a "Done" button; view mode shows a one-line
+// summary and an "Edit" button. The icons swap via CSS on .view-mode.
+const PI_TITLE_DONE = 'Done editing — collapse to a one-line summary';
+const PI_TITLE_EDIT = 'Edit project information';
+
 function togglePiExpand() {
   document.getElementById('proj-info-card').classList.toggle('pi-expanded');
 }
@@ -4459,13 +4667,13 @@ function togglePiEdit() {
     card.classList.remove('view-mode');
     card.classList.remove('pi-expanded');
     btn.classList.remove('active');
-    label.textContent = 'View';
+    label.textContent = 'Done'; btn.title = PI_TITLE_DONE;
   } else {
     updatePiView();
     card.classList.add('view-mode');
     card.classList.remove('pi-expanded');
     btn.classList.add('active');
-    label.textContent = 'Edit';
+    label.textContent = 'Edit'; btn.title = PI_TITLE_EDIT;
   }
   updateLockUI();
 }
@@ -4492,7 +4700,7 @@ function clearPiFields() {
   card.classList.remove('view-mode');
   card.classList.remove('pi-expanded');
   btn.classList.remove('active');
-  label.textContent = 'View';
+  label.textContent = 'Done'; btn.title = PI_TITLE_DONE;
 }
 
 function hasPiData() {
@@ -4510,12 +4718,12 @@ function initPiMode() {
     card.classList.add('view-mode');
     card.classList.remove('pi-expanded');
     btn.classList.add('active');
-    label.textContent = 'Edit';
+    label.textContent = 'Edit'; btn.title = PI_TITLE_EDIT;
   } else {
     card.classList.remove('view-mode');
     card.classList.remove('pi-expanded');
     btn.classList.remove('active');
-    label.textContent = 'View';
+    label.textContent = 'Done'; btn.title = PI_TITLE_DONE;
   }
   if (bomPasswordHash) setLockedState(!bomUnlocked);
   updateLockUI();
@@ -4915,6 +5123,9 @@ function initDemoLink() {
   loadClip();
   initUndoBaseline();
   loadSaved();
+  // The unsaved-changes flag lives only in memory, so after a reload work out
+  // whether the BOM on screen matches its latest save rather than assuming it does.
+  bomDirty = !matchesLatestSave();
   updateBadges();
   updateSavedBadge();
   renderGroups();
@@ -4924,8 +5135,8 @@ function initDemoLink() {
     const pinned = localStorage.getItem('sbar-pinned') !== 'false';
     const sbar = document.getElementById('sbar');
     const btn = document.getElementById('pin-btn');
-    if (!pinned) { sbar.classList.add('unpinned'); btn.title = 'Pin toolbar'; }
-    else { btn.classList.add('pinned'); btn.title = 'Unpin toolbar'; }
+    if (!pinned) { sbar.classList.add('unpinned'); btn.title = PIN_TITLE_OFF; }
+    else { btn.classList.add('pinned'); btn.title = PIN_TITLE_ON; }
   })();
   await renderPluginNav();
   renderPluginList();

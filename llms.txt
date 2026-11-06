@@ -21,7 +21,7 @@ FabricBOM is a single-page hub (`index.html`) that loads per-product configurato
 5. Open the Project BOM view (`#nav-proj` in the sidebar, or the cart button in the top bar)
 6. Fill the project metadata fields — `#pi-cust` (customer/opportunity, required), `#pi-opp`, `#pi-eng`, `#pi-date`, `#pi-term`, `#pi-notes`
 7. Choose the global license term in `#pi-term` (`-DD` co-term default, or `-12` / `-36` / `-60` for 1/3/5 years)
-8. Use the "File" menu (`#project-btn`) to Save, Export FabricBOM (CSV/XLSX/.fbom), or Print; use "Share" (`#copy-export-btn`) for URL/TSV/Markdown copy
+8. Click "Save" (`#save-btn`) to store the project in Saved Projects; use the "File" menu (`#project-btn`) for New / Save / Open Saved Project and to download or open a `.fbom` file; use "Export" (`#copy-export-btn`) to download Excel (.xlsx) or CSV, print / save as PDF, copy a share link, or copy the line items as TSV / CSV / Markdown
 
 ## Key DOM landmarks
 

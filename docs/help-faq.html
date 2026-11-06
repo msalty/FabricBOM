@@ -500,7 +500,7 @@
             <summary>How do I start a brand new BOM?</summary>
             <div class="qa-body">
               <p>Click <strong>New BOM</strong> at the top of the left sidebar. If the current BOM has anything in it, you'll be asked to confirm first — it clears every product group and resets the Project Information fields (SE name, default term, and any boilerplate scope notes come back from your Settings defaults).</p>
-              <p>This does not touch anything in <strong>Saved Projects</strong>, so save the current build from <strong>File ▸ Save Project</strong> first if you want to come back to it later.</p>
+              <p>This does not touch anything in <strong>Saved Projects</strong>, so click <strong>Save</strong> in the Project BOM toolbar first if you want to come back to it later.</p>
             </div>
           </details>
 
@@ -673,10 +673,8 @@
           <details class="qa" open>
             <summary>How do I save my current Project BOM?</summary>
             <div class="qa-body">
-              <ol>
-                <li><strong>Locate the File Menu:</strong> On the right side of the screen, just above your first list of items (and right next to the <strong>Share</strong> button), you will see a button labeled <strong>File</strong>.</li>
-                <li><strong>Save the Project:</strong> Click the <strong>File</strong> dropdown menu and select <strong>Save</strong> or <strong>Save As…</strong> to store your current build.</li>
-              </ol>
+              <p>Click <strong>Save</strong> in the toolbar just above your first list of items (it's also under <strong>File ▸ Save Project</strong>). If the project doesn't have a Customer / Opportunity name yet, you'll be asked for one — saves are grouped by that name, and each save of the same name is kept as a version.</p>
+              <p>The button shows whether you're up to date: <strong>Save</strong> with an orange dot means there are unsaved changes; a green <strong>Saved</strong> means the BOM matches its last save.</p>
               <p>Once your project is saved, you can easily retrieve it later by clicking on <strong>Saved Projects</strong> in the top-left sidebar menu.</p>
             </div>
           </details>
@@ -811,7 +809,7 @@
           <details class="qa" open>
             <summary>How do I mark my Project BOM as Read-Only?</summary>
             <div class="qa-body">
-              <p>In the white Project Information box at the top of your workspace, locate the small checkbox labeled <strong>RO</strong> (next to the Save button). Click the checkbox to toggle Read-Only mode on.</p>
+              <p>In the white Project Information box at the top of your workspace, locate the checkbox with the padlock labeled <strong>Read-only</strong> (on a phone it shows just the padlock). Click the checkbox to toggle Read-Only mode on.</p>
             </div>
           </details>
 
@@ -825,7 +823,7 @@
           <details class="qa" open>
             <summary>Will I be prompted to enter a password when making a BOM Read-Only?</summary>
             <div class="qa-body">
-              <p>Yes. When you check the <strong>RO</strong> box, a prompt will appear asking if you would like to require a password to unlock the BOM. You can choose to generate a password or proceed without one by clicking <strong>No, read-only only</strong>.</p>
+              <p>Yes. When you check the <strong>Read-only</strong> box, a prompt will appear asking if you would like to require a password to unlock the BOM. You can choose to generate a password or proceed without one by clicking <strong>No, read-only only</strong>.</p>
             </div>
           </details>
 
@@ -857,14 +855,22 @@
           <details class="qa" open>
             <summary>How do I export my current Project BOM?</summary>
             <div class="qa-body">
-              <p>You can export your current build directly from your workspace. Look at the menu panel on the far right side of your screen. Under the <strong>FILE</strong> heading, click the <strong>Export FabricBOM</strong> button. This will download a copy of your project file to your computer.</p>
+              <p>Click <strong>Export</strong> in the Project BOM toolbar:</p>
+              <ul>
+                <li><strong>Excel (.xlsx)</strong> — project details plus a line-item table you can sort and filter, with list prices and totals when a price list is loaded. Best for sending to a customer.</li>
+                <li><strong>CSV (.csv)</strong> — the same line items as a plain CSV, for importing into other tools.</li>
+                <li><strong>Print / Save as PDF</strong> — a printer-friendly layout of the whole BOM.</li>
+                <li><strong>Copy share link</strong> — a link that opens this BOM in FabricBOM; paste it into email, Teams, or Slack.</li>
+                <li><strong>Copy to clipboard</strong> — the line items as a table for Excel, CSV, or Markdown.</li>
+              </ul>
+              <p>To keep a copy of the full project that you can reopen in FabricBOM later, use <strong>File ▸ Download .fbom file</strong>.</p>
             </div>
           </details>
 
           <details class="qa" open>
             <summary>How do I import a previously exported Project BOM?</summary>
             <div class="qa-body">
-              <p>To load an external BOM file into the tool, navigate to the menu panel on the far right side of your screen. Under the <strong>FILE</strong> heading, click the <strong>Import FabricBOM</strong> button. This will prompt you to browse your computer and select the FabricBOM file you wish to upload and open.</p>
+              <p>Click <strong>File ▸ Open .fbom file…</strong> in the Project BOM toolbar (or <strong>Open .fbom file</strong> on the start screen). This will prompt you to browse your computer and select the .fbom file you wish to open.</p>
             </div>
           </details>
 
@@ -889,8 +895,8 @@
             <div class="qa-body">
               <p>Because FabricBOM is a web-based tool, you can print your BOM using a couple of straightforward methods:</p>
               <ul>
-                <li><strong>Directly from your web browser:</strong> The application is built to be printer-friendly. Simply press <strong>Ctrl + P</strong> (Windows/Linux) or <strong>Cmd + P</strong> (Mac), or navigate to your browser's settings menu and select "Print."</li>
-                <li><strong>Export to a spreadsheet first (Recommended for formatting):</strong> If you want more control over page breaks, column widths, or custom formatting, export your build first using the <strong>File</strong> menu, then open and print the file using Microsoft Excel or your preferred spreadsheet application.</li>
+                <li><strong>Directly from your web browser:</strong> The application is built to be printer-friendly. Choose <strong>Export ▸ Print / Save as PDF</strong>, or press <strong>Ctrl + P</strong> (Windows/Linux) or <strong>Cmd + P</strong> (Mac).</li>
+                <li><strong>Export to a spreadsheet first (Recommended for formatting):</strong> If you want more control over page breaks, column widths, or custom formatting, choose <strong>Export ▸ Excel (.xlsx)</strong>, then open and print the file using Microsoft Excel or your preferred spreadsheet application.</li>
               </ul>
             </div>
           </details>

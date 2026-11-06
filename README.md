@@ -32,7 +32,7 @@ Designed to be run entirely offline. Install it as a web app on most modern brow
 
 ### Project Management
 - **New BOM** — one click in the sidebar clears the BOM and Project Information to start a fresh quote (with a confirmation when there's anything to lose)
-- **Named project saves** — save multiple projects to browser storage by name and reopen them any time
+- **Named project saves** — the toolbar **Save** button stores the project under its Customer / Opportunity name (asking for one if it's blank) and shows **Saved** or an unsaved-changes dot, so it's always clear whether the current BOM has been saved
 - **Version history** — each project retains previous saves; restore any prior version with one click
 - **Session persistence** — IndexedDB keeps your active BOM intact across page refreshes
 - **Project metadata** — capture customer/opportunity name, opportunity ID, SE name, date, and project scope notes
@@ -45,12 +45,13 @@ Designed to be run entirely offline. Install it as a web app on most modern brow
 - **Discount matrix columns** — add, rename, re-type, and remove extra partner-type and named-account columns directly in the Discount Matrix; no CSV round trip needed, and rates carry over on rename
 
 ### Export & Sharing
-- **Export as CSV** — flat export with resolved term suffixes applied to all SKUs
-- **Export as XLSX** — formatted Excel workbook via the bundled SheetJS library
-- **Export as .fbom file** — the native FabricBOM format for saving and sharing a full project
-- **Import .fbom** — reload any previously exported project file to continue editing
-- **Share URL** — generate a compressed URL containing the full BOM; recipients open it directly in their browser
-- **Print view** — browser-native print layout optimized for customer-ready output
+- **Export ▸ Excel (.xlsx)** — project details plus a filterable line-item table (section, product, part number, description, qty, type, notes), with list price, extended price, and totals when a price list is loaded; built with the bundled SheetJS library, so it works offline
+- **Export ▸ CSV (.csv)** — the same line-item table as a plain CSV for importing into other tools
+- **Export ▸ Print / Save as PDF** — browser-native print layout optimized for customer-ready output
+- **Export ▸ Copy share link** — a compressed URL containing the full BOM; pastes as a named hyperlink in email / Teams / Slack and as a plain URL elsewhere, and recipients open it directly in their browser
+- **Export ▸ Copy to clipboard** — the line items as a table for Excel, CSV, or Markdown
+- **File ▸ Download / Open .fbom file** — the native FabricBOM format for saving a full project to disk and reopening it later
+- Term suffixes (-12 / -36 / -60) are resolved on every SKU in every export
 - **Global license term** — apply 1-year, 3-year, 5-year, or co-term suffixes to all SKUs at export time
 
 ### Security & Privacy
@@ -106,7 +107,7 @@ python3 -m http.server 8080
 4. Repeat for each product; add group headers to separate sections
 5. Fill in project metadata (customer name, opportunity ID, SE, date, scope)
 6. Optionally upload a Fortinet price list to show pricing
-7. Select the license term and export as CSV, XLSX, or print
+7. Click **Save**, then select the license term and use **Export** for Excel, CSV, print/PDF, or a share link
 
 ---
 
