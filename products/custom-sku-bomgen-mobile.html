@@ -580,6 +580,69 @@ input.sku-input {
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
+/* ── Price-list search ── */
+.ps-body { display: flex; flex-direction: column; gap: 10px; }
+.ps-field { position: relative; }
+.ps-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--forti-text-muted); pointer-events: none; }
+#ps-input {
+  width: 100%; font-size: 16px;   /* 16px keeps iOS from zooming in on focus */
+  padding: 11px 12px 11px 36px; border: 1px solid var(--forti-input-border); border-radius: var(--radius);
+  font-family: inherit; color: var(--forti-text); background: white; -webkit-appearance: none;
+}
+#ps-input:focus { outline: none; border-color: var(--forti-red); box-shadow: 0 0 0 3px rgba(238,49,36,.1); }
+.ps-filters { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ps-filters select { font-size: 13px; padding: 8px 10px; min-width: 0; }
+.ps-status { font-size: 12px; color: var(--forti-text-secondary); line-height: 1.45; }
+.ps-status code { font-size: 11px; background: var(--forti-bg); border-radius: 3px; padding: 0 4px; }
+.ps-results { display: flex; flex-direction: column; gap: 8px; }
+.ps-results:empty { display: none; }
+.ps-card {
+  display: flex; align-items: center; gap: 10px;
+  border: 1px solid var(--forti-border); border-radius: var(--radius);
+  padding: 10px 10px 10px 12px; background: white;
+}
+.ps-card.is-added { border-color: #A5D6A7; background: #F4FBF4; }
+.ps-main { flex: 1; min-width: 0; }
+/* wrap: on a phone the price drops under the part number rather than splitting it */
+.ps-top { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 8px; row-gap: 1px; }
+.ps-sku {
+  font-family: 'Courier New', monospace; font-size: 13px; font-weight: 700; color: #1A4E82;
+  letter-spacing: .02em; overflow-wrap: anywhere;
+}
+.ps-price { margin-left: auto; font-size: 13px; font-weight: 700; color: var(--forti-text); white-space: nowrap; }
+.ps-price small { font-size: 10px; font-weight: 600; color: var(--forti-text-muted); margin-left: 3px; }
+.ps-desc {
+  font-size: 12px; color: var(--forti-text-secondary); line-height: 1.4; margin-top: 2px;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.ps-meta { font-size: 10px; color: var(--forti-text-muted); margin-top: 3px; text-transform: uppercase; letter-spacing: .04em; }
+.ps-results mark { background: #FFF2B3; color: inherit; border-radius: 2px; padding: 0 1px; }
+.ps-add {
+  flex-shrink: 0; min-width: 76px; min-height: 40px; padding: 8px 12px;
+  border-radius: var(--radius); border: 1px solid #2E7D32; background: white; color: #2E7D32;
+  font-size: 13px; font-weight: 700; font-family: inherit; cursor: pointer;
+}
+.ps-add:hover { background: #F1F8F1; }
+.ps-card.is-added .ps-add { background: #2E7D32; color: white; }
+/* Small phones: keep a full part number on one line beside the button */
+@media (max-width: 400px) {
+  .ps-sku { font-size: 12px; letter-spacing: 0; }
+  .ps-add { min-width: 64px; padding: 8px 10px; }
+}
+.ps-more {
+  align-self: center; padding: 8px 16px; border-radius: var(--radius); border: 1px solid var(--forti-border);
+  background: white; color: var(--forti-text-secondary); font-size: 12px; font-weight: 600; font-family: inherit; cursor: pointer;
+}
+.ps-nopricing {
+  font-size: 12px; color: var(--forti-text-secondary); background: var(--forti-white);
+  border: 1px dashed var(--forti-input-border); border-radius: var(--radius); padding: 9px 12px; line-height: 1.5;
+}
+#sku-rows:empty::before {
+  content: attr(data-empty); display: block; text-align: center;
+  font-size: 12px; color: var(--forti-text-muted); padding: 14px 8px;
+  border: 1.5px dashed var(--forti-border); border-radius: var(--radius);
+}
+
 /* ── Row count badge ── */
 .row-count-badge {
   font-size: 10px;
@@ -662,8 +725,8 @@ input.sku-input {
     </svg>
   </div>
   <div>
-    <div class="page-title">Custom SKU Entry</div>
-    <div class="page-subtitle">FortiBOM · Manually add any part number to the Project BOM</div>
+    <div class="page-title" id="page-title">Add part numbers</div>
+    <div class="page-subtitle">FabricBOM · Search the price list or type in any part number</div>
   </div>
   <button class="popover-close" onclick="closePopover()" title="Close">✕</button>
 </div>
@@ -674,45 +737,68 @@ input.sku-input {
   <div class="info-callout">
     <span>ℹ</span>
     <div>
-      Use this page to add <strong>any SKU</strong> that isn't covered by an existing product page — hardware, third-party accessories, custom bundles, or manually entered part numbers.
+      Use this page to add <strong>any part number</strong> that isn't covered by a product page — hardware, accessories, custom bundles, or anything from the price list.
       SKUs with a term suffix should use <code>-DD</code>; the main BOM tool will substitute the correct term on export.
     </div>
   </div>
 
-  <!-- Group / Bundle Label -->
+  <!-- Price-list search: shown when a price list is loaded. Results are cards
+       (not a table) so they read and tap well on a phone. -->
+  <div class="card" id="search-card" style="display:none">
+    <div class="card-body ps-body">
+      <div class="ps-field">
+        <svg class="ps-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="4.6" stroke="currentColor" stroke-width="1.6"/><path d="M10.5 10.5l3.6 3.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <input type="search" id="ps-input" placeholder="Search part numbers or descriptions"
+               autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+               enterkeyhint="search" aria-label="Search the price list">
+      </div>
+      <div class="ps-filters">
+        <select id="ps-family" aria-label="Product family"><option value="">All families</option></select>
+        <select id="ps-type" aria-label="Product type"><option value="">All types</option></select>
+      </div>
+      <div class="ps-status" id="ps-status" aria-live="polite"></div>
+      <div class="ps-results" id="ps-results"></div>
+      <button type="button" class="ps-more" id="ps-more" style="display:none">Show more</button>
+    </div>
+  </div>
+  <div class="ps-nopricing" id="ps-nopricing" style="display:none">
+    Tip: load a price list in <strong>Settings</strong> to search part numbers here instead of typing them.
+  </div>
+
+  <!-- Name for these part numbers in the BOM -->
   <div class="card" id="group-card">
     <div class="card-header">
-      <div class="card-header-title">Group / Bundle Label</div>
+      <div class="card-header-title">Name</div>
     </div>
     <div class="card-body">
       <div class="field">
-        <label>Group Name <span class="hint">(optional)</span></label>
+        <label for="f-group-name">Name <span class="hint">(optional — the heading in the BOM)</span></label>
         <input type="text" id="f-group-name" placeholder="e.g. FortiGate 91G — ENT Bundle"
                oninput="clearErr('f-group-name','err-group-name')">
       </div>
     </div>
   </div>
 
-  <!-- SKU Rows -->
+  <!-- Part number rows -->
   <div class="card">
     <div class="card-header">
       <div class="card-header-title">
-        SKU Line Items
+        Part numbers
         <span class="row-count-badge" id="row-count-badge">0</span>
       </div>
     </div>
     <div class="card-body" style="display:flex;flex-direction:column;gap:12px;">
 
-      <div id="sku-rows"></div>
+      <div id="sku-rows" data-empty="Nothing added yet — search above, or enter a part number manually."></div>
 
-      <div id="err-no-rows">⚠ Add at least one SKU row before generating a BOM.</div>
+      <div id="err-no-rows">⚠ Add at least one part number first.</div>
 
       <div class="add-row-btns">
         <button class="add-row-btn" onclick="addSkuRow(null, true)">
-          <strong>＋</strong> Add SKU Row
+          <strong>＋</strong> <span id="add-row-label">Add part number</span>
         </button>
-        <button class="add-row-btn" onclick="addSectionRow(null, true)">
-          <strong>≡</strong> Add Section Header
+        <button class="add-row-btn" onclick="addSectionRow(null, true)" title="A heading inside this product, e.g. “Hardware + Enterprise Bundle”">
+          <strong>≡</strong> Add sub-heading
         </button>
       </div>
 
@@ -749,8 +835,8 @@ input.sku-input {
 <!-- Sticky Action Bar -->
 <div class="sticky-actions">
  <div class="sticky-inner">
-  <button class="btn btn-primary" onclick="generateBOM()">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:5px;margin-top:-1px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg><span class="btn-preview-label">Preview</span>
+  <button class="btn btn-secondary" onclick="generateBOM()" title="Show these lines as they'll appear in the BOM">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:5px;margin-top:-1px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg><span class="btn-preview-label">Preview</span>
   </button>
   <button id="add-to-bom-btn" class="btn btn-success" onclick="addToProjectBOM()">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:5px;margin-top:-1px;"><path d="M12 3v13M5 13l7 7 7-7"/><line x1="5" y1="21" x2="19" y2="21"/></svg><span id="add-to-bom-label">Add to BOM</span>
@@ -813,12 +899,13 @@ let _lastLabel = '';
 let _lastMeta  = {};
 let _isEditing = false;
 
+// Short labels keep the type buttons on one line on a phone; the full name is the tooltip.
 const KIND_OPTIONS = [
-  { value: 'req',  label: 'REQ',  cls: 'selected-req'  },
-  { value: 'mand', label: 'MAND', cls: 'selected-mand' },
-  { value: 'opt',  label: 'OPT',  cls: 'selected-opt'  },
-  { value: 'inc',  label: 'INC',  cls: 'selected-inc'  },
-  { value: 'note', label: 'NOTE', cls: 'selected-note' },
+  { value: 'req',  label: 'REQ',  title: 'Required',  cls: 'selected-req'  },
+  { value: 'mand', label: 'MAND', title: 'Mandatory', cls: 'selected-mand' },
+  { value: 'opt',  label: 'OPT',  title: 'Optional',  cls: 'selected-opt'  },
+  { value: 'inc',  label: 'INC',  title: 'Included',  cls: 'selected-inc'  },
+  { value: 'note', label: 'NOTE', title: 'Note — information only, nothing to order', cls: 'selected-note' },
 ];
 
 // ─────────────────────────────────────────────
@@ -888,7 +975,7 @@ function addSkuRow(data, reveal) {
           <div class="type-group" id="type-btns-${id}">
             ${KIND_OPTIONS.map(k => `<button type="button"
               class="type-btn${(data.kind||'req')===k.value?' '+k.cls:''}"
-              data-kind="${k.value}"
+              data-kind="${k.value}" title="${k.title}" aria-label="${k.title}"
               onclick="selectKind(${id},'${k.value}')">${k.label}</button>`).join('')}
           </div>
         </div>
@@ -928,7 +1015,7 @@ function addSectionRow(data, reveal) {
 
   div.innerHTML = `
     <span class="drag-handle" title="Drag to reorder">⠿</span>
-    <span class="section-label">§ Section:</span>
+    <span class="section-label">Sub-heading:</span>
     <input type="text" class="section-label-input" id="sec-${id}"
            placeholder="e.g. Hardware + Enterprise Bundle"
            value="${escHtml(data.label||'')}"
@@ -983,6 +1070,18 @@ function updateRowNumbers() {
 function updateRowCountBadge() {
   const total = document.querySelectorAll('#sku-rows [data-row-id]').length;
   document.getElementById('row-count-badge').textContent = total;
+  _updateAddLabel();
+  _psRefreshAdded();
+}
+
+// "Add 3 to BOM" — counts rows that have a part number, so a blank row doesn't count.
+function _updateAddLabel() {
+  const lbl = document.getElementById('add-to-bom-label');
+  if (!lbl) return;
+  if (_isEditing) { lbl.textContent = 'Update in BOM'; return; }
+  const n = [...document.querySelectorAll('#sku-rows [data-row-type="sku"]')]
+    .filter(c => (document.getElementById(`sku-${c.dataset.rowId}`)?.value || '').trim()).length;
+  lbl.textContent = n ? `Add ${n} to BOM` : 'Add to BOM';
 }
 
 // ─────────────────────────────────────────────
@@ -1265,11 +1364,15 @@ function resetForm(skipSeed) {
   _lastRows = [];
   _isEditing = false;
   _rowPricingItems.clear();
-  const lbl = document.getElementById('add-to-bom-label');
-  if (lbl) lbl.textContent = 'Add to BOM';
+  document.getElementById('page-title').textContent = 'Add part numbers';
+  document.getElementById('ps-input').value = '';
+  document.getElementById('ps-family').value = '';
+  document.getElementById('ps-type').value = '';
   updateRowCountBadge();
   window.scrollTo(0, 0);
-  if (!skipSeed) addSkuRow(null, _isWide());
+  // With a price list the dialog opens on its search box; without one it
+  // opens on an empty row to type into (unless loadForEdit supplies rows).
+  _prepareMode(!skipSeed);
 }
 
 // ─────────────────────────────────────────────
@@ -1290,8 +1393,8 @@ function loadForEdit(data) {
   }
 
   _isEditing = true;
-  const lbl = document.getElementById('add-to-bom-label');
-  if (lbl) lbl.textContent = 'Update in BOM';
+  document.getElementById('page-title').textContent = 'Edit part numbers';
+  _updateAddLabel();
 }
 
 // ─────────────────────────────────────────────
@@ -1408,11 +1511,25 @@ function showAcDropdown(inputEl, items, onSelect) {
     dd.appendChild(div);
   });
 
-  const rect = inputEl.getBoundingClientRect();
+  // Open below the field, or above it when the sticky action bar leaves too
+  // little room below — otherwise the list ran off the bottom of the dialog.
+  // Width is capped to the screen so it never spills sideways on a phone.
+  const rect  = inputEl.getBoundingClientRect();
+  const bar   = document.querySelector('.sticky-actions');
+  const limit = bar ? bar.getBoundingClientRect().top : window.innerHeight;
+  const below = limit - rect.bottom - 6, above = rect.top - 6;
+  const width = Math.min(Math.max(rect.width, 300), window.innerWidth - 16);
   dd.style.display = 'block';
-  dd.style.top   = (rect.bottom + 2) + 'px';
-  dd.style.left  = rect.left + 'px';
-  dd.style.width = Math.max(rect.width, 300) + 'px';
+  dd.style.width = width + 'px';
+  dd.style.left  = Math.max(8, Math.min(rect.left, window.innerWidth - width - 8)) + 'px';
+  if (below < 160 && above > below) {
+    const h = Math.min(240, above);
+    dd.style.maxHeight = h + 'px';
+    dd.style.top = (rect.top - 2 - Math.min(dd.scrollHeight, h)) + 'px';
+  } else {
+    dd.style.maxHeight = Math.max(120, Math.min(240, below)) + 'px';
+    dd.style.top = (rect.bottom + 2) + 'px';
+  }
 }
 
 function hideAcDropdown() {
@@ -1589,9 +1706,287 @@ document.addEventListener('keydown', e => {
 });
 
 // ─────────────────────────────────────────────
+//  Price-list search
+//  Shown when a price list is loaded. Same query language as Pricing Dataset
+//  Search: every word must match; OR, NOT, "quoted phrases" and (parentheses)
+//  work too. Term versions of one subscription (-12 / -36 / -60) collapse into
+//  a single -DD result — the same normalization a picked row gets, and the
+//  BOM applies the project's term on top. Picks become ordinary rows below,
+//  so quantity, type and notes are edited the same way as typed-in rows.
+// ─────────────────────────────────────────────
+const PS_PAGE   = 30;
+const PS_FIELDS = ['SKU','Identifier','Product','Product Family Group','Product Type','Description #1','Description #2','Pillar','Item'];
+let _psIndex = null, _psSig = '', _psShown = PS_PAGE, _psTimer = null, _psTerms = [];
+
+/* Boolean query parser — copied from asku.html (Pricing Dataset Search). */
+function tokenize(input) {
+  const tokens = []; let i = 0;
+  while (i < input.length) {
+    if (/\s/.test(input[i])) { i++; continue; }
+    if (input[i] === '"') {
+      let j = i + 1;
+      while (j < input.length && input[j] !== '"') j++;
+      tokens.push({ type: 'TERM', value: input.slice(i+1, j).toLowerCase() });
+      i = j + 1; continue;
+    }
+    if (input[i] === '(') { tokens.push({ type:'LPAREN' }); i++; continue; }
+    if (input[i] === ')') { tokens.push({ type:'RPAREN' }); i++; continue; }
+    if (input.slice(i,i+2) === '&&') { tokens.push({ type:'AND' }); i+=2; continue; }
+    if (input.slice(i,i+2) === '||') { tokens.push({ type:'OR'  }); i+=2; continue; }
+    if (input[i] === '&') { tokens.push({ type:'AND' }); i++; continue; }
+    if (input[i] === '|') { tokens.push({ type:'OR'  }); i++; continue; }
+    if (input[i] === '!') { tokens.push({ type:'NOT' }); i++; continue; }
+    let j = i;
+    while (j < input.length && !/[\s()"&|!]/.test(input[j])) j++;
+    const word = input.slice(i, j), up = word.toUpperCase();
+    if      (up === 'AND') tokens.push({ type:'AND' });
+    else if (up === 'OR')  tokens.push({ type:'OR'  });
+    else if (up === 'NOT') tokens.push({ type:'NOT' });
+    else tokens.push({ type:'TERM', value: word.toLowerCase() });
+    i = j;
+  }
+  return tokens;
+}
+function parse(tokens) {
+  let pos = 0;
+  const peek    = () => tokens[pos];
+  const consume = () => tokens[pos++];
+  function expr() {
+    let n = andExpr();
+    while (peek()?.type === 'OR') { consume(); n = { op:'OR', left:n, right:andExpr() }; }
+    return n;
+  }
+  function andExpr() {
+    let n = notExpr();
+    while (peek() && peek().type !== 'OR' && peek().type !== 'RPAREN') {
+      if (peek().type === 'AND') consume();
+      if (!peek() || peek().type === 'OR' || peek().type === 'RPAREN') break;
+      n = { op:'AND', left:n, right:notExpr() };
+    }
+    return n;
+  }
+  function notExpr() {
+    if (peek()?.type === 'NOT') { consume(); return { op:'NOT', operand:atom() }; }
+    return atom();
+  }
+  function atom() {
+    const t = peek(); if (!t) return null;
+    if (t.type === 'LPAREN') { consume(); const n = expr(); if (peek()?.type==='RPAREN') consume(); return n; }
+    if (t.type === 'TERM')   { consume(); return { op:'TERM', value:t.value }; }
+    consume(); return null;
+  }
+  return expr();
+}
+function evalNode(n, t) {
+  if (!n) return true;
+  if (n.op==='TERM') return t.includes(n.value);
+  if (n.op==='AND')  return evalNode(n.left,t) && evalNode(n.right,t);
+  if (n.op==='OR')   return evalNode(n.left,t) || evalNode(n.right,t);
+  if (n.op==='NOT')  return !evalNode(n.operand,t);
+  return true;
+}
+function collectTerms(n, out=[]) {
+  if (!n) return out;
+  if (n.op==='TERM' && n.value) out.push(n.value);
+  if (n.left)    collectTerms(n.left, out);
+  if (n.right)   collectTerms(n.right, out);
+  if (n.operand) collectTerms(n.operand, out);
+  return out;
+}
+
+function _psTermOf(sku) { const m = /-(12|24|36|48|60)$/i.exec(sku || ''); return m ? m[1] : ''; }
+
+// One entry per part number after term normalization, with every term version kept.
+function _psBuildIndex(rows) {
+  const byKey = new Map();
+  for (const r of rows) {
+    const sku = String(r.SKU || '').trim();
+    if (!sku) continue;
+    const key = normalizeSkuTerm(sku).toUpperCase();
+    let g = byKey.get(key);
+    if (!g) {
+      g = { key, desc: normalizeDesc(r['Description #1'] || ''), family: r['Product Family Group'] || '',
+            type: r['Product Type'] || '', text: key.toLowerCase(), variants: [] };
+      byKey.set(key, g);
+    }
+    g.variants.push({ row: r, term: _psTermOf(sku) });
+    g.text += '\0' + PS_FIELDS.map(f => String(r[f] || '').toLowerCase()).join('\0');
+  }
+  return [...byKey.values()];
+}
+
+function _psFillSelect(sel, values, allLabel) {
+  sel.innerHTML = `<option value="">${allLabel}</option>` +
+    values.map(v => `<option value="${escHtml(v)}">${escHtml(v)}</option>`).join('');
+}
+
+// Which term version's price to show: the project's term if set, else 1 year.
+function _psPick(g) {
+  if (g.variants.length === 1) return g.variants[0];
+  let term = '';
+  try { term = JSON.parse(localStorage.getItem('fortibom_pi') || '{}').term || ''; } catch(_) {}
+  return g.variants.find(v => term && term !== 'DD' && v.term === term)
+      || g.variants.find(v => v.term === '12')
+      || g.variants[0];
+}
+
+function _psFmt(v) {
+  const n = parseFloat(String(v ?? '').replace(/[^0-9.]/g, ''));
+  if (isNaN(n)) return '';
+  let round = false;
+  try { round = !!JSON.parse(localStorage.getItem('fortibom_settings') || '{}').roundPrices; } catch(_) {}
+  return '$' + n.toLocaleString('en-US', round ? { maximumFractionDigits: 0 } : { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function _psHi(text) {
+  const safe = escHtml(text || '');
+  const pats = _psTerms.filter(Boolean).map(t => escHtml(t).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  return pats.length ? safe.replace(new RegExp('(' + pats.join('|') + ')', 'gi'), '<mark>$1</mark>') : safe;
+}
+
+// Quantity already in the list for this part number (0 if not added yet).
+function _psAddedQty(key) {
+  let q = 0;
+  document.querySelectorAll('#sku-rows [data-row-type="sku"]').forEach(c => {
+    const id = c.dataset.rowId;
+    if ((document.getElementById(`sku-${id}`)?.value || '').trim().toUpperCase() === key)
+      q += parseInt(document.getElementById(`qty-${id}`)?.value, 10) || 1;
+  });
+  return q;
+}
+function _psAddLabel(q) { return q ? (q > 1 ? `✓ ×${q}` : '✓ Added') : '+ Add'; }
+
+function _psCard(g) {
+  const v = _psPick(g);
+  const price = v ? _psFmt(v.row.Price) : '';
+  const term  = v && v.term ? `<small>${+v.term / 12} yr</small>` : '';
+  const q = _psAddedQty(g.key);
+  const meta = [g.family, g.type].filter(Boolean).join(' · ');
+  return `<div class="ps-card${q ? ' is-added' : ''}" data-key="${escHtml(g.key)}">
+    <div class="ps-main">
+      <div class="ps-top"><span class="ps-sku">${_psHi(g.key)}</span>${price ? `<span class="ps-price">${price}${term}</span>` : ''}</div>
+      <div class="ps-desc">${_psHi(g.desc)}</div>
+      ${meta ? `<div class="ps-meta">${escHtml(meta)}</div>` : ''}
+    </div>
+    <button type="button" class="ps-add" data-key="${escHtml(g.key)}"
+            title="${q ? 'Add one more' : 'Add to the list below'}" aria-label="Add ${escHtml(g.key)}">${_psAddLabel(q)}</button>
+  </div>`;
+}
+
+function _psRun(resetPage) {
+  if (!_psIndex) return;
+  if (resetPage) _psShown = PS_PAGE;
+  const raw = document.getElementById('ps-input').value.trim();
+  const fam = document.getElementById('ps-family').value;
+  const typ = document.getElementById('ps-type').value;
+  const status = document.getElementById('ps-status');
+  const list   = document.getElementById('ps-results');
+  const more   = document.getElementById('ps-more');
+  if (!raw && !fam && !typ) {
+    list.innerHTML = ''; more.style.display = 'none'; _psTerms = [];
+    status.innerHTML = `Search ${_psIndex.length.toLocaleString()} part numbers — e.g. <code>60F UTP</code>, <code>FortiSwitch 148F</code>, or <code>"FortiCare Premium" NOT bundle</code>.`;
+    return;
+  }
+  let q = null;
+  try { q = raw ? parse(tokenize(raw)) : null; } catch(_) { q = null; }
+  _psTerms = collectTerms(q);
+  const hits = _psIndex.filter(g =>
+    (!fam || g.family === fam) && (!typ || g.type === typ) && (!q || evalNode(q, g.text)));
+  // Part-number matches first, then shorter part numbers (usually the base unit).
+  const score = g => {
+    const k = g.key.toLowerCase();
+    return _psTerms.reduce((s, t) => s + (k === t ? 4 : k.startsWith(t) ? 2 : k.includes(t) ? 1 : 0), 0);
+  };
+  hits.sort((a, b) => score(b) - score(a) || a.key.length - b.key.length || a.key.localeCompare(b.key));
+  const shown = hits.slice(0, _psShown);
+  list.innerHTML = shown.map(_psCard).join('');
+  more.style.display = hits.length > shown.length ? '' : 'none';
+  more.textContent = `Show ${Math.min(PS_PAGE, hits.length - shown.length)} more`;
+  status.textContent = hits.length
+    ? `${hits.length.toLocaleString()} match${hits.length !== 1 ? 'es' : ''}${hits.length > shown.length ? ` — showing ${shown.length}` : ''}`
+    : 'No matches. Try fewer words, or enter the part number manually below.';
+}
+
+// Keep the result buttons in step with the list (added, quantity, removed).
+function _psRefreshAdded() {
+  if (!_psIndex) return;
+  document.querySelectorAll('#ps-results .ps-card').forEach(card => {
+    const q = _psAddedQty(card.dataset.key);
+    card.classList.toggle('is-added', !!q);
+    const b = card.querySelector('.ps-add');
+    b.textContent = _psAddLabel(q);
+    b.title = q ? 'Add one more' : 'Add to the list below';
+  });
+}
+
+function _psAdd(key) {
+  const g = _psIndex && _psIndex.find(x => x.key === key);
+  if (!g) return;
+  const rows = [...document.querySelectorAll('#sku-rows [data-row-type="sku"]')];
+  const val  = c => (document.getElementById(`sku-${c.dataset.rowId}`)?.value || '').trim();
+  const existing = rows.find(c => val(c).toUpperCase() === key);
+  if (existing) {
+    // Already in the list — tapping again adds one more.
+    const qEl = document.getElementById(`qty-${existing.dataset.rowId}`);
+    qEl.value = (parseInt(qEl.value, 10) || 0) + 1;
+  } else {
+    // Reuse a blank row (e.g. one added with "Enter manually") before adding another.
+    const blank = rows.find(c => !val(c) && !(document.getElementById(`desc-${c.dataset.rowId}`)?.value || '').trim());
+    let id;
+    if (blank) id = parseInt(blank.dataset.rowId, 10);
+    else { addSkuRow(null, false); id = _rowIdCounter; }
+    fillRowFromPricing(id, rowToAcItem(_psPick(g).row));
+  }
+  updateRowCountBadge();
+  document.getElementById('err-no-rows').style.display = 'none';
+}
+
+async function _prepareMode(seed) {
+  _pricingLoaded = false;   // a price list may have been loaded or replaced since this dialog last opened
+  const data = await getPricingData();
+  const has  = !!(data && Array.isArray(data.rows) && data.rows.length);
+  document.getElementById('search-card').style.display  = has ? '' : 'none';
+  document.getElementById('ps-nopricing').style.display = has ? 'none' : '';
+  document.getElementById('add-row-label').textContent  = has ? 'Enter manually' : 'Add part number';
+  if (!has) {
+    _psIndex = null; _psSig = '';
+    if (seed && !document.querySelector('#sku-rows [data-row-id]')) addSkuRow(null, _isWide());
+    return;
+  }
+  const sig = `${data.name || ''}|${data.effectiveDate || ''}|${data.rows.length}`;
+  if (sig !== _psSig) {
+    _psIndex = _psBuildIndex(data.rows);
+    _psSig = sig;
+    const uniq = k => [...new Set(_psIndex.map(g => g[k]).filter(Boolean))].sort();
+    _psFillSelect(document.getElementById('ps-family'), uniq('family'), 'All families');
+    _psFillSelect(document.getElementById('ps-type'),   uniq('type'),   'All types');
+  }
+  _psRun(true);
+  if (seed && _isWide()) setTimeout(() => document.getElementById('ps-input').focus(), 80);
+}
+
+(function wireSearch() {
+  const inp = document.getElementById('ps-input');
+  inp.addEventListener('input', () => { clearTimeout(_psTimer); _psTimer = setTimeout(() => _psRun(true), 120); });
+  // Enter / "Search" on a phone keyboard: put the keyboard away so the results show.
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); inp.blur(); } });
+  document.getElementById('ps-family').addEventListener('change', () => _psRun(true));
+  document.getElementById('ps-type').addEventListener('change', () => _psRun(true));
+  document.getElementById('ps-more').addEventListener('click', () => { _psShown += PS_PAGE; _psRun(false); });
+  document.getElementById('ps-results').addEventListener('click', e => {
+    const b = e.target.closest('.ps-add');
+    if (b) _psAdd(b.dataset.key);
+  });
+  // Typing a part number or quantity into a row updates the result buttons and "Add N to BOM".
+  document.getElementById('sku-rows').addEventListener('input', e => {
+    if (/^(sku|qty)-/.test(e.target.id || '')) { _updateAddLabel(); _psRefreshAdded(); }
+  });
+})();
+
+// ─────────────────────────────────────────────
 //  Init
 // ─────────────────────────────────────────────
-addSkuRow(null, _isWide());
+_prepareMode(true);
 </script>
 </body>
 </html>

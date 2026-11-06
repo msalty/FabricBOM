@@ -38,7 +38,7 @@ FabricBOM is a single-page hub (`index.html`) that loads per-product configurato
 - All SKUs use a `-DD` placeholder for the term suffix; the hub substitutes `-12` / `-36` / `-60` at export time based on `#pi-term`
 - Item classification kinds: `req` (Required), `mand` (Mandatory), `opt` (Optional), `inc` (Included), `excl` (Excluded), `attn` (Attention — auto-flagged when a SKU has no price match)
 - Saved projects, version history, and uploaded price lists live in IndexedDB; nothing is ever sent to a server
-- The `.fbom` export format is the canonical save/share file — round-trips a full project including metadata, groups, line items, and notes
+- The `.fbom` export format is the canonical save/share file — round-trips a full project including metadata, sections, products, line items, and notes
 
 ## What this app is not
 

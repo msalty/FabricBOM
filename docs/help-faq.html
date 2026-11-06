@@ -438,7 +438,7 @@
       <span class="ni-label">Editing Items</span>
     </a>
     <a class="ni" href="#group-headers" onclick="closeSidebar()">
-      <span class="ni-label">Group Headers</span>
+      <span class="ni-label">Sections</span>
     </a>
     <a class="ni" href="#editing-project-info" onclick="closeSidebar()">
       <span class="ni-label">Project Information</span>
@@ -499,7 +499,7 @@
           <details class="qa">
             <summary>How do I start a brand new BOM?</summary>
             <div class="qa-body">
-              <p>Click <strong>New BOM</strong> at the top of the left sidebar. If the current BOM has anything in it, you'll be asked to confirm first — it clears every product group and resets the Project Information fields (SE name, default term, and any boilerplate scope notes come back from your Settings defaults).</p>
+              <p>Click <strong>New BOM</strong> at the top of the left sidebar. If the current BOM has anything in it, you'll be asked to confirm first — it clears every product and resets the Project Information fields (SE name, default term, and any boilerplate scope notes come back from your Settings defaults).</p>
               <p>This does not touch anything in <strong>Saved Projects</strong>, so click <strong>Save</strong> in the Project BOM toolbar first if you want to come back to it later.</p>
             </div>
           </details>
@@ -507,12 +507,13 @@
           <details class="qa" open>
             <summary>How do I add a new SKU or part number to my Project BOM?</summary>
             <div class="qa-body">
-              <p>There are a few ways to add a new SKU (Stock Keeping Unit) or part number to your Project BOM:</p>
+              <p>Click the red <strong>Add</strong> button just below <em>Project Information</em>. It offers three choices:</p>
               <ul>
-                <li><strong>The "Add Item" Button:</strong> Under the <em>Project Information</em> section, there is a red <strong>Add Item</strong> dropdown menu. Clicking this will give you options to append a new product line or group directly to your current build.</li>
-                <li><strong>Product Categories:</strong> In the left-hand sidebar, products are categorized by solution (e.g., <em>Network Security</em>, <em>Cloud Security</em>, <em>Network Access</em>). Clicking on a specific product family like <strong>FortiGate (FGT)</strong> or <strong>FortiSwitch (FSW)</strong> will allow you to browse and select specific SKUs to add to your BOM.</li>
-                <li><strong>Search &amp; Custom Entry:</strong> If you know the exact part number (like <code>FG-401G</code> or <code>FC-10-348GF</code>), you can use the <strong>Filter products…</strong> search bar at the top left, or scroll down to the <strong>CATALOG SEARCH</strong> section and click <strong>Search &amp; Custom Entry</strong> to manually look up and add the SKU.</li>
+                <li><strong>Add part numbers</strong> — for SKUs you already know. With a price list loaded (in <strong>Settings</strong>), it opens on a search box: type part of a part number or a description, such as <code>60F UTP</code> or <code>FortiSwitch 148F</code>, and tap <strong>+ Add</strong> on each result you want. Tapping it again adds one more. Searches understand <code>OR</code>, <code>NOT</code> and <code>"quoted phrases"</code>, and the family / type filters narrow the list. Without a price list, or for anything not in it, use <strong>Enter manually</strong> and type the part number, description and quantity. Subscription SKUs are added with <code>-DD</code>, so the project's license term is applied for you.</li>
+                <li><strong>Configure a product…</strong> — opens the product list (on a phone it's behind the ☰ button) so you can pick a product such as <strong>FortiGate (FGT)</strong> or <strong>FortiSwitch (FSW)</strong> and build it step by step.</li>
+                <li><strong>Add section</strong> — a divider for the BOM; see <em>Sections</em> below.</li>
               </ul>
+              <p><strong>Add part numbers</strong> is also in the sidebar, under <strong>PART NUMBERS</strong>.</p>
               <a class="media-thumb" href="javascript:void(0)" onclick="openLightbox('screenshots/fabricbom-docs-adding_sku.gif')" aria-label="View full-size walkthrough">
                 <img src="screenshots/fabricbom-docs-adding_sku.gif" alt="Walkthrough: adding a SKU to a Project BOM" loading="lazy">
               </a>
@@ -545,8 +546,8 @@
                 <li><strong>Change Quantity:</strong> Click directly into the number box in the <strong>QTY</strong> column to adjust the unit count.</li>
                 <li><strong>Change Item Type:</strong> Click the dropdown in the <strong>TYPE</strong> column (showing options like <em>REQUIRED</em>, <em>OPTIONAL</em>, or <em>EXCLUDED</em>) to change how the item is factored into your project.</li>
                 <li><strong>Update Notes:</strong> Click the text field in the <strong>NOTES</strong> column to add, modify, or delete custom details.</li>
-                <li><strong>Edit the Item Header:</strong> To rename the title of a product block, click the small <strong>pencil icon</strong> located at the top-right corner of that block.</li>
-                <li><strong>Remove an Item:</strong> To delete a block entirely, click the <strong>✕</strong> button next to the pencil icon.</li>
+                <li><strong>Rename a product:</strong> Click its title at the top of the block and type, or use the <strong>pencil icon</strong> at the top-right of the block to edit its line items.</li>
+                <li><strong>Remove a product:</strong> To delete a block entirely, click the <strong>✕</strong> button next to the pencil icon.</li>
               </ul>
             </div>
           </details>
@@ -555,7 +556,7 @@
             <summary>How do I reorder the line items inside a product block?</summary>
             <div class="qa-body">
               <p>Each row in the table has a <strong>grip handle</strong> in the left-most column. Drag it up or down to move that line item — this works with a mouse and by touch on a phone or tablet. You can also click the handle and use the <kbd>↑</kbd> and <kbd>↓</kbd> arrow keys.</p>
-              <p>Section header rows move the same way, and dragging a SKU past one changes which section it belongs to.</p>
+              <p>Sub-heading rows inside a block move the same way, and dragging a SKU past one changes which sub-heading it sits under.</p>
               <p>Reordering works <em>within</em> a product block. To move a line item into a different block, open that block's <strong>pencil</strong> (Edit) icon and add it there.</p>
             </div>
           </details>
@@ -563,11 +564,11 @@
           <details class="qa">
             <summary>Can I copy an item and paste it somewhere else in the BOM?</summary>
             <div class="qa-body">
-              <p>Yes. Every product block has a <strong>copy icon</strong> (two overlapping pages) next to its pencil and ✕ buttons, and every group header has one too — copying a header takes the whole section, including all of the blocks underneath it.</p>
-              <p>Once something is copied, a <strong>Paste</strong> button appears next to <strong>Add Item</strong> showing what's on the clipboard. Use it to:</p>
+              <p>Yes. Every product block has a <strong>copy icon</strong> (two overlapping pages) next to its pencil and ✕ buttons, and every section has one too — copying a section takes all of the products underneath it.</p>
+              <p>Once something is copied, a <strong>Paste</strong> button appears next to <strong>Add</strong> showing what's on the clipboard. Use it to:</p>
               <ul>
-                <li><strong>Paste at the end of the BOM</strong> — click the Paste button in the toolbar, choose <em>Paste</em> from the <strong>Add Item</strong> menu, or press <kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>V</kbd>.</li>
-                <li><strong>Paste into a specific section</strong> — click the clipboard icon that appears on that group header.</li>
+                <li><strong>Paste at the end of the BOM</strong> — click the Paste button in the toolbar, choose <em>Paste</em> from the <strong>Add</strong> menu, or press <kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>V</kbd>.</li>
+                <li><strong>Paste into a specific section</strong> — click the clipboard icon that appears on that section.</li>
               </ul>
               <p>The pasted copy is fully independent, so editing it won't change the original. The clipboard holds one item at a time, survives a page reload, and is shared with other FabricBOM tabs in the same browser — which makes it a quick way to move a product block from one project into another. Click the <strong>×</strong> on the Paste button to clear it.</p>
             </div>
@@ -586,21 +587,22 @@
           <svg class="lch-icon" viewBox="0 0 16 16" fill="none">
             <path d="M1 4h14M1 8h10M1 12h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
           </svg>
-          <h2>Adding and Working with Group Headers</h2>
+          <h2>Sections</h2>
         </div>
         <div class="lcb">
 
           <details class="qa" open>
-            <summary>How do I add a header to my Project BOM?</summary>
+            <summary>How do I add a section to my Project BOM?</summary>
             <div class="qa-body">
-              <p>To add a custom section header, navigate to your active Project BOM. Just below the Project Information section at the top of your workspace, click the red <strong>Add Item</strong> dropdown menu (or <strong>Add SKU</strong>) and select the option to <strong>Add Header</strong>.</p>
+              <p>A section is a divider in the BOM, such as a site, a phase, or an option. Click the red <strong>Add</strong> button below Project Information and choose <strong>Add section</strong>, then give it a name and an optional note. The new section goes at the bottom of the BOM; drag products below it — everything below a section belongs to it until the next one.</p>
+              <p>Sections are different from <em>sub-headings</em>, which sit inside one product block (for example "Hardware + Enterprise Bundle") and are added with <strong>Add sub-heading</strong> when you add or edit part numbers.</p>
             </div>
           </details>
 
           <details class="qa">
-            <summary>Why should I use headers in my build?</summary>
+            <summary>Why should I use sections?</summary>
             <div class="qa-body">
-              <p>Headers are an excellent way to keep your Bill of Materials clean and organized, especially for larger or more complex projects. You can use them to logically group products by:</p>
+              <p>Sections keep a Bill of Materials organized, especially for larger or more complex projects. Use them to group products by:</p>
               <ul>
                 <li><strong>Physical location</strong> — e.g., "HQ Data Center," "Branch Offices"</li>
                 <li><strong>Solution category</strong> — e.g., "Core Networking," "Endpoint Security"</li>
@@ -610,23 +612,23 @@
           </details>
 
           <details class="qa">
-            <summary>How do I customize the text of a new header?</summary>
+            <summary>How do I rename a section?</summary>
             <div class="qa-body">
-              <p>Once a header block is added to your project workspace, click directly on the default text or use the <strong>Edit</strong> (pencil) icon on that block to rename it to whatever fits your organizational needs.</p>
+              <p>Click its name and type, or use the <strong>pencil</strong> icon on the section to change its name, note, or whether it shows a price total.</p>
             </div>
           </details>
 
           <details class="qa">
-            <summary>Can I reorganize my BOM using these headers?</summary>
+            <summary>Can I reorganize my BOM using sections?</summary>
             <div class="qa-body">
-              <p>Absolutely. FabricBOM is designed to be flexible. You can drag and drop your configured product blocks to move them beneath your newly created headers, allowing you to structure your final export exactly how you want to present it.</p>
+              <p>Absolutely. FabricBOM is designed to be flexible. You can drag product blocks beneath any section — or drag a whole section, which brings its products along — allowing you to structure your final export exactly how you want to present it.</p>
             </div>
           </details>
 
           <details class="qa">
-            <summary>How do I delete a header I no longer need?</summary>
+            <summary>How do I remove a section I no longer need?</summary>
             <div class="qa-body">
-              <p>Just like any other item on your BOM, look for the <strong>✕</strong> (remove) button located on the right side of the header block. Clicking this will remove the header from your project layout.</p>
+              <p>Click the <strong>✕</strong> on the right of the section. Only the divider is removed — the products under it stay in the BOM.</p>
             </div>
           </details>
 
@@ -648,7 +650,7 @@
             <summary>How do I edit the Project Information on a Project BOM?</summary>
             <div class="qa-body">
               <ol>
-                <li><strong>Locate the Project Information Section:</strong> Look at the white box at the top of your main working area, just above the "Add Item" button. This section displays details like your project name, Engineer, Date, and Term.</li>
+                <li><strong>Locate the Project Information Section:</strong> Look at the white box at the top of your main working area, just above the "Add" button. This section displays details like your project name, Engineer, Date, and Term.</li>
                 <li><strong>Click the Edit Button:</strong> In the top-right corner of that white box, click the <strong>Edit</strong> button (which features a small pencil icon).</li>
               </ol>
               <p>Clicking this will allow you to modify those top-level project details.</p>

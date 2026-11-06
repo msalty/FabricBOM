@@ -23,12 +23,13 @@ Designed to be run entirely offline. Install it as a web app on most modern brow
 ### Building a BOM
 - **30+ product configurators** — dedicated per-product pages organized in a sidebar by solution category
 - **Per-product configuration** — select hardware model, quantity, FortiCare support tier, and product-specific add-on licenses
-- **Custom section headers** — insert labeled group dividers (e.g., "Core Firewall", "Option A – SD-WAN") with optional notes to organize complex quotes
+- **Sections** — **Add ▸ Add section** inserts a divider for a site, phase, or option (e.g., "Core Firewall", "Option A – SD-WAN") with an optional note and price total; everything below a section belongs to it until the next one
 - **Item classification** — tag line items as REQUIRED, OPTIONAL, or EXCLUDED; items without pricing auto-flag as ATTENTION
-- **Inline editing** — edit quantities, notes, group labels, and item types directly in the BOM table
-- **Drag-to-reorder** — drag product groups, section headers, and individual line items into any order; line items can also be moved with ↑/↓ from the keyboard
-- **Copy & paste** — duplicate a product group, or a section header with everything under it, anywhere in the BOM; the clipboard persists across reloads and other open tabs, so blocks can be moved between projects
-- **Custom SKU entry** — look up any part number via catalog search or enter it manually
+- **Inline editing** — edit quantities, notes, product and section names, and item types directly in the BOM table
+- **Drag-to-reorder** — drag products, sections (with everything under them), and individual line items into any order; line items can also be moved with ↑/↓ from the keyboard
+- **Copy & paste** — duplicate a product, or a section with everything under it, anywhere in the BOM; the clipboard persists across reloads and other open tabs, so blocks can be moved between projects
+- **Add part numbers** — with a price list loaded, **Add ▸ Add part numbers** opens on a search of it: part numbers and descriptions, `OR` / `NOT` / `"phrases"`, family and type filters, and one result per part number with its price (term versions -12 / -36 / -60 collapse to -DD). Tap **+ Add**, and again for more. Anything else can be typed in manually, with sub-headings to organize the lines
+- **Configure a product** — **Add ▸ Configure a product…** opens the product list (behind ☰ on a phone) to build a FortiGate, FortiSwitch, FortiAP and more step by step
 
 ### Project Management
 - **New BOM** — one click in the sidebar clears the BOM and Project Information to start a fresh quote (with a confirmation when there's anything to lose)
@@ -40,8 +41,8 @@ Designed to be run entirely offline. Install it as a web app on most modern brow
 ### Pricing
 - **Price list upload** — drag-and-drop a Fortinet CSV or XLSX price list to apply pricing across all BOM items; columns are matched by name, so old and new Fortinet layouts both import even as columns are added, dropped, or reordered
 - **Auto-applied pricing** — matched prices appear inline; SKUs with no price match are flagged automatically
-- **Group pricing totals** — optionally display a subtotal on each group header
-- **Quote scope** — in Pricing & Quotes, quote the entire Project BOM or just one section header, so a multi-phase BOM can be priced and exported per phase / site
+- **Section totals** — optionally show a price total on each section
+- **Quote scope** — in Pricing & Quotes, quote the entire Project BOM or just one section, so a multi-phase BOM can be priced and exported per phase / site
 - **Discount matrix columns** — add, rename, re-type, and remove extra partner-type and named-account columns directly in the Discount Matrix; no CSV round trip needed, and rates carry over on rename
 
 ### Export & Sharing
@@ -85,7 +86,7 @@ Designed to be run entirely offline. Install it as a web app on most modern brow
 | Access Control | FortiAuthenticator (FAC), FortiNAC |
 | Management | FortiAnalyzer (FAZ), FortiAIOps, FortiManager (FMG), FortiMonitor, FortiRecon, FortiSIEM, FortiSOAR |
 | Licensing | FortiFlex |
-| Catalog Search | Search & Custom Entry |
+| Part Numbers | Add part numbers (search the price list or type them in) |
 
 ---
 
@@ -109,7 +110,7 @@ python3 -m http.server 8080
 1. Select a product from the sidebar (use the search box to filter quickly)
 2. Configure the hardware model, quantity, support tier, and any add-on licenses
 3. Click **Add to Project BOM**
-4. Repeat for each product; add group headers to separate sections
+4. Repeat for each product; use **Add ▸ Add section** to divide the BOM by site, phase, or option, and **Add ▸ Add part numbers** for SKUs you already know
 5. Fill in project metadata (customer name, opportunity ID, SE, date, scope)
 6. Optionally upload a Fortinet price list to show pricing
 7. Click **Save**, then select the license term and use **Export** for Excel, CSV, print/PDF, or a share link

@@ -343,6 +343,7 @@
   #grp-box{background:#fff;border-radius:5px;width:400px;max-width:95vw;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.3);}
   #grp-box h3{font-size:14px;font-weight:700;color:var(--c-text);padding:16px 18px;border-bottom:1px solid var(--c-border);background:var(--c-sh);}
   #grp-body{padding:18px;display:flex;flex-direction:column;gap:12px;}
+  .grp-intro{font-size:12px;color:var(--c-text2);line-height:1.5;margin:0;}
   #grp-foot{padding:12px 18px;border-top:1px solid var(--c-border);display:flex;justify-content:flex-end;gap:8px;background:var(--c-sh);}
 
   /* Toast */
@@ -386,6 +387,13 @@
   .dm-section{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--c-textm);padding:6px 12px 2px;}
   .dm-item{display:flex;align-items:center;gap:8px;padding:7px 12px;font-size:12px;color:var(--c-text);cursor:pointer;white-space:nowrap;font-family:inherit;background:none;border:none;width:100%;text-align:left;}
   .dm-item:hover{background:var(--c-sh);}
+  /* Two-line menu entries (title + what it does) in the Add menu */
+  #add-menu{width:min(290px,calc(100vw - 16px));}
+  .dm-item.dm-rich{align-items:flex-start;white-space:normal;padding:9px 12px;}
+  .dm-item.dm-rich svg{width:15px;height:15px;margin-top:1px;}
+  .dm-text{display:flex;flex-direction:column;gap:2px;min-width:0;}
+  .dm-title{font-size:13px;font-weight:600;color:var(--c-text);}
+  .dm-desc{font-size:11px;color:var(--c-text2);line-height:1.35;}
   .dm-item svg{width:13px;height:13px;flex-shrink:0;color:var(--c-text2);}
   .dm-sep{height:1px;background:var(--c-border);margin:3px 0;}
 
@@ -702,10 +710,10 @@
           <li><span class="sn">4</span>Repeat for each product, then open Project BOM</li>
         </ol>
         <div class="hint">Multiple runs of the same product are supported</div>
-        <div class="hint">Already know your SKUs? Use <strong>Add SKU</strong> or load a project from <strong>Saved Projects</strong> — the product pages are optional.</div>
+        <div class="hint">Already know your part numbers? Use <strong>Add part numbers</strong> or load a project from <strong>Saved Projects</strong> — the product pages are optional.</div>
         <div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap;justify-content:center;">
           <button class="btn bs" onclick="openImport()" title="Open a FabricBOM project — a .fbom file, or an Excel / CSV file exported from FabricBOM"><svg viewBox="0 0 13 13" fill="none"><path d="M6.5 9V1.5M3.5 4.5l3-3 3 3" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round"/></svg>Open file</button>
-          <button class="btn bp" onclick="openSkuModal()"><svg viewBox="0 0 13 13" fill="none"><rect x="1" y="3" width="11" height="7" rx="1" stroke="#fff" stroke-width="1.1"/><path d="M3.5 6.5h6M6.5 5v3" stroke="#fff" stroke-width="1.1" stroke-linecap="round"/></svg>Add SKU</button>
+          <button class="btn bp" onclick="openSkuModal()"><svg viewBox="0 0 13 13" fill="none"><rect x="1" y="3" width="11" height="7" rx="1" stroke="#fff" stroke-width="1.1"/><path d="M3.5 6.5h6M6.5 5v3" stroke="#fff" stroke-width="1.1" stroke-linecap="round"/></svg>Add part numbers</button>
           <a class="demo-bom-link btn bs" href="#" target="_blank" rel="noopener" style="display:none;text-decoration:none;align-items:center;gap:6px;"><svg viewBox="0 0 13 13" fill="none" style="width:13px;height:13px;"><path d="M7.5 1.5h4v4M11 2L6 7M5.5 2.5H2a1 1 0 0 0-1 1V11a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V7.5" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="demo-bom-label">Demo BOM</span></a>
         </div>
       </div>
@@ -772,7 +780,7 @@
       <!-- Actions -->
       <div class="sbar" id="sbar">
         <div class="act-row">
-          <button class="btn bp" id="add-btn" onclick="toggleAddMenu(event)"><svg viewBox="0 0 13 13" fill="none"><rect x="1" y="4" width="11" height="5" rx="1" stroke="currentColor" stroke-width="1.1"/><path d="M4 6.5h5M6.5 5.5v2" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>Add Item<svg viewBox="0 0 10 6" fill="none" style="width:9px;height:9px;margin-left:1px;"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="btn bp" id="add-btn" onclick="toggleAddMenu(event)"><svg viewBox="0 0 13 13" fill="none"><rect x="1" y="4" width="11" height="5" rx="1" stroke="currentColor" stroke-width="1.1"/><path d="M4 6.5h5M6.5 5.5v2" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>Add<svg viewBox="0 0 10 6" fill="none" style="width:9px;height:9px;margin-left:1px;"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <button class="btn bs" id="paste-btn" onclick="pasteClip()" title="Paste the copied item at the end of the BOM">
             <svg viewBox="0 0 13 13" fill="none"><path d="M4.5 2H3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><rect x="4.5" y="1" width="3" height="2" rx=".6" stroke="currentColor" stroke-width="1.1"/><path d="M4.5 6.5h3.5M4.5 8.8h2.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
             Paste<span class="paste-lbl" id="paste-lbl"></span><span class="paste-x" onclick="event.stopPropagation();clearClip()" title="Clear the copied item">&times;</span>
@@ -798,7 +806,7 @@
         <p>Select a product from the left sidebar, configure it, and click <strong>Add to Project BOM</strong>. You can add multiple products and run the same product page multiple times to build a complete project quote.</p>
         <div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap;justify-content:center;">
           <button class="btn bs" onclick="openImport()" title="Open a FabricBOM project — a .fbom file, or an Excel / CSV file exported from FabricBOM"><svg viewBox="0 0 13 13" fill="none"><path d="M6.5 9V1.5M3.5 4.5l3-3 3 3" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round"/></svg>Open file</button>
-          <button class="btn bp" onclick="openSkuModal()"><svg viewBox="0 0 13 13" fill="none"><rect x="1" y="3" width="11" height="7" rx="1" stroke="#fff" stroke-width="1.1"/><path d="M3.5 6.5h6M6.5 5v3" stroke="#fff" stroke-width="1.1" stroke-linecap="round"/></svg>Add SKU</button>
+          <button class="btn bp" onclick="openSkuModal()"><svg viewBox="0 0 13 13" fill="none"><rect x="1" y="3" width="11" height="7" rx="1" stroke="#fff" stroke-width="1.1"/><path d="M3.5 6.5h6M6.5 5v3" stroke="#fff" stroke-width="1.1" stroke-linecap="round"/></svg>Add part numbers</button>
           <a class="demo-bom-link btn bs" href="#" target="_blank" rel="noopener" style="display:none;text-decoration:none;align-items:center;gap:6px;"><svg viewBox="0 0 13 13" fill="none" style="width:13px;height:13px;"><path d="M7.5 1.5h4v4M11 2L6 7M5.5 2.5H2a1 1 0 0 0-1 1V11a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V7.5" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="demo-bom-label">Demo BOM</span></a>
         </div>
       </div>
@@ -808,7 +816,7 @@
 
       <!-- BOM Summary Stats -->
       <div class="sbar" id="bom-stats">
-        <div class="si"><div class="sl">Groups</div><div class="sv" id="sum-g">0</div></div>
+        <div class="si"><div class="sl">Products</div><div class="sv" id="sum-g">0</div></div>
         <div class="si hi"><div class="sl">Line Items</div><div class="sv" id="sum-l">0</div></div>
         <div class="si"><div class="sl">Units / Lic.</div><div class="sv" id="sum-q">0</div></div>
         <div class="si"><div class="sl">Term</div><div class="sv" id="sum-term">-DD</div></div>
@@ -943,10 +951,10 @@
               <div style="font-size:10px;color:var(--c-textm);margin-top:3px;">Pre-filled in new projects.</div>
             </div>
             <div class="pg">
-              <label class="pl">Group Subtotals</label>
+              <label class="pl">Section Subtotals</label>
               <label style="display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer;padding:6px 0;">
                 <input type="checkbox" id="set-default-subtotals" style="width:auto;cursor:pointer;accent-color:var(--forti-red);" onchange="onSettingChange('defaultGroupSubtotals', this.checked)">
-                <span>Show group subtotals on by default</span>
+                <span>Show a price total on new sections by default</span>
               </label>
             </div>
             <div class="pg full">
@@ -969,7 +977,7 @@
               <label class="pl">Confirm Before Delete</label>
               <label style="display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer;padding:6px 0;">
                 <input type="checkbox" id="set-confirm-delete" style="width:auto;cursor:pointer;accent-color:var(--forti-red);" onchange="onSettingChange('confirmDelete', this.checked)">
-                <span>Confirm before deleting line items / groups</span>
+                <span>Confirm before removing products / sections</span>
               </label>
             </div>
             <div class="pg">
@@ -1075,11 +1083,20 @@
   <button class="dm-item" onclick="copyMD()"><svg viewBox="0 0 13 13" fill="none"><rect x="1" y="2.5" width="11" height="8" rx="1" stroke="currentColor" stroke-width="1.1"/><path d="M3.5 8.5V4.5l2 2.5 2-2.5v4M9.5 8.5V4.5l-1.5 2" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>Copy Markdown</button>
 </div>
 
-<!-- Add Item dropdown menu -->
+<!-- Add dropdown menu: each entry says what it adds, so the choice is clear on a phone too -->
 <div id="add-menu">
-  <div class="dm-section">Add to BOM</div>
-  <button class="dm-item" onclick="openSkuModal();closeAddMenu()"><svg viewBox="0 0 13 13" fill="none"><rect x="1" y="3" width="11" height="7" rx="1" stroke="currentColor" stroke-width="1.1"/><path d="M3.5 6.5h6M6.5 5v3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>Add SKU</button>
-  <button class="dm-item" onclick="openAddGroup();closeAddMenu()"><svg viewBox="0 0 13 13" fill="none"><rect x="1" y="4" width="11" height="5" rx="1" stroke="currentColor" stroke-width="1.1"/><path d="M4 6.5h5M6.5 5.5v2" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>Add Group</button>
+  <button class="dm-item dm-rich" onclick="openSkuModal();closeAddMenu()">
+    <svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><circle cx="5.4" cy="5.4" r="3.6" stroke="currentColor" stroke-width="1.2"/><path d="M8.1 8.1l3.2 3.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+    <span class="dm-text"><span class="dm-title">Add part numbers</span><span class="dm-desc" id="add-menu-sku-desc">Search the price list or type them in</span></span>
+  </button>
+  <button class="dm-item dm-rich" onclick="configureProduct()">
+    <svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M1.5 3.5h5M9.5 3.5h2M1.5 9.5h2M6.5 9.5h5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="8" cy="3.5" r="1.5" stroke="currentColor" stroke-width="1.2"/><circle cx="5" cy="9.5" r="1.5" stroke="currentColor" stroke-width="1.2"/></svg>
+    <span class="dm-text"><span class="dm-title">Configure a product…</span><span class="dm-desc">FortiGate, FortiSwitch, FortiAP and more, step by step</span></span>
+  </button>
+  <button class="dm-item dm-rich" onclick="openAddGroup();closeAddMenu()">
+    <svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M1 6.5h11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M2.5 2.5h8M2.5 10.5h8" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-dasharray="1.5 1.6"/></svg>
+    <span class="dm-text"><span class="dm-title">Add section</span><span class="dm-desc">A divider such as a site, a phase, or an option</span></span>
+  </button>
   <div class="dm-sep" id="add-menu-paste-sep" style="display:none;"></div>
   <button class="dm-item" id="add-menu-paste" style="display:none;" onclick="pasteClip();closeAddMenu()"><svg viewBox="0 0 13 13" fill="none"><path d="M4.5 2H3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><rect x="4.5" y="1" width="3" height="2" rx=".6" stroke="currentColor" stroke-width="1.1"/><path d="M4.5 6.5h3.5M4.5 8.8h2.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg><span class="dm-paste-lbl">Paste</span></button>
 </div>
@@ -1129,24 +1146,25 @@
 <!-- Add / Edit Group Modal -->
 <div id="grp-modal">
   <div id="grp-box">
-    <h3 id="grp-title">Add Group Header</h3>
+    <h3 id="grp-title">Add section</h3>
     <div id="grp-body">
+      <p class="grp-intro">A divider in the BOM, such as a site, a phase, or an option. It's added at the bottom; the products below it belong to it until the next section.</p>
       <div class="pg">
-        <label class="pl">Group Label <span class="r">*</span></label>
-        <input type="text" class="pi" id="grp-label" placeholder="e.g. Core Firewall, Option A – SD-WAN…">
+        <label class="pl" for="grp-label">Section name <span class="r">*</span></label>
+        <input type="text" class="pi" id="grp-label" placeholder="e.g. Headquarters, Option A – SD-WAN…">
       </div>
       <div class="pg">
-        <label class="pl">Note (optional)</label>
+        <label class="pl" for="grp-note">Note (optional)</label>
         <input type="text" class="pi" id="grp-note" placeholder="e.g. Requires FortiCare Essential">
       </div>
       <div class="pg" style="flex-direction:row;align-items:center;gap:8px;margin-top:2px;">
         <input type="checkbox" id="grp-show-pricing" style="width:auto;cursor:pointer;accent-color:var(--forti-red);">
-        <label class="pl" for="grp-show-pricing" style="text-transform:none;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:0;">Show group pricing total on header</label>
+        <label class="pl" for="grp-show-pricing" style="text-transform:none;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:0;">Show this section's price total</label>
       </div>
     </div>
     <div id="grp-foot">
       <button class="btn bs" onclick="closeGroupModal()">Cancel</button>
-      <button class="btn bp" id="grp-ok" onclick="saveGroupRow()">Add Group</button>
+      <button class="btn bp" id="grp-ok" onclick="saveGroupRow()">Add section</button>
     </div>
   </div>
 </div>
@@ -1288,7 +1306,8 @@ const CATALOG = [
   { file:'fortiflex-bomgen.html', label:'FortiFlex', cat:'Licensing' },
   { file:'pricing-quotes.html', label:'Pricing & Quotes', cat:'Pricing', pricingOnly:true },
   { file:'asku.html', label:'Pricing Dataset Search', cat:'Pricing', pricingOnly:true },
-  { file:'custom-sku-bomgen.html', label:'Search & Custom Entry', cat:'Catalog Search' },
+  // Opens the Add part numbers dialog (see buildNav) rather than its older full-page copy.
+  { file:'custom-sku-bomgen.html', label:'Add part numbers', cat:'Part Numbers', opensSkuDialog:true },
   //{ file:'placeholder-bomgen.html',  label:'Placeholder',    cat:'Demo' },
 ];
 
@@ -1517,7 +1536,9 @@ async function buildNav() {
       const el = document.createElement('div'); el.className='ni'; el.tabIndex=0; el.setAttribute('role','button');
       el.dataset.productPath = `products/${p.file}`;
       el.innerHTML = `${icon(p.file)}<span class="ni-label">${p.label}</span>`;
-      el.onclick = () => loadProduct(`products/${p.file}`, p.label, el);
+      el.onclick = p.opensSkuDialog
+        ? () => { closeSidebar(); openSkuModal(); }
+        : () => loadProduct(`products/${p.file}`, p.label, el);
       frag.appendChild(el);
     }
   }
@@ -2002,7 +2023,7 @@ window.addEventListener('message', e => {
     renderGroups();
     saveCart();
     markDirty();
-    toast(`✓ Updated: ${label || 'Custom SKU group'}`);
+    toast(`✓ Updated: ${label || 'part numbers'}`);
   } else {
     const newEntry = { id:++seq, product, label, rows, meta };
     if (_skuInsertGroupId !== null) {
@@ -2022,7 +2043,7 @@ window.addEventListener('message', e => {
     renderGroups();
     saveCart();
     markDirty();
-    toast(`✓ Added to Project BOM: ${label || 'Custom SKU group'}`);
+    toast(`✓ Added to Project BOM: ${label || 'part numbers'}`);
     if (cart.length === 1) showPBV();
   }
 });
@@ -2068,12 +2089,12 @@ function markSaved() { bomDirty = false; updateSaveIndicator(); }
 function removeFromCart(id) {
   if (getSetting('confirmDelete')) {
     const entry = cart.find(c => c.id === id);
-    let label = 'this entry';
+    let msg = 'Remove this from the BOM?';
     if (entry) {
-      if (entry._type === 'group') label = `group header "${entry.label || 'Untitled'}"`;
-      else label = `${entry.product || 'product'} group${entry.label ? ` "${entry.label}"` : ''}`;
+      if (entry._type === 'group') msg = `Remove the section "${entry.label || 'Untitled'}"?\n\nThe products under it stay in the BOM.`;
+      else msg = `Remove "${entry.label || entry.product || 'this product'}" and its line items from the BOM?`;
     }
-    if (!confirm(`Delete ${label}?`)) return;
+    if (!confirm(msg)) return;
   }
   cart = cart.filter(c=>c.id!==id);
   updateBadges(); renderGroups(); saveCart(); markDirty();
@@ -2147,7 +2168,7 @@ function newProject() {
   const hasInfo = hasPiData();
   if (itemN || cart.length || hasInfo) {
     const parts = [];
-    if (itemN) parts.push(`${itemN} product group${itemN !== 1 ? 's' : ''}`);
+    if (itemN) parts.push(`${itemN} product${itemN !== 1 ? 's' : ''}`);
     if (hasInfo) parts.push('the Project Information fields');
     const what = parts.join(' and ') || 'the current project';
     if (!confirm(`Start a new BOM?\n\nThis clears ${what}.\n\nAnything unsaved will be lost — use File ▸ Save Project first if you want to keep it.`)) return;
@@ -2217,7 +2238,7 @@ function copyEntry(id) {
   renderGroups();
   const n = entries.filter(x => !x._type).length;
   toast(kind === 'section'
-    ? `⧉ Copied section “${_bomClip.label}” (${n} group${n !== 1 ? 's' : ''}) — tap Paste to place a copy`
+    ? `⧉ Copied section “${_bomClip.label}” (${n} product${n !== 1 ? 's' : ''}) — tap Paste to place a copy`
     : `⧉ Copied “${_bomClip.label}” — tap Paste to place a copy`);
 }
 
@@ -2233,7 +2254,7 @@ function clearClip() {
 // lands directly after it.
 function pasteClip(targetGroupId) {
   if (isReadOnly()) { toast('This BOM is read-only — unlock it to paste'); return; }
-  if (!_bomClip || !_bomClip.entries.length) { toast('Nothing copied yet — use the ⧉ Copy button on a BOM group first'); return; }
+  if (!_bomClip || !_bomClip.entries.length) { toast('Nothing copied yet — use the ⧉ Copy button on a product or section first'); return; }
   const fresh = _cloneEntries(_bomClip.entries).map(e => ({ ...e, id: ++seq }));
 
   let insertAt = cart.length;
@@ -2249,7 +2270,7 @@ function pasteClip(targetGroupId) {
 
   updateBadges(); renderGroups(); saveCart(); markDirty();
   const n = fresh.filter(e => !e._type).length;
-  toast(`✓ Pasted “${_bomClip.label}”${n > 1 ? ` — ${n} groups` : ''}`);
+  toast(`✓ Pasted “${_bomClip.label}”${n > 1 ? ` — ${n} products` : ''}`);
 }
 
 // Markup for the "paste into this section" button — rendered only when
@@ -2357,6 +2378,7 @@ async function renderGroups() {
     }
   } catch(e) { /* pricing unavailable */ }
   const hasPricing = priceMap !== null;
+  _hasPricingData = hasPricing;
   const colSpan = hasPricing ? 9 : 7;   // grip + exp + sku + desc + qty + type + notes [+ list + total]
   const c = document.getElementById('bgc');
   const ec = document.getElementById('ec');
@@ -2432,16 +2454,16 @@ async function renderGroups() {
           <button class="bgr-toggle${isCollapsed?' collapsed':''}" aria-expanded="${!isCollapsed}" aria-controls="bgr-section-${entry.id}" title="${isCollapsed?'Expand section':'Collapse section'}" onclick="toggleGroupCollapse(event,${entry.id})"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <div class="bgr-text">
             <input type="text" class="label-input bgr-label" value="${h(entry.label)}" onchange="updateEntryLabel(${entry.id},this.value)">
-            <div class="bgr-meta"><span class="bgr-count">${itemN} group${itemN!==1?'s':''}</span>${entry.note ? ` · <span class="bgr-note">${h(entry.note)}</span>` : ''}</div>
+            <div class="bgr-meta"><span class="bgr-count">Section · ${itemN} product${itemN!==1?'s':''}</span>${entry.note ? ` · <span class="bgr-note">${h(entry.note)}</span>` : ''}</div>
           </div>
           ${groupPriceHtml}
         </div>
         <div class="bgr-actions">
-          <button class="bgr-btn add" onclick="openSkuModalForGroup(${entry.id})" title="Add SKU to this group" aria-label="Add SKU to this group"><svg viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M5.5 1.5v8M1.5 5.5h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button>
+          <button class="bgr-btn add" onclick="openSkuModalForGroup(${entry.id})" title="Add part numbers to this section" aria-label="Add part numbers to this section"><svg viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M5.5 1.5v8M1.5 5.5h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button>
           <button class="bgr-btn${_bomClip && _bomClip.srcId === entry.id ? ' copied' : ''}" onclick="copyEntry(${entry.id})" title="Copy this section and everything in it" aria-label="Copy section"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><rect x="3.5" y="1" width="8" height="9" rx="1" stroke="currentColor" stroke-width="1.1"/><rect x="1" y="3" width="8" height="9" rx="1" stroke="currentColor" stroke-width="1.1"/></svg></button>
           ${pasteIntoBtn(entry.id)}
-          <button class="bgr-btn" onclick="openEditGroup(${entry.id})" title="Edit group header"><svg viewBox="0 0 11 11" fill="none"><path d="M7.5 1.5l2 2L3 10H1V8L7.5 1.5z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg></button>
-          <button class="bgr-btn del" onclick="removeFromCart(${entry.id})" title="Delete this section header (the products under it are kept)" aria-label="Delete section header">✕</button>
+          <button class="bgr-btn" onclick="openEditGroup(${entry.id})" title="Edit section" aria-label="Edit section"><svg viewBox="0 0 11 11" fill="none"><path d="M7.5 1.5l2 2L3 10H1V8L7.5 1.5z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg></button>
+          <button class="bgr-btn del" onclick="removeFromCart(${entry.id})" title="Remove this section (the products under it stay)" aria-label="Remove section">✕</button>
         </div>`;
       addDragListeners(el);
       c.appendChild(el);
@@ -2493,8 +2515,8 @@ async function renderGroups() {
           </div>
           <div style="flex:1;min-width:0;"><input type="text" class="label-input bgp" value="${h(entry.label)}" onchange="updateEntryLabel(${entry.id},this.value)"><div class="bgm">${lines} line item${lines!==1?'s':''} · ${qty.toLocaleString()} units/licenses</div></div>
           ${entry.product !== 'Custom SKU' ? `<span class="bg-tag">${h(entry.product)}</span>` : ''}
-          <button class="bg-copy${_bomClip && _bomClip.srcId === entry.id ? ' copied' : ''}" onclick="copyEntry(${entry.id})" title="Copy this group — then paste a duplicate anywhere in the BOM" aria-label="Copy group"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><rect x="3.5" y="1" width="8" height="9" rx="1" stroke="currentColor" stroke-width="1.1"/><rect x="1" y="3" width="8" height="9" rx="1" stroke="currentColor" stroke-width="1.1"/></svg></button>
-          <button class="bg-edit" onclick="openSkuModalForEdit(${entry.id})" title="Edit rows" aria-label="Edit rows"><svg viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M7.5 1.5l2 2L3 10H1V8L7.5 1.5z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg></button>
+          <button class="bg-copy${_bomClip && _bomClip.srcId === entry.id ? ' copied' : ''}" onclick="copyEntry(${entry.id})" title="Copy this product — then paste a duplicate anywhere in the BOM" aria-label="Copy product"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><rect x="3.5" y="1" width="8" height="9" rx="1" stroke="currentColor" stroke-width="1.1"/><rect x="1" y="3" width="8" height="9" rx="1" stroke="currentColor" stroke-width="1.1"/></svg></button>
+          <button class="bg-edit" onclick="openSkuModalForEdit(${entry.id})" title="Edit this product's line items" aria-label="Edit line items"><svg viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M7.5 1.5l2 2L3 10H1V8L7.5 1.5z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg></button>
           <button class="bg-del" onclick="removeFromCart(${entry.id})" title="Remove this product from the BOM" aria-label="Remove product">✕</button>
         </div>
         <div class="bt-wrap"><table class="bt"><thead><tr>
@@ -2871,8 +2893,9 @@ let editingGroupId = null;
 
 function openAddGroup() {
   editingGroupId = null;
-  document.getElementById('grp-title').textContent = 'Add Group Header';
-  document.getElementById('grp-ok').textContent = 'Add Group';
+  document.getElementById('grp-title').textContent = 'Add section';
+  document.getElementById('grp-ok').textContent = 'Add section';
+  document.querySelector('#grp-body .grp-intro').style.display = '';
   document.getElementById('grp-label').value = '';
   document.getElementById('grp-note').value = '';
   document.getElementById('grp-show-pricing').checked = !!getSetting('defaultGroupSubtotals');
@@ -2884,8 +2907,9 @@ function openEditGroup(id) {
   const entry = cart.find(c => c.id === id);
   if (!entry) return;
   editingGroupId = id;
-  document.getElementById('grp-title').textContent = 'Edit Group Header';
+  document.getElementById('grp-title').textContent = 'Edit section';
   document.getElementById('grp-ok').textContent = 'Save';
+  document.querySelector('#grp-body .grp-intro').style.display = 'none';
   document.getElementById('grp-label').value = entry.label;
   document.getElementById('grp-note').value = entry.note || '';
   document.getElementById('grp-show-pricing').checked = !!entry.showPricing;
@@ -2903,7 +2927,8 @@ function saveGroupRow() {
   if (!label) { document.getElementById('grp-label').focus(); return; }
   const note = document.getElementById('grp-note').value.trim();
   const showPricing = document.getElementById('grp-show-pricing').checked;
-  if (editingGroupId !== null) {
+  const editing = editingGroupId !== null;   // closeGroupModal() clears editingGroupId
+  if (editing) {
     const entry = cart.find(c => c.id === editingGroupId);
     if (entry) { entry.label = label; entry.note = note; entry.showPricing = showPricing; }
   } else {
@@ -2914,7 +2939,7 @@ function saveGroupRow() {
   renderGroups();
   saveCart();
   markDirty();
-  toast(editingGroupId !== null ? '✓ Group updated' : '✓ Group header added');
+  toast(editing ? '✓ Section updated' : `✓ Section “${label}” added at the bottom — drag products below it`);
 }
 
 // Allow Enter key in group modal inputs
@@ -3106,7 +3131,7 @@ function renderSavedProjects() {
       <div class="sp-accent"></div>
       <div class="sp-body">
         <div class="sp-name">${h(p.meta.cust || 'Unnamed Project')}</div>
-        <div class="sp-meta">${when} &middot; ${prodCount} product group${prodCount !== 1 ? 's' : ''} &middot; ${lineCount} line item${lineCount !== 1 ? 's' : ''}</div>
+        <div class="sp-meta">${when} &middot; ${prodCount} product${prodCount!== 1 ? 's' : ''} &middot; ${lineCount} line item${lineCount !== 1 ? 's' : ''}</div>
         ${opp}${eng}
         ${toggleBtn}
         ${revList}
@@ -3535,15 +3560,34 @@ function toggleCopyMenu(e) {
   placeMenu(menu, e.currentTarget);
 }
 function closeCopyMenu() { document.getElementById('copy-menu').classList.remove('on'); }
+var _hasPricingData = false;   // kept current by renderGroups()
 function toggleAddMenu(e) {
   e.stopPropagation();
   const menu = document.getElementById('add-menu');
   if (menu.classList.contains('on')) { menu.classList.remove('on'); return; }
   closeCopyMenu();
   closeProjectMenu();
+  document.getElementById('add-menu-sku-desc').textContent = _hasPricingData
+    ? 'Search the price list or type them in'
+    : 'Type them in — load a price list in Settings to search';
   placeMenu(menu, e.currentTarget);
 }
 function closeAddMenu() { document.getElementById('add-menu').classList.remove('on'); }
+// Add ▸ Configure a product… — the product pages live in the sidebar, which a
+// phone hides behind ☰; open it there, and on a desktop jump to its filter box.
+function configureProduct() {
+  closeAddMenu();
+  const sb = document.getElementById('sidebar');
+  if (window.innerWidth <= 768) {
+    if (!sb.classList.contains('open')) toggleSidebar();
+    return;
+  }
+  if (sb.classList.contains('collapsed')) toggleSidebar();
+  const inp = document.getElementById('nav-search-input');
+  inp.scrollIntoView({ block: 'nearest' });
+  inp.focus();
+  inp.select();
+}
 function openSkuModal() {
   _skuEditId = null;
   _skuInsertGroupId = null;
@@ -3743,8 +3787,8 @@ function parseImportFile(file) {
       pendingImport = result;
       ok.disabled = false; ok.style.opacity = '1';
       const pParts = [];
-      if (result.prodCount) pParts.push(`${result.prodCount} product group${result.prodCount!==1?'s':''}`);
-      if (result.grpCount)  pParts.push(`${result.grpCount} group header${result.grpCount!==1?'s':''}`);
+      if (result.prodCount) pParts.push(`${result.prodCount} product${result.prodCount!== 1 ? 's' : ''}`);
+      if (result.grpCount)  pParts.push(`${result.grpCount} section${result.grpCount!== 1 ? 's' : ''}`);
       const what = pParts.join(' + ') || 'no items';
       let msg;
       if (result.mode === 'items') {
@@ -3971,8 +4015,8 @@ function applyImportedProject(res) {
   markDirty();
   closeImport();
   const parts = [];
-  if (prodCount) parts.push(`${prodCount} product group${prodCount!==1?'s':''}`);
-  if (grpCount)  parts.push(`${grpCount} group header${grpCount!==1?'s':''}`);
+  if (prodCount) parts.push(`${prodCount} product${prodCount!== 1 ? 's' : ''}`);
+  if (grpCount)  parts.push(`${grpCount} section${grpCount!== 1 ? 's' : ''}`);
   toast('✓ Opened ' + (parts.join(' + ') || 'project'));
   initPiMode();
   showPBV();
@@ -4114,8 +4158,8 @@ function doImport() {
   markDirty();
   closeImport();
   const parts = [];
-  if (prodCount) parts.push(`${prodCount} product group${prodCount!==1?'s':''}`);
-  if (grpCount)  parts.push(`${grpCount} group header${grpCount!==1?'s':''}`);
+  if (prodCount) parts.push(`${prodCount} product${prodCount!== 1 ? 's' : ''}`);
+  if (grpCount)  parts.push(`${grpCount} section${grpCount!== 1 ? 's' : ''}`);
   toast('✓ Imported ' + (parts.join(' + ') || 'project'));
   initPiMode();
   showPBV();
@@ -4191,8 +4235,8 @@ function checkBOMFragment() {
   const prodCount = parsed.prodCount;
   const grpCount  = parsed.grpCount;
   const summary = [
-    prodCount ? `${prodCount} product group${prodCount !== 1 ? 's' : ''}` : '',
-    grpCount  ? `${grpCount} group header${grpCount !== 1 ? 's' : ''}` : ''
+    prodCount ? `${prodCount} product${prodCount!== 1 ? 's' : ''}` : '',
+    grpCount  ? `${grpCount} section${grpCount!== 1 ? 's' : ''}` : ''
   ].filter(Boolean).join(' + ') || 'no items';
   if (cart.length) {
     showBOMFragmentConfirm(parsed, name, summary);
