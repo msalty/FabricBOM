@@ -45,12 +45,17 @@ Designed to be run entirely offline. Install it as a web app on most modern brow
 - **Discount matrix columns** — add, rename, re-type, and remove extra partner-type and named-account columns directly in the Discount Matrix; no CSV round trip needed, and rates carry over on rename
 
 ### Export & Sharing
-- **Export ▸ Excel (.xlsx)** — project details plus a filterable line-item table (section, product, part number, description, qty, type, notes), with list price, extended price, and totals when a price list is loaded; built with the bundled SheetJS library, so it works offline
+- **Export ▸ Excel (.xlsx)** — project details plus a filterable line-item table (section, product, part number, description, qty, type, notes), with list price, extended price, and totals when a price list is loaded; built with the bundled SheetJS library, so it works offline. The workbook also carries a hidden **FabricBOM data** sheet (the same project data a share link holds) so it can be reopened in FabricBOM
 - **Export ▸ CSV (.csv)** — the same line-item table as a plain CSV for importing into other tools
 - **Export ▸ Print / Save as PDF** — browser-native print layout optimized for customer-ready output
 - **Export ▸ Copy share link** — a compressed URL containing the full BOM; pastes as a named hyperlink in email / Teams / Slack and as a plain URL elsewhere, and recipients open it directly in their browser
 - **Export ▸ Copy to clipboard** — the line items as a table for Excel, CSV, or Markdown
-- **File ▸ Download / Open .fbom file** — the native FabricBOM format for saving a full project to disk and reopening it later
+- **File ▸ Download .fbom file** — the native FabricBOM format for saving a full project to disk
+- **File ▸ Open file** — reopens a `.fbom`, Excel, or CSV file:
+  - an **Excel** export that hasn't been changed reopens exactly, including section notes, type overrides, and password protection
+  - an **edited Excel** export keeps your edits — changed quantities, added or removed rows, retyped items, and updated project details — while the hidden sheet fills in what a table can't hold
+  - a **CSV** export (or any spreadsheet with a *Part Number* / *SKU* column) is read row by row and replaces the BOM's line items, keeping the current Project Information since CSV files don't include it
+  - SKUs exported with a -12 / -36 / -60 term are turned back into -DD so the term selector keeps working
 - Term suffixes (-12 / -36 / -60) are resolved on every SKU in every export
 - **Global license term** — apply 1-year, 3-year, 5-year, or co-term suffixes to all SKUs at export time
 

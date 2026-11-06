@@ -870,7 +870,13 @@
           <details class="qa" open>
             <summary>How do I import a previously exported Project BOM?</summary>
             <div class="qa-body">
-              <p>Click <strong>File ▸ Open .fbom file…</strong> in the Project BOM toolbar (or <strong>Open .fbom file</strong> on the start screen). This will prompt you to browse your computer and select the .fbom file you wish to open.</p>
+              <p>Click <strong>File ▸ Open file</strong> in the Project BOM toolbar (or <strong>Open file</strong> on the start screen), then pick or drop the file. FabricBOM opens three kinds of file:</p>
+              <ul>
+                <li><strong>.fbom</strong> — the full project.</li>
+                <li><strong>Excel (.xlsx) exported from FabricBOM</strong> — if you haven't changed it, the project comes back exactly. If you edited it in Excel (quantities, added or deleted rows, types, project details), your edits are kept. Leave the hidden <em>FabricBOM data</em> sheet in place — it's what lets the file reopen as a full project.</li>
+                <li><strong>CSV</strong> — read row by row. Because a CSV has no Project Information, it replaces only the BOM's line items and keeps your current project details. Any spreadsheet with a <em>Part Number</em> (or <em>SKU</em>) column works, so you can also bring in a parts list from somewhere else.</li>
+              </ul>
+              <p>Opening a file replaces the current Project BOM, so save it first if you want to keep it.</p>
             </div>
           </details>
 

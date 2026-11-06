@@ -704,7 +704,7 @@
         <div class="hint">Multiple runs of the same product are supported</div>
         <div class="hint">Already know your SKUs? Use <strong>Add SKU</strong> or load a project from <strong>Saved Projects</strong> — the product pages are optional.</div>
         <div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap;justify-content:center;">
-          <button class="btn bs" onclick="openImport()" title="Open a FabricBOM project file (.fbom)"><svg viewBox="0 0 13 13" fill="none"><path d="M6.5 9V1.5M3.5 4.5l3-3 3 3" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round"/></svg>Open .fbom file</button>
+          <button class="btn bs" onclick="openImport()" title="Open a FabricBOM project — a .fbom file, or an Excel / CSV file exported from FabricBOM"><svg viewBox="0 0 13 13" fill="none"><path d="M6.5 9V1.5M3.5 4.5l3-3 3 3" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round"/></svg>Open file</button>
           <button class="btn bp" onclick="openSkuModal()"><svg viewBox="0 0 13 13" fill="none"><rect x="1" y="3" width="11" height="7" rx="1" stroke="#fff" stroke-width="1.1"/><path d="M3.5 6.5h6M6.5 5v3" stroke="#fff" stroke-width="1.1" stroke-linecap="round"/></svg>Add SKU</button>
           <a class="demo-bom-link btn bs" href="#" target="_blank" rel="noopener" style="display:none;text-decoration:none;align-items:center;gap:6px;"><svg viewBox="0 0 13 13" fill="none" style="width:13px;height:13px;"><path d="M7.5 1.5h4v4M11 2L6 7M5.5 2.5H2a1 1 0 0 0-1 1V11a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V7.5" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="demo-bom-label">Demo BOM</span></a>
         </div>
@@ -797,7 +797,7 @@
         <h3>Project BOM is empty</h3>
         <p>Select a product from the left sidebar, configure it, and click <strong>Add to Project BOM</strong>. You can add multiple products and run the same product page multiple times to build a complete project quote.</p>
         <div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap;justify-content:center;">
-          <button class="btn bs" onclick="openImport()" title="Open a FabricBOM project file (.fbom)"><svg viewBox="0 0 13 13" fill="none"><path d="M6.5 9V1.5M3.5 4.5l3-3 3 3" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round"/></svg>Open .fbom file</button>
+          <button class="btn bs" onclick="openImport()" title="Open a FabricBOM project — a .fbom file, or an Excel / CSV file exported from FabricBOM"><svg viewBox="0 0 13 13" fill="none"><path d="M6.5 9V1.5M3.5 4.5l3-3 3 3" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round"/></svg>Open file</button>
           <button class="btn bp" onclick="openSkuModal()"><svg viewBox="0 0 13 13" fill="none"><rect x="1" y="3" width="11" height="7" rx="1" stroke="#fff" stroke-width="1.1"/><path d="M3.5 6.5h6M6.5 5v3" stroke="#fff" stroke-width="1.1" stroke-linecap="round"/></svg>Add SKU</button>
           <a class="demo-bom-link btn bs" href="#" target="_blank" rel="noopener" style="display:none;text-decoration:none;align-items:center;gap:6px;"><svg viewBox="0 0 13 13" fill="none" style="width:13px;height:13px;"><path d="M7.5 1.5h4v4M11 2L6 7M5.5 2.5H2a1 1 0 0 0-1 1V11a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V7.5" stroke="#6B7589" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="demo-bom-label">Demo BOM</span></a>
         </div>
@@ -1098,30 +1098,30 @@
   <button class="dm-item" onclick="saveProject();closeProjectMenu()"><svg viewBox="0 0 13 13" fill="none"><rect x="1" y="1" width="11" height="11" rx="1" stroke="currentColor" stroke-width="1.1"/><rect x="4" y="1" width="5" height="4" rx=".5" stroke="currentColor" stroke-width="1.1"/><rect x="3" y="7" width="7" height="4" rx=".5" stroke="currentColor" stroke-width="1.1"/></svg>Save Project</button>
   <button class="dm-item" onclick="closeProjectMenu();showSavedProjects()"><svg viewBox="0 0 13 13" fill="none"><path d="M1.5 3.2a1 1 0 0 1 1-1h2.7l1.3 1.5h4a1 1 0 0 1 1 1v5.6a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg>Open Saved Project…</button>
   <div class="dm-sep"></div>
-  <div class="dm-section">FabricBOM file (.fbom)</div>
+  <div class="dm-section">Project files</div>
   <button class="dm-item" onclick="exportCSV();closeProjectMenu()" title="Download this project as a .fbom file you can reopen later or send to another FabricBOM user"><svg viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3.5 6l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Download .fbom file</button>
-  <button class="dm-item" onclick="openImport();closeProjectMenu()"><svg viewBox="0 0 13 13" fill="none"><path d="M6.5 9V1.5M3.5 4.5l3-3 3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Open .fbom file…</button>
+  <button class="dm-item" onclick="openImport();closeProjectMenu()"><svg viewBox="0 0 13 13" fill="none"><path d="M6.5 9V1.5M3.5 4.5l3-3 3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Open file (.fbom, Excel, CSV)…</button>
 </div>
 
 <!-- Import CSV Modal -->
 <div id="imp-modal">
   <div id="imp-box">
     <h3>
-      <svg width="14" height="14" viewBox="0 0 13 13" fill="none"><path d="M6.5 9V1M9.5 6l-3 3-3-3" stroke="#2A2F3A" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="#2A2F3A" stroke-width="1.3" stroke-linecap="round"/></svg>
-      Open a FabricBOM file (.fbom)
+      <svg width="14" height="14" viewBox="0 0 13 13" fill="none"><path d="M6.5 9V1.5M3.5 4.5l3-3 3 3" stroke="#2A2F3A" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v1a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1" stroke="#2A2F3A" stroke-width="1.3" stroke-linecap="round"/></svg>
+      Open a project file
     </h3>
     <div id="imp-body">
       <div id="imp-drop" onclick="document.getElementById('imp-file').click()" ondragover="impDragOver(event)" ondragleave="impDragLeave(event)" ondrop="impDrop(event)">
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="opacity:.35"><rect x="4" y="4" width="24" height="24" rx="3" stroke="#6B7589" stroke-width="1.5"/><path d="M10 16h12M16 10v12" stroke="#6B7589" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <div style="font-weight:600;color:var(--c-text);margin-top:8px;">Drop an .fbom <span title="go ahead, drop it" aria-hidden="true">😉</span> … or click to browse.</div>
-        <p>Must be a FabricBOM-exported .fbom file. Project info and all product groups will be restored.</p>
-        <input type="file" id="imp-file" accept=".fbom" style="display:none" onchange="impFileChosen(this)">
+        <div style="font-weight:600;color:var(--c-text);margin-top:8px;">Drop a .fbom, Excel, or CSV file <span title="go ahead, drop it" aria-hidden="true">😉</span> … or click to browse.</div>
+        <p>Files exported from FabricBOM reopen as a full project — Excel files you’ve edited keep your edits. Any spreadsheet with a Part Number column works too.</p>
+        <input type="file" id="imp-file" accept=".fbom,.xlsx,.csv" style="display:none" onchange="impFileChosen(this)">
       </div>
       <div id="imp-warn" style="display:none;font-size:12px;color:#8A5800;background:#FFF8EE;border:1px solid #F5D9A0;border-radius:3px;padding:8px 12px;"></div>
     </div>
     <div id="imp-foot">
       <button class="btn bs" onclick="closeImport()">Cancel</button>
-      <button class="btn bp" id="imp-ok" onclick="doImport()" disabled style="opacity:.5;">Import</button>
+      <button class="btn bp" id="imp-ok" onclick="doImport()" disabled style="opacity:.5;">Open</button>
     </div>
   </div>
 </div>
@@ -3418,7 +3418,9 @@ async function buildBOMTable() {
 
 function bomInfoRows() {
   const v = id => document.getElementById(id).value.trim();
-  const locked = !!(bomPasswordHash && !bomUnlocked);
+  // With a password set, Customer / Opportunity / Notes stay out of every
+  // export — even when the owner has it unlocked — as the password promises.
+  const locked = !!bomPasswordHash;
   const term = document.getElementById('pi-term').value;
   const out = [['Customer / Opportunity', locked ? '(password protected)' : (v('pi-cust') || 'Unnamed Project')]];
   if (!locked && v('pi-opp')) out.push(['Opportunity ID', v('pi-opp')]);
@@ -3442,7 +3444,8 @@ async function downloadBOM(fmt) {
   closeCopyMenu();
   if (!cart.some(e => !e._type)) { toast('Nothing to export — add items to the BOM first'); return; }
   const t = await buildBOMTable();
-  const base = `FabricBOM_${getMeta().cust.replace(/[^a-zA-Z0-9]/g,'_')}_${new Date().toISOString().slice(0,10)}`;
+  const fileName = bomPasswordHash ? 'Protected' : getMeta().cust;   // don't leak a protected customer name via the file name
+  const base = `FabricBOM_${fileName.replace(/[^a-zA-Z0-9]/g,'_')}_${new Date().toISOString().slice(0,10)}`;
 
   if (fmt === 'csv') {
     // Plain table (no title block) so it imports cleanly into other tools.
@@ -3480,6 +3483,19 @@ async function downloadBOM(fmt) {
   ws['!autofilter'] = { ref: XLSX.utils.encode_range({ s:{ r:hdrRow, c:0 }, e:{ r:lastDataRow, c:t.header.length - 1 } }) };
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'BOM');
+  // Hidden second sheet: the full project (the same data a share link carries)
+  // plus a fingerprint of the visible sheet, so File ▸ Open can bring this
+  // workbook back exactly — or, if the BOM sheet was edited, use the edits.
+  const headRows = aoa.slice(0, hdrRow).filter(r => r.some(c => String(c ?? '').trim() !== ''));
+  const dataRows = [
+    ['FabricBOM project data — lets FabricBOM reopen this file. Please leave this sheet as it is.'],
+    [IMPORT_DATA_VERSION],
+    [_bomSheetFingerprint(headRows, t.rows)],
+  ];
+  const packed = LZString.compressToBase64(serializeBOM());
+  for (let i = 0; i < packed.length; i += 30000) dataRows.push([packed.slice(i, i + 30000)]);  // Excel caps a cell at 32,767 chars
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(dataRows), IMPORT_DATA_SHEET);
+  wb.Workbook = { Sheets: [{ Hidden: 0 }, { Hidden: 1 }] };
   const out = XLSX.write(wb, { bookType:'xlsx', type:'array' });
   saveBlob(new Blob([out], { type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), base + '.xlsx');
   toast('✓ Excel file downloaded');
@@ -3677,25 +3693,282 @@ function impDragLeave() { document.getElementById('imp-drop').classList.remove('
 function impDrop(e) { e.preventDefault(); document.getElementById('imp-drop').classList.remove('over'); const f=e.dataTransfer.files[0]; if(f) parseImportFile(f); }
 function impFileChosen(inp) { if(inp.files[0]) parseImportFile(inp.files[0]); }
 
+// Opens .fbom, Excel (.xlsx) and CSV. A .fbom file (or anything whose first
+// line is the .fbom header) goes through parseCSV below; spreadsheets go
+// through parseSpreadsheetImport.
 function parseImportFile(file) {
   const warn = document.getElementById('imp-warn');
   const ok = document.getElementById('imp-ok');
   warn.style.display = 'none';
+  const fail = msg => {
+    warn.textContent = msg; warn.style.display='block';
+    warn.style.color='#8A5800'; warn.style.background='#FFF8EE'; warn.style.borderColor='#F5D9A0';
+    pendingImport=null; ok.disabled=true; ok.style.opacity='.5';
+  };
+  const name = file.name || '';
+  const isXlsx = /\.xls[xm]$/i.test(name);
   const reader = new FileReader();
   reader.onload = ev => {
     try {
-      const result = parseCSV(ev.target.result);
-      if (!result.ok) { warn.textContent = result.error; warn.style.display='block'; pendingImport=null; ok.disabled=true; ok.style.opacity='.5'; return; }
+      let result;
+      if (isXlsx) {
+        if (typeof XLSX === 'undefined') return fail('Excel files can’t be opened — the spreadsheet library did not load.');
+        result = parseSpreadsheetImport(XLSX.read(ev.target.result, { type:'array' }), 'xlsx');
+      } else {
+        const text = String(ev.target.result).replace(/^﻿/, '');
+        const firstLine = text.slice(0, 200).split(/\r?\n/)[0];
+        if (/\.fbom$/i.test(name) || firstLine.includes('FabricBOM Project Export')) {
+          result = parseCSV(text);
+        } else {
+          if (typeof XLSX === 'undefined') return fail('CSV files can’t be opened — the spreadsheet library did not load.');
+          result = parseSpreadsheetImport(XLSX.read(text, { type:'string', raw:true }), 'csv');
+        }
+      }
+      if (!result.ok) return fail(result.error);
+      // A file without Project Information only replaces the line items, so it
+      // must not slip past Read-only on the current project.
+      if (result.mode === 'items' && isReadOnly()) {
+        return fail('This BOM is read-only. Turn off Read-only (or start a New BOM) before opening a file that has no Project Information.');
+      }
       pendingImport = result;
       ok.disabled = false; ok.style.opacity = '1';
       const pParts = [];
       if (result.prodCount) pParts.push(`${result.prodCount} product group${result.prodCount!==1?'s':''}`);
       if (result.grpCount)  pParts.push(`${result.grpCount} group header${result.grpCount!==1?'s':''}`);
-      warn.textContent = `Ready to import: "${result.meta.cust || 'Unnamed'}" — ` + (pParts.join(' + ') || 'no items');
+      const what = pParts.join(' + ') || 'no items';
+      let msg;
+      if (result.mode === 'items') {
+        msg = `Ready to open ${what}. Your Project Information is kept — this file doesn’t include it.`;
+      } else {
+        const nm = result.meta.cust_enc ? 'password-protected project' : `"${(result.meta.cust && result.meta.cust !== 'Unnamed Project') ? result.meta.cust : 'Unnamed'}"`;
+        msg = `Ready to open ${nm} — ${what}.`;
+        if (result.via === 'exact')  msg += ' Exact copy of the exported project.';
+        if (result.via === 'edited') msg += ' Your edits in the spreadsheet are included.';
+      }
+      if (cart.length) msg += ' This replaces the current Project BOM.';
+      warn.textContent = msg;
       warn.style.display='block'; warn.style.color='#1A6B3A'; warn.style.background='#F0FFF6'; warn.style.borderColor='#9BD6B8';
-    } catch(err) { warn.textContent = 'Could not parse CSV: ' + err.message; warn.style.display='block'; pendingImport=null; ok.disabled=true; ok.style.opacity='.5'; }
+    } catch(err) { fail('Could not read this file: ' + err.message); }
   };
-  reader.readAsText(file);
+  if (isXlsx) reader.readAsArrayBuffer(file); else reader.readAsText(file);
+}
+
+// ── OPEN EXCEL / CSV ─────────────────────────────────────────────────────────
+// Excel files from Export ▸ Excel carry a hidden "FabricBOM data" sheet with
+// the full project plus a fingerprint of the visible sheet:
+//   • visible sheet unchanged → the project reopens exactly (via 'exact');
+//   • visible sheet edited    → its rows and project details win, and the
+//     hidden data only fills in what a table can't hold — product tags,
+//     section-header notes, type overrides, password protection (via 'edited').
+// CSV files, and any spreadsheet with a Part Number column, are read row by
+// row. Without a Project Information block they replace only the line items.
+const IMPORT_DATA_SHEET = 'FabricBOM data';
+const IMPORT_DATA_VERSION = 'v1';
+const IMPORT_COLS = ['section','product','sub','sku','desc','qty','type','note'];  // export column order
+const IMPORT_COL_ALIASES = {
+  section: ['section'],
+  product: ['product','product group'],
+  sub:     ['sub-section','subsection','sub section'],
+  sku:     ['part number','part #','part no','part no.','part num','sku','item number'],
+  desc:    ['description','desc'],
+  qty:     ['qty','qty.','quantity'],
+  type:    ['type'],
+  note:    ['notes','note','comments'],
+};
+const IMPORT_INFO_KEYS = {
+  'customer / opportunity':'cust', 'opportunity id':'opp', 'se / engineer':'eng',
+  'date':'date', 'license term':'term', 'project scope / notes':'notes',
+};
+function _normCell(v) { return String(v ?? '').trim().toLowerCase().replace(/\s+/g, ' '); }
+
+// Fingerprint of everything visible on the BOM sheet except prices (those
+// depend on whichever price list was loaded). FNV-1a, so it's quick and stable.
+function _bomSheetFingerprint(headRows, rows) {
+  const s = JSON.stringify([
+    headRows.map(r => [String(r[0] ?? ''), String(r[1] ?? '')]),
+    rows.map(r => r.slice(0, IMPORT_COLS.length).map(c => String(c ?? ''))),
+  ]);
+  let hsh = 0x811c9dc5;
+  for (let i = 0; i < s.length; i++) { hsh ^= s.charCodeAt(i); hsh = Math.imul(hsh, 0x01000193) >>> 0; }
+  return s.length + ':' + hsh.toString(16);
+}
+
+function _termFromLabel(s) {
+  s = String(s || '');
+  if (/\b1 ?year|-12\b/i.test(s)) return '12';
+  if (/\b3 ?years?|-36\b/i.test(s)) return '36';
+  if (/\b5 ?years?|-60\b/i.test(s)) return '60';
+  return 'DD';
+}
+
+function parseSpreadsheetImport(wb, fileKind) {
+  // 1. Find the sheet and header row that hold the line items.
+  let found = null;
+  for (const n of wb.SheetNames) {
+    if (n === IMPORT_DATA_SHEET) continue;
+    const aoa = XLSX.utils.sheet_to_json(wb.Sheets[n], { header:1, defval:'', raw:true, blankrows:true });
+    for (let r = 0; r < Math.min(aoa.length, 40) && !found; r++) {
+      const hdr = (aoa[r] || []).map(_normCell);
+      const col = {};
+      for (const [k, aliases] of Object.entries(IMPORT_COL_ALIASES)) {
+        const i = hdr.findIndex(c => aliases.includes(c));
+        if (i !== -1) col[k] = i;
+      }
+      if (col.sku !== undefined) found = { aoa, hdrRow: r, col };
+    }
+    if (found) break;
+  }
+  if (!found) return { ok:false, error:'No line items found — the sheet needs a column headed "Part Number" (or "SKU").' };
+  const { aoa, hdrRow, col } = found;
+
+  // 2. Project Information block above the table (Excel exports only).
+  const headRows = aoa.slice(0, hdrRow).filter(r => r.some(c => String(c ?? '').trim() !== ''));
+  const info = {};
+  for (const r of headRows) { const k = IMPORT_INFO_KEYS[_normCell(r[0])]; if (k) info[k] = String(r[1] ?? '').trim(); }
+  const hasInfo = Object.keys(info).length > 0;
+
+  // 3. Line-item rows, in export column order; blank rows (and the price
+  //    Total rows, whose text sits in the price columns) drop out here.
+  const rows = [];
+  for (let r = hdrRow + 1; r < aoa.length; r++) {
+    const vals = IMPORT_COLS.map(k => col[k] === undefined ? '' : (aoa[r][col[k]] ?? ''));
+    if (vals.every(v => String(v).trim() === '')) continue;
+    rows.push(vals);
+  }
+
+  // 4. Hidden project data, if this workbook came from FabricBOM.
+  let payload = null, storedPrint = '';
+  const ds = wb.Sheets[IMPORT_DATA_SHEET];
+  if (ds) {
+    try {
+      const d = XLSX.utils.sheet_to_json(ds, { header:1, defval:'', raw:true });
+      if (String(d[1]?.[0] || '') === IMPORT_DATA_VERSION) {
+        storedPrint = String(d[2]?.[0] || '');
+        const parsed = deserializeBOM(LZString.decompressFromBase64(d.slice(3).map(r => String(r[0] || '')).join('')));
+        if (parsed && parsed.ok) payload = parsed;
+      }
+    } catch(_) { payload = null; }
+  }
+  if (payload && storedPrint && storedPrint === _bomSheetFingerprint(headRows, rows)) {
+    return { ...payload, ok:true, mode:'project', via:'exact' };
+  }
+  if (!rows.length) return { ok:false, error:'The sheet has a header row but no line items under it.' };
+
+  // 5. Rebuild the project from the visible rows.
+  const meta = { cust:'', opp:'', eng:'', date:'', notes:'', term:'DD', readOnly:false, passwordHash:'', passwordSalt:'' };
+  const mode = hasInfo ? 'project' : 'items';
+  if (hasInfo) {
+    const c = info.cust || '';
+    meta.cust  = (c === '(password protected)' || c === 'Unnamed Project') ? '' : c;
+    meta.opp   = info.opp || '';
+    meta.eng   = info.eng || '';
+    meta.date  = info.date || '';
+    meta.notes = info.notes || '';
+    meta.term  = _termFromLabel(info.term);
+    if (payload) {
+      meta.readOnly = !!payload.meta.readOnly;
+      // Password protection can't be edited in a spreadsheet — carry it over.
+      if (payload.meta.passwordHash) {
+        meta.passwordHash = payload.meta.passwordHash;
+        meta.passwordSalt = payload.meta.passwordSalt || '';
+        if (payload.meta.cust_enc) Object.assign(meta, { cust_enc: payload.meta.cust_enc, opp_enc: payload.meta.opp_enc || '', notes_enc: payload.meta.notes_enc || '' });
+      }
+    }
+  }
+  // Exports resolve -DD to the project's term; undo that so the term selector keeps working.
+  const term = hasInfo ? meta.term : getCurrentTerm();
+  const termRe = term !== 'DD' ? new RegExp(`-${term}$`, 'i') : null;
+
+  const pEntries = new Map(), pRows = new Map(), pGroups = new Map();
+  if (payload) for (const it of payload.items) {
+    if (it._type === 'group') { if (!pGroups.has(it.label)) pGroups.set(it.label, it); continue; }
+    if (!pEntries.has(it.label)) pEntries.set(it.label, it);
+    for (const r of it.rows) if (r.sku !== undefined) pRows.set(it.label + '\u0001' + r.sku, r);
+  }
+  const kindByLabel = Object.fromEntries(Object.entries(KIND_LABELS).map(([k, v]) => [v.toLowerCase(), k]));
+  const noProductCol = col.product === undefined;
+
+  const items = [];
+  let curSection = '', curEntry = null, curSub = '';
+  for (const [secV, prodV, subV, skuV, descV, qtyV, typeV, noteV] of rows) {
+    const sec = String(secV).trim();
+    // A blank Section / Product cell means "same as the row above".
+    const label = String(prodV).trim() || (curEntry ? curEntry.label : 'Imported items');
+    if (sec && sec !== curSection) {
+      const pg = pGroups.get(sec);
+      items.push({ _type:'group', label: sec, note: pg ? pg.note : '', showPricing: pg ? !!pg.showPricing : false });
+      curSection = sec; curEntry = null;
+    }
+    if (!curEntry || curEntry.label !== label) {
+      const pe = pEntries.get(label);
+      const guess = noProductCol ? '' : ((label.match(/^Forti\w+/i) || [])[0] || '');
+      curEntry = { product: pe ? pe.product : (guess || 'Custom SKU'), label, rows: [] };
+      items.push(curEntry);
+      curSub = '';
+    }
+    const sub = String(subV).trim();
+    if (sub && sub !== curSub) { curEntry.rows.push({ section: sub }); curSub = sub; }
+
+    let sku = String(skuV).trim();
+    const desc = String(descV), note = String(noteV), t = _normCell(typeV);
+    if (t === 'note' || (!sku && !t)) {           // caveat / free-text row
+      if (!desc.trim() && !note.trim()) continue;
+      curEntry.rows.push({ sku: sku || '⚠', desc, qty: null, kind: 'note', note });
+      continue;
+    }
+    if (termRe) sku = sku.replace(termRe, '-DD');
+    const qs = String(qtyV).replace(/,/g, '').trim();
+    const qn = qs === '' ? NaN : Number(qs);
+    const row = { sku, desc, qty: isNaN(qn) ? undefined : qn, kind: '', note };
+    const prev = pRows.get(label + '\u0001' + sku);
+    const prevEff = prev ? (prev._kindOverride !== undefined ? prev._kindOverride : prev.kind) : undefined;
+    if (prev && (t === 'attention' || _normCell(KIND_LABELS[prevEff]) === t)) {
+      // Type unchanged (or an automatic "Attention" from a missing price):
+      // restore the original type and any override instead of freezing it.
+      row.kind = prev.kind || '';
+      if (prev._kindOverride !== undefined) row._kindOverride = prev._kindOverride;
+    } else {
+      row.kind = col.type === undefined ? 'req' : (kindByLabel[t] || '');
+    }
+    curEntry.rows.push(row);
+  }
+  const prodCount = items.filter(i => !i._type).length;
+  const grpCount  = items.filter(i => i._type === 'group').length;
+  return { ok:true, mode, via: payload ? 'edited' : 'table', meta, items, prodCount, grpCount };
+}
+
+// Apply a parsed Excel / CSV file. mode 'project' replaces the project
+// details and the BOM; mode 'items' replaces only the BOM.
+function applyImportedProject(res) {
+  const { meta, items, prodCount, grpCount, mode } = res;
+  if (mode === 'project') {
+    const set = (id, v) => { document.getElementById(id).value = v || ''; };
+    _activeKey = null; _encBlobsCache = null; bomUnlocked = false; _sessionUnlockPlain = '';
+    if (meta.cust_enc) { set('pi-cust', ''); set('pi-opp', ''); set('pi-notes', ''); }
+    else { set('pi-cust', meta.cust === 'Unnamed Project' ? '' : meta.cust); set('pi-opp', meta.opp); set('pi-notes', meta.notes); }
+    if (meta.eng)  set('pi-eng', meta.eng);
+    if (meta.date) set('pi-date', meta.date);
+    document.getElementById('pi-term').value = meta.term || 'DD';
+    _restoreReadOnly(meta);
+    applyPasswordHashFromMeta(meta);
+  }
+  cart = []; seq = 0; collapsedGroups = new Set();
+  for (const item of items) {
+    if (item._type === 'group') cart.push({ id: ++seq, _type:'group', label: item.label, note: item.note || '', showPricing: !!item.showPricing });
+    else cart.push({ id: ++seq, product: item.product, label: item.label, rows: item.rows, meta: {} });
+  }
+  updateBadges();
+  renderGroups();
+  saveCart();
+  savePiData();
+  markDirty();
+  closeImport();
+  const parts = [];
+  if (prodCount) parts.push(`${prodCount} product group${prodCount!==1?'s':''}`);
+  if (grpCount)  parts.push(`${grpCount} group header${grpCount!==1?'s':''}`);
+  toast('✓ Opened ' + (parts.join(' + ') || 'project'));
+  initPiMode();
+  showPBV();
 }
 
 function parseCSV(text) {
@@ -3788,6 +4061,7 @@ function _restoreReadOnly(meta) {
 
 function doImport() {
   if (!pendingImport) return;
+  if (pendingImport.mode) { applyImportedProject(pendingImport); return; }   // Excel / CSV
   const { meta, items, prodCount, grpCount } = pendingImport;
   // Restore project info fields (skip cust/opp/notes when encrypted — applyPasswordHashFromMeta handles decryption)
   if (!meta.cust_enc && meta.cust) document.getElementById('pi-cust').value = meta.cust;
