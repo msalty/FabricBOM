@@ -3263,7 +3263,8 @@ function copyShareLink() {
   const okMsg = big ? '✓ Link copied — note: this BOM is very large, so the link may not open in every browser'
                     : '✓ Share link copied — paste it into email, Teams, or Slack';
   const url = location.origin + location.pathname + '#bom=' + compressed;
-  const displayName = getMeta().cust;
+  // The link text is visible wherever it's pasted, so a protected customer name stays out of it.
+  const displayName = bomPasswordHash ? 'FabricBOM project (password protected)' : getMeta().cust;
   const html = `<a href="${url}">${displayName.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}</a>`;
   history.replaceState(null, '', '#bom=' + compressed);
   if (navigator.clipboard && navigator.clipboard.write && typeof ClipboardItem !== 'undefined') {
@@ -3338,12 +3339,20 @@ function backupProjects() {
   toast(`✓ Backup downloaded (${primaries.length} project${primaries.length !== 1 ? 's' : ''})`);
 }
 
+// One-line form of a multi-line value for the .fbom meta row. Older FabricBOM
+// versions split .fbom files on raw line breaks, so the meta row has to stay on
+// one line for them to read the file; '\' and line breaks are escaped here and
+// restored on import.
+function _fbomEsc(s)   { return String(s || '').replace(/\\/g, '\\\\').replace(/\r\n|\r|\n/g, '\\n'); }
+function _fbomUnesc(s) { return String(s || '').replace(/\\(\\|n)/g, (_, c) => c === 'n' ? '\n' : '\\'); }
+
 function exportCSV() {
   const p = getMeta();
   const termLabel = {DD:'Co-term (-DD)',12:'1 Year (-12)',36:'3 Years (-36)',60:'5 Years (-60)'}[p.term];
+  // Notes goes last so older versions, which read these cells by position, still parse the file.
   const metaFields = p.cust_enc
     ? [`Customer_enc:${p.cust_enc}`,`Opportunity_enc:${p.opp_enc||''}`,`Notes_enc:${p.notes_enc||''}`,`Engineer:${p.eng}`,`Date:${p.date}`,`Term:${termLabel}`,`ReadOnly:${p.readOnly?'true':''}`,`PasswordHash:${p.passwordHash||''}`,`PasswordSalt:${p.passwordSalt||''}`]
-    : [`Customer:${p.cust}`,`Opportunity:${p.opp}`,`Engineer:${p.eng}`,`Date:${p.date}`,`Term:${termLabel}`,`ReadOnly:${p.readOnly?'true':''}`,`PasswordHash:${p.passwordHash||''}`];
+    : [`Customer:${p.cust}`,`Opportunity:${p.opp}`,`Engineer:${p.eng}`,`Date:${p.date}`,`Term:${termLabel}`,`ReadOnly:${p.readOnly?'true':''}`,`PasswordHash:${p.passwordHash||''}`,`Notes:${_fbomEsc(p.notes)}`];
   const rows = [
     ['FabricBOM Project Export'],
     metaFields,
@@ -3365,7 +3374,8 @@ function exportCSV() {
   const csv = rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\r\n');
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
-  a.download=`FabricBOM_${p.cust.replace(/[^a-zA-Z0-9]/g,'_')}_${new Date().toISOString().slice(0,10)}.fbom`;
+  const fileName = bomPasswordHash ? 'Protected' : p.cust;   // don't leak a protected customer name via the file name
+  a.download=`FabricBOM_${fileName.replace(/[^a-zA-Z0-9]/g,'_')}_${new Date().toISOString().slice(0,10)}.fbom`;
   a.click(); toast('✓ FabricBOM exported');
 }
 
@@ -3942,12 +3952,9 @@ function parseSpreadsheetImport(wb, fileKind) {
 function applyImportedProject(res) {
   const { meta, items, prodCount, grpCount, mode } = res;
   if (mode === 'project') {
-    const set = (id, v) => { document.getElementById(id).value = v || ''; };
-    _activeKey = null; _encBlobsCache = null; bomUnlocked = false; _sessionUnlockPlain = '';
-    if (meta.cust_enc) { set('pi-cust', ''); set('pi-opp', ''); set('pi-notes', ''); }
-    else { set('pi-cust', meta.cust === 'Unnamed Project' ? '' : meta.cust); set('pi-opp', meta.opp); set('pi-notes', meta.notes); }
-    if (meta.eng)  set('pi-eng', meta.eng);
-    if (meta.date) set('pi-date', meta.date);
+    _setProjectIdentity(meta);
+    if (meta.eng)  document.getElementById('pi-eng').value  = meta.eng;
+    if (meta.date) document.getElementById('pi-date').value = meta.date;
     document.getElementById('pi-term').value = meta.term || 'DD';
     _restoreReadOnly(meta);
     applyPasswordHashFromMeta(meta);
@@ -3972,50 +3979,53 @@ function applyImportedProject(res) {
 }
 
 function parseCSV(text) {
-  // Split lines, handle \r\n and \n
-  const rawLines = text.replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n');
-  function parseLine(line) {
-    const cells=[]; let cur='', inQ=false;
-    for(let i=0;i<line.length;i++){
-      const c=line[i];
-      if(inQ){if(c==='"'&&line[i+1]==='"'){cur+='"';i++;}else if(c==='"'){inQ=false;}else{cur+=c;}}
-      else{if(c==='"'){inQ=true;}else if(c===','){cells.push(cur);cur='';}else{cur+=c;}}
+  // Read rows character by character rather than splitting on line breaks:
+  // a quoted value can span lines (multi-line line-item notes), and splitting
+  // first used to cut such a note in two and turn the rest into a bogus row.
+  const lines = [];
+  {
+    const s = text.replace(/\r\n?/g, '\n');
+    let row = [], cur = '', inQ = false;
+    for (let i = 0; i < s.length; i++) {
+      const c = s[i];
+      if (inQ) {
+        if (c === '"') { if (s[i+1] === '"') { cur += '"'; i++; } else inQ = false; }
+        else cur += c;
+      }
+      else if (c === '"')  inQ = true;
+      else if (c === ',')  { row.push(cur); cur = ''; }
+      else if (c === '\n') { row.push(cur); lines.push(row); row = []; cur = ''; }
+      else cur += c;
     }
-    cells.push(cur); return cells;
+    row.push(cur); lines.push(row);
   }
-  const lines = rawLines.map(parseLine);
   // Validate header
   if (!lines[0] || lines[0][0] !== 'FabricBOM Project Export') return {ok:false, error:'Not a FabricBOM CSV export (missing header).'};
-  // Row 1: meta
-  const metaRow = lines[1] || [];
-  function mval(cell) { return cell ? cell.replace(/^[^:]+:/,'').trim() : ''; }
-  const meta = { cust:'', opp:'', eng:'', date:'', term:'DD', readOnly:false, passwordHash:'', passwordSalt:'' };
-  const encrypted = metaRow[0] && metaRow[0].startsWith('Customer_enc:');
-  if (encrypted) {
-    // fields: Customer_enc, Opportunity_enc, Notes_enc, Engineer, Date, Term, ReadOnly, PasswordHash, PasswordSalt
-    meta.cust_enc  = mval(metaRow[0]);
-    meta.opp_enc   = mval(metaRow[1]);
-    meta.notes_enc = mval(metaRow[2]);
-    meta.eng       = mval(metaRow[3]);
-    meta.date      = mval(metaRow[4]);
-    const termLine = mval(metaRow[5]);
-    if (termLine.includes('1 Year')) meta.term='12';
-    else if (termLine.includes('3 Year')) meta.term='36';
-    else if (termLine.includes('5 Year')) meta.term='60';
-    if (mval(metaRow[6]).toLowerCase() === 'true') meta.readOnly = true;
-    meta.passwordHash = mval(metaRow[7]);
-    meta.passwordSalt = mval(metaRow[8]);
+  // Row 1: "Key:value" cells, read by key so new cells (e.g. Notes) can be added.
+  // Encrypted values contain ':' themselves, so split at the first one only.
+  const kv = {};
+  for (const cell of lines[1] || []) {
+    const i = cell.indexOf(':');
+    if (i > 0) kv[cell.slice(0, i).trim()] = cell.slice(i + 1).trim();
+  }
+  const meta = { cust:'', opp:'', eng:'', date:'', notes:'', term:'DD', readOnly:false, passwordHash:'', passwordSalt:'' };
+  meta.eng  = kv.Engineer || '';
+  meta.date = kv.Date || '';
+  const termLine = kv.Term || '';
+  if (termLine.includes('1 Year')) meta.term='12';
+  else if (termLine.includes('3 Year')) meta.term='36';
+  else if (termLine.includes('5 Year')) meta.term='60';
+  meta.readOnly     = (kv.ReadOnly || '').toLowerCase() === 'true';
+  meta.passwordHash = kv.PasswordHash || '';
+  meta.passwordSalt = kv.PasswordSalt || '';
+  if (kv.Customer_enc !== undefined) {
+    meta.cust_enc  = kv.Customer_enc;
+    meta.opp_enc   = kv.Opportunity_enc || '';
+    meta.notes_enc = kv.Notes_enc || '';
   } else {
-    meta.cust = mval(metaRow[0]);
-    meta.opp  = mval(metaRow[1]);
-    meta.eng  = mval(metaRow[2]);
-    meta.date = mval(metaRow[3]);
-    const termLine = mval(metaRow[4]);
-    if (termLine.includes('1 Year')) meta.term='12';
-    else if (termLine.includes('3 Year')) meta.term='36';
-    else if (termLine.includes('5 Year')) meta.term='60';
-    if (mval(metaRow[5]).toLowerCase() === 'true') meta.readOnly = true;
-    if (metaRow[6]) meta.passwordHash = mval(metaRow[6]);
+    meta.cust  = kv.Customer || '';
+    meta.opp   = kv.Opportunity || '';
+    meta.notes = _fbomUnesc(kv.Notes);   // absent in files from before Notes was saved
   }
   // Data rows start at index 4 (after header row at index 3)
   // Parse all items in order (product groups and group headers interleaved)
@@ -4053,6 +4063,23 @@ function parseCSV(text) {
   return { ok:true, meta, items, prodCount, grpCount };
 }
 
+// Opening a project (a .fbom file or a share link) replaces Customer /
+// Opportunity / Notes outright — blank in the file means blank here, or the
+// previous project's values would linger. Encrypted values are filled in later
+// by applyPasswordHashFromMeta. It also drops the previous project's key and
+// encrypted fields: left in place, they would re-encrypt a project that has no
+// password on the next save, and that data could never be decrypted again.
+function _setProjectIdentity(meta) {
+  const set = (id, v) => { document.getElementById(id).value = v || ''; };
+  if (meta.cust_enc) { set('pi-cust', ''); set('pi-opp', ''); set('pi-notes', ''); }
+  else {
+    set('pi-cust', meta.cust === 'Unnamed Project' ? '' : meta.cust);
+    set('pi-opp', meta.opp);
+    set('pi-notes', meta.notes);
+  }
+  _activeKey = null; _encBlobsCache = null; bomUnlocked = false; _sessionUnlockPlain = '';
+}
+
 function _restoreReadOnly(meta) {
   const ro = !!meta.readOnly || !!getSetting('readOnlyOnOpen');
   document.getElementById('pi-readonly').checked = ro;
@@ -4063,14 +4090,10 @@ function doImport() {
   if (!pendingImport) return;
   if (pendingImport.mode) { applyImportedProject(pendingImport); return; }   // Excel / CSV
   const { meta, items, prodCount, grpCount } = pendingImport;
-  // Restore project info fields (skip cust/opp/notes when encrypted — applyPasswordHashFromMeta handles decryption)
-  if (!meta.cust_enc && meta.cust) document.getElementById('pi-cust').value = meta.cust;
-  if (!meta.cust_enc && meta.opp)  document.getElementById('pi-opp').value  = meta.opp;
+  _setProjectIdentity(meta);
   if (meta.eng)  document.getElementById('pi-eng').value  = meta.eng;
   if (meta.date) document.getElementById('pi-date').value = meta.date;
   if (meta.term) document.getElementById('pi-term').value = meta.term;
-  if (meta.cust_enc) { document.getElementById('pi-cust').value = ''; document.getElementById('pi-opp').value = ''; document.getElementById('pi-notes').value = ''; }
-  _sessionUnlockPlain = '';
   _restoreReadOnly(meta);
   applyPasswordHashFromMeta(meta);
   // Rebuild cart preserving order
@@ -4103,15 +4126,10 @@ let _pendingSharedBOM = null;
 
 function applySharedBOM(parsed) {
   const { meta, items } = parsed;
-  // skip cust/opp/notes when encrypted — applyPasswordHashFromMeta handles decryption
-  if (!meta.cust_enc && meta.cust)  document.getElementById('pi-cust').value  = meta.cust;
-  if (!meta.cust_enc && meta.opp)   document.getElementById('pi-opp').value   = meta.opp;
-  if (!meta.cust_enc && meta.notes) document.getElementById('pi-notes').value = meta.notes;
-  if (meta.cust_enc) { document.getElementById('pi-cust').value = ''; document.getElementById('pi-opp').value = ''; document.getElementById('pi-notes').value = ''; }
+  _setProjectIdentity(meta);
   if (meta.eng)   document.getElementById('pi-eng').value   = meta.eng;
   if (meta.date)  document.getElementById('pi-date').value  = meta.date;
   if (meta.term)  document.getElementById('pi-term').value  = meta.term;
-  _sessionUnlockPlain = '';
   _restoreReadOnly(meta);
   applyPasswordHashFromMeta(meta);
   cart = []; seq = 0;
